@@ -13,9 +13,49 @@
 letter [a-zA-Z]
 
 %%
-{letter}+ { words++; chars+=strlen(yytext); }
-\n { chars++; lines++; }
-. { chars++; }
+/*
+ * Error type:
+ * 1. undefined tokens, eg., '@', '#' as non-literal token
+ * 2. illegal hex int, eg., 0x5gg
+ * 3. illegal hex char, eg., '\x9', '\xt0'
+*/
+
+// value
+INT     -> /* integer in 32-bits (decimal or hexadecimal) */
+FLOAT   -> /* floating point number (only dot-form) */
+CHAR    -> /* single character (printable or hex-form) */
+
+ID      -> /* identifier */
+
+TYPE    -> int | float | char // key word
+STRUCT  -> struct
+IF      -> if
+ELSE    -> else
+WHILE   -> while
+RETURN  -> return
+DOT     -> .
+SEMI    -> ;
+COMMA   -> ,
+ASSIGN  -> =
+LT      -> <
+LE      -> <=
+GT      -> >
+GE      -> >=
+NE      -> !=
+EQ      -> ==
+PLUS    -> +
+MINUS   -> -
+MUL     -> *
+DIV     -> /
+AND     -> &&
+OR      -> ||
+NOT     -> !
+LP      -> (
+RP      -> )
+LB      -> [
+RB      -> ]
+LC      -> {
+RC      -> }
 
 %%
 int main(int argc, char **argv){

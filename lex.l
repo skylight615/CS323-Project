@@ -4,11 +4,6 @@
     // C macro tutorial in Chinese: http://c.biancheng.net/view/446.html
     #define EXIT_OK 0
     #define EXIT_FAIL 1
-
-    // global variables
-    int chars = 0;
-    int words = 0;
-    int lines = 0;
 %}
 letter [a-zA-Z]
 letter_ {letter}|_
@@ -24,6 +19,7 @@ quotes [']
 
 %%
 INT     -> /* integer in 32-bits (decimal or hexadecimal) */
+{digit}{1,10}|(0x({digit}|[abcde]){1,8})
 FLOAT   -> /* floating point number (only dot-form) */
 CHAR    -> /* single character (printable or hex-form) */
 

@@ -18,7 +18,7 @@ quotes [']
 */
 
 %%
-INT     -> /* integer in 32-bits (decimal or hexadecimal) */
+INT     -> /* integer in 32-bits (decimal or hexadecimal) sss*/
 {digit}{1,10}|(0x({digit}|[abcde]){1,8})
 FLOAT   -> /* floating point number (only dot-form) */
 CHAR    -> /* single character (printable or hex-form) */

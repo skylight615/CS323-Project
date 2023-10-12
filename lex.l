@@ -11,8 +11,10 @@
     int lines = 0;
 %}
 letter [a-zA-Z]
+letter_ {letter}|_
+digit [0-9]
+quotes [']
 
-%%
 /*
  * Error type:
  * 1. undefined tokens, eg., '@', '#' as non-literal token
@@ -20,42 +22,45 @@ letter [a-zA-Z]
  * 3. illegal hex char, eg., '\x9', '\xt0'
 */
 
-// value
+%%
 INT     -> /* integer in 32-bits (decimal or hexadecimal) */
 FLOAT   -> /* floating point number (only dot-form) */
 CHAR    -> /* single character (printable or hex-form) */
 
-ID      -> /* identifier */
+{quotes}.{quotes} {printf("CHAR");} /*fixme: not include the hex form */
 
-TYPE    -> int | float | char // key word
-STRUCT  -> struct
-IF      -> if
-ELSE    -> else
-WHILE   -> while
-RETURN  -> return
-DOT     -> .
-SEMI    -> ;
-COMMA   -> ,
-ASSIGN  -> =
-LT      -> <
-LE      -> <=
-GT      -> >
-GE      -> >=
-NE      -> !=
-EQ      -> ==
-PLUS    -> +
-MINUS   -> -
-MUL     -> *
-DIV     -> /
-AND     -> &&
-OR      -> ||
-NOT     -> !
-LP      -> (
-RP      -> )
-LB      -> [
-RB      -> ]
-LC      -> {
-RC      -> }
+{digit}({letter_}|{digit})* {printf("ERROR ID");}
+{letter_}({letter_}|{digit}){0,31} {printf("ID");}
+
+int|float|char {printf("TYPE\n");}
+struct {printf("STRUCT\n");}
+if {printf("IF\n");}
+else {printf("ELSE\n");}
+while {printf("WHILE\n");}
+return {printf("RETURN\n");}
+. {printf("DOT\n");}
+; {printf("SEMI\n");}
+, {printf("COMMA\n");}
+= {printf("ASSIGN\n");}
+< {printf("LT\n");}
+<= {printf("LE\n");}
+> {printf("GT\n");}
+>= {printf("GE\n");}
+!= {printf("NE\n");}
+== {printf("EQ\n");}
++ {printf("PLUS\n");}
+- {printf("MINUS\n");}
+* {printf("MUL\n");}
+/ {printf("DIV\n");}
+&& {printf("AND\n");}
+|| {printf("OR\n");}
+! {printf("NOT\n");}
+\( {printf("LP\n");}
+\) {printf("RP\n");}
+\[ {printf("LB\n");}
+\] {printf("RB\n");}
+{ {printf("LC\n");}
+} {printf("RC\n");}
 
 %%
 int main(int argc, char **argv){

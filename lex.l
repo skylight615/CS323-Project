@@ -9,6 +9,8 @@ letter [a-zA-Z]
 letter_ {letter}|_
 digit [0-9]
 quotes [']
+MCE "*/"
+MCB "/*"
 
 /*
  * Error type:
@@ -20,13 +22,22 @@ quotes [']
 %%
 INT     -> /* integer in 32-bits (decimal or hexadecimal) */
 {digit}{1,10}|(0x({digit}|[abcde]){1,8})
-FLOAT   -> /* floating point number (only dot-form) */
+{digit}{digit}*\.{digit}* {printf("FLOAT\n");}
 CHAR    -> /* single character (printable or hex-form) */
 
-{quotes}.{quotes} {printf("CHAR");} /*fixme: not include the hex form */
+{quotes}.{quotes} {printf("CHAR\n");} /*fixme: not include the hex form */
 
 {digit}({letter_}|{digit})* {printf("ERROR ID");}
 {letter_}({letter_}|{digit}){0,31} {printf("ID");}
+
+"//" {
+	char c;
+	while ((c = input()) != '\n'){}
+	unput(c);
+	printf("SINGLE COMMENT\n");
+}
+
+{MCB}([^{MCB}{MCE}])*{MCE} {printf("MULTIPLE COMMENT\n")}
 
 int|float|char {printf("TYPE\n");}
 struct {printf("STRUCT\n");}
@@ -71,8 +82,6 @@ int main(int argc, char **argv){
             return EXIT_FAIL;
         }
         yylex();
-	printf("%-8s%-8s%-8s%s\n", "#lines", "#words", "#chars", "file path");
-        printf("%-8d%-8d%-8d%s\n", lines, words, chars, file_path);
         return EXIT_OK;
     } else{
         fputs("Too many arguments! Expected: 2.\n", stderr);

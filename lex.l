@@ -82,8 +82,6 @@ int main(int argc, char **argv){
             return EXIT_FAIL;
         }
         yylex();
-	printf("%-8s%-8s%-8s%s\n", "#lines", "#words", "#chars", "file path");
-        printf("%-8d%-8d%-8d%s\n", lines, words, chars, file_path);
         return EXIT_OK;
     } else{
         fputs("Too many arguments! Expected: 2.\n", stderr);

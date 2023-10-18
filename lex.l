@@ -8,8 +8,11 @@
 letter [a-zA-Z]
 letter_ {letter}|_
 digit [0-9]
-quotes [']
+quote [']
 
+integerde -?[1-9]{digit}{0,9}|0|[1-9]{digit}{0,9}
+integerhe -?0(x|X)(0|(([1-9]|[abcde])({digit}|[abcde]){0,7}))
+charhe \\x({digit}|[abcde]){2}
 /*
  * Error type:
  * 1. undefined tokens, eg., '@', '#' as non-literal token
@@ -18,45 +21,48 @@ quotes [']
 */
 
 %%
-INT     -> /* integer in 32-bits (decimal or hexadecimal) sss*/
-{digit}{1,10}|(0x({digit}|[abcde]){1,8})
-FLOAT   -> /* floating point number (only dot-form) */
-CHAR    -> /* single character (printable or hex-form) */
 
-{quotes}.{quotes} {printf("CHAR");} /*fixme: not include the hex form */
+{integerde} {if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649) printf("INT %s\n",yytext); }
+{integerhe} {printf("INT %s\n",yytext);}
 
-{digit}({letter_}|{digit})* {printf("ERROR ID");}
-{letter_}({letter_}|{digit}){0,31} {printf("ID");}
+{quote}(.|{charhe}){quote}
+{quote}([^\t\r ]+){quote} {printf("ERROR CHAR %s\n",yytext);} 
 
-int|float|char {printf("TYPE\n");}
-struct {printf("STRUCT\n");}
-if {printf("IF\n");}
-else {printf("ELSE\n");}
-while {printf("WHILE\n");}
-return {printf("RETURN\n");}
-. {printf("DOT\n");}
-; {printf("SEMI\n");}
-, {printf("COMMA\n");}
-= {printf("ASSIGN\n");}
-< {printf("LT\n");}
-<= {printf("LE\n");}
-> {printf("GT\n");}
->= {printf("GE\n");}
-!= {printf("NE\n");}
-== {printf("EQ\n");}
-+ {printf("PLUS\n");}
-- {printf("MINUS\n");}
-* {printf("MUL\n");}
-/ {printf("DIV\n");}
-&& {printf("AND\n");}
-|| {printf("OR\n");}
-! {printf("NOT\n");}
-\( {printf("LP\n");}
-\) {printf("RP\n");}
-\[ {printf("LB\n");}
-\] {printf("RB\n");}
-{ {printf("LC\n");}
-} {printf("RC\n");}
+"int"|"float"|"char" {printf("TYPE\n");}
+"struct" {printf("STRUCT\n");}
+"if" {printf("IF\n");}
+"else" {printf("ELSE\n");}
+"while" {printf("WHILE\n");}
+"return" {printf("RETURN\n");}
+-?{digit}({letter_}|{digit})* {printf("ERROR ID\n");}
+{letter_}({letter_}|{digit}){0,31} {printf("ID %s\n",yytext);}
+[\t\r ]+ { /* does nothing when seeing white spaces except new line */}
+
+
+"." {printf("DOT\n");}
+";" {printf("SEMI\n");}
+"," {printf("COMMA\n");}
+"=" {printf("ASSIGN\n");}
+"<" {printf("LT\n");}
+"<=" {printf("LE\n");}
+">" {printf("GT\n");}
+">=" {printf("GE\n");}
+"!=" {printf("NE\n");}
+"==" {printf("EQ\n");}
+"+" {printf("PLUS\n");}
+"-" {printf("MINUS\n");}
+"*" {printf("MUL\n");}
+"/" {printf("DIV\n");}
+"&&" {printf("AND\n");}
+"||" {printf("OR\n");}
+"!" {printf("NOT\n");}
+"(" {printf("LP\n");}
+")" {printf("RP\n");}
+"[" {printf("LB\n");}
+"]" {printf("RB\n");}
+"{" {printf("LC\n");}
+"}" {printf("RC\n");}
+
 
 %%
 int main(int argc, char **argv){
@@ -71,8 +77,8 @@ int main(int argc, char **argv){
             return EXIT_FAIL;
         }
         yylex();
-	printf("%-8s%-8s%-8s%s\n", "#lines", "#words", "#chars", "file path");
-        printf("%-8d%-8d%-8d%s\n", lines, words, chars, file_path);
+	/*printf("%-8s%-8s%-8s%s\n", "#lines", "#words", "#chars", "file path");*/
+    /*    printf("%-8d%-8d%-8d%s\n", lines, words, chars, file_path);*/
         return EXIT_OK;
     } else{
         fputs("Too many arguments! Expected: 2.\n", stderr);

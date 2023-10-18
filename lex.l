@@ -24,7 +24,9 @@ charhe \\x({digit}|[abcde]){2}
 
 %%
 
-{integerde} {if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649) printf("INT %s\n",yytext); }
+{integerde} {
+	if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649) 			printf("INT %s\n",yytext); 
+	}
 {integerhe} {printf("INT %s\n",yytext);}
 
 {digit}{digit}*\.{digit}* {printf("FLOAT\n");}
@@ -49,7 +51,7 @@ charhe \\x({digit}|[abcde]){2}
 "return" {printf("RETURN\n");}
 -?{digit}({letter_}|{digit})* {printf("ERROR ID\n");}
 {letter_}({letter_}|{digit}){0,31} {printf("ID %s\n",yytext);}
-[\t\r ]+ { /* does nothing when seeing white spaces except new line */}
+[\t\r\n ]+ { /* does nothing when seeing white spaces except new line */}
 
 
 "." {printf("DOT\n");}

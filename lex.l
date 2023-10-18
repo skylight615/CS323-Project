@@ -9,6 +9,8 @@ letter [a-zA-Z]
 letter_ {letter}|_
 digit [0-9]
 quote [']
+MCE "*/"
+MCB "/*"
 
 integerde -?[1-9]{digit}{0,9}|0|[1-9]{digit}{0,9}
 integerhe -?0(x|X)(0|(([1-9]|[abcde])({digit}|[abcde]){0,7}))
@@ -25,8 +27,19 @@ charhe \\x({digit}|[abcde]){2}
 {integerde} {if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649) printf("INT %s\n",yytext); }
 {integerhe} {printf("INT %s\n",yytext);}
 
+{digit}{digit}*\.{digit}* {printf("FLOAT\n");}
+
 {quote}(.|{charhe}){quote}
 {quote}([^\t\r ]+){quote} {printf("ERROR CHAR %s\n",yytext);} 
+
+"//" {
+	char c;
+	while ((c = input()) != '\n'){}
+	unput(c);
+	printf("SINGLE COMMENT\n");
+}
+
+{MCB}([^{MCB}{MCE}])*{MCE} {printf("MULTIPLE COMMENT\n")}
 
 "int"|"float"|"char" {printf("TYPE\n");}
 "struct" {printf("STRUCT\n");}
@@ -63,7 +76,6 @@ charhe \\x({digit}|[abcde]){2}
 "{" {printf("LC\n");}
 "}" {printf("RC\n");}
 
-
 %%
 int main(int argc, char **argv){
     char *file_path;
@@ -77,8 +89,6 @@ int main(int argc, char **argv){
             return EXIT_FAIL;
         }
         yylex();
-	/*printf("%-8s%-8s%-8s%s\n", "#lines", "#words", "#chars", "file path");*/
-    /*    printf("%-8d%-8d%-8d%s\n", lines, words, chars, file_path);*/
         return EXIT_OK;
     } else{
         fputs("Too many arguments! Expected: 2.\n", stderr);

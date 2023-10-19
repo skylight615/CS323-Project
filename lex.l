@@ -23,32 +23,38 @@ charhe \\x({digit}|[abcde]){2}
 */
 
 %%
-
+/* int */
 {integerde} {
-	if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649) 			printf("INT %s\n",yytext); 
-	}
+	if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649);
+    printf("INT %s\n",yytext); 
+}
 {integerhe} {printf("INT %s\n",yytext);}
 
+/* float */
 {digit}{digit}*\.{digit}* {printf("FLOAT\n");}
 
+/* char */
 {quote}(.|{charhe}){quote}
 {quote}([^\t\r ]+){quote} {printf("ERROR CHAR %s\n",yytext);} 
 
+/* comment */
 "//" {
 	char c;
 	while ((c = input()) != '\n'){}
 	unput(c);
 	printf("SINGLE COMMENT\n");
 }
-
 {MCB}([^{MCB}{MCE}])*{MCE} {printf("MULTIPLE COMMENT\n")}
 
+/* key word */
 "int"|"float"|"char" {printf("TYPE\n");}
 "struct" {printf("STRUCT\n");}
 "if" {printf("IF\n");}
 "else" {printf("ELSE\n");}
 "while" {printf("WHILE\n");}
 "return" {printf("RETURN\n");}
+
+/* ID */
 -?{digit}({letter_}|{digit})* {printf("ERROR ID\n");}
 {letter_}({letter_}|{digit}){0,31} {printf("ID %s\n",yytext);}
 [\t\r\n ]+ { /* does nothing when seeing white spaces except new line */}

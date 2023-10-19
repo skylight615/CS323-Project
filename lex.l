@@ -31,7 +31,7 @@ charhe \\x({digit}|[abcde]){2}
 {integerhe} {printf("INT %s\n",yytext);}
 
 /* float */
-{digit}{digit}*\.{digit}* {printf("FLOAT\n");}
+-?{digit}{digit}*\.{digit}* {printf("FLOAT\n");}
 
 /* char */
 {quote}(.|{charhe}){quote}

@@ -1,14 +1,14 @@
 %{
-    // In this example, we assume that words can only contain English letters. If there are special symbols such as hyphen or apostrophe, we count multiple times (for example, "isn't" will be counted as two words and "world-class" will also be counted as two words. 
-    // just let you know you have macros!
-    // C macro tutorial in Chinese: http://c.biancheng.net/view/446.html
-    #define EXIT_OK 0
-    #define EXIT_FAIL 1
+    #define YYSTYPE struct Node *
+    #include "syntax.tab.h"
+    #include "tree.h"
+    #include <string.h>
 %}
+
 letter [a-zA-Z]
 letter_ {letter}|_
 digit [0-9]
-quote [']
+quote "'"
 MCE "*/"
 MCB "/*"
 
@@ -23,83 +23,65 @@ charhe \\x({digit}|[abcde]){2}
 */
 
 %%
-/* int */
 {integerde} {
 	if(strtol(yytext,NULL,10)<21478483648 && strtol(yytext,NULL,10)>-21478483649);
+    yylval=createLeaf("INT",yytext);
     printf("INT %s\n",yytext); 
+    return INT;
 }
-{integerhe} {printf("INT %s\n",yytext);}
+{integerhe} {yylval=createLeaf("INT",yytext);printf("INT %s\n",yytext);return INT;}
 
-/* float */
--?{digit}{digit}*\.{digit}* {printf("FLOAT\n");}
+-?{digit}{digit}*\.{digit}* {yylval=createLeaf("FLOAT",yytext);printf("FLOAT\n");return FLOAT;}
 
-/* char */
-{quote}(.|{charhe}){quote}
-{quote}([^\t\r ]+){quote} {printf("ERROR CHAR %s\n",yytext);} 
+{quote}(.|{charhe}){quote} {
+    yylval=createLeaf("CHAR",yytext);
+    printf("CHAR %s\n", yytext);
+    return CHAR;
+    }
+{quote}([^\t\r ]+){quote} {printf("ERROR CHAR %s\n",yytext);return CHAR;} 
 
-/* comment */
 "//" {
 	char c;
 	while ((c = input()) != '\n'){}
 	unput(c);
 	printf("SINGLE COMMENT\n");
 }
-{MCB}([^{MCB}{MCE}])*{MCE} {printf("MULTIPLE COMMENT\n")}
+{MCB}([^{MCB}{MCE}])*{MCE} {printf("MULTIPLE COMMENT\n");}
 
-/* key word */
-"int"|"float"|"char" {printf("TYPE\n");}
-"struct" {printf("STRUCT\n");}
-"if" {printf("IF\n");}
-"else" {printf("ELSE\n");}
-"while" {printf("WHILE\n");}
-"return" {printf("RETURN\n");}
+"int"|"float"|"char" {yylval=createLeaf("TYPE",yytext);printf("TYPE\n");return TYPE;}
+"struct" {yylval=createLeaf("STRUCT",yytext);printf("STRUCT\n");return STRUCT;}
+"if" {yylval=createLeaf("IF",yytext);printf("IF\n");return IF;}
+"else" {yylval=createLeaf("ELSE",yytext);printf("ELSE\n");return ELSE;}
+"while" {yylval=createLeaf("WHILE",yytext);printf("WHILE\n");return WHILE;}
+"return" {yylval=createLeaf("RETURN",yytext);printf("RETURN\n");return RETURN;}
 
-/* ID */
--?{digit}({letter_}|{digit})* {printf("ERROR ID\n");}
-{letter_}({letter_}|{digit}){0,31} {printf("ID %s\n",yytext);}
+-?{digit}({letter_}|{digit})* {printf("ERROR ID\n");return ID;}
+{letter_}({letter_}|{digit}){0,31} {yylval=createLeaf("ID",yytext);printf("ID %s\n",yytext);return ID;}
 [\t\r\n ]+ { /* does nothing when seeing white spaces except new line */}
 
 
-"." {printf("DOT\n");}
-";" {printf("SEMI\n");}
-"," {printf("COMMA\n");}
-"=" {printf("ASSIGN\n");}
-"<" {printf("LT\n");}
-"<=" {printf("LE\n");}
-">" {printf("GT\n");}
-">=" {printf("GE\n");}
-"!=" {printf("NE\n");}
-"==" {printf("EQ\n");}
-"+" {printf("PLUS\n");}
-"-" {printf("MINUS\n");}
-"*" {printf("MUL\n");}
-"/" {printf("DIV\n");}
-"&&" {printf("AND\n");}
-"||" {printf("OR\n");}
-"!" {printf("NOT\n");}
-"(" {printf("LP\n");}
-")" {printf("RP\n");}
-"[" {printf("LB\n");}
-"]" {printf("RB\n");}
-"{" {printf("LC\n");}
-"}" {printf("RC\n");}
+"." {yylval=createLeaf("DOT",yytext);printf("DOT\n");return DOT;}
+";" {yylval=createLeaf("SEMI",yytext);printf("SEMI\n");return SEMI;}
+"," {yylval=createLeaf("COMMA",yytext);printf("COMMA\n");return COMMA;}
+"=" {yylval=createLeaf("ASSIGN",yytext);printf("ASSIGN\n");return ASSIGN;}
+"<" {yylval=createLeaf("LT",yytext);printf("LT\n");return LT;}
+"<=" {yylval=createLeaf("LE",yytext);printf("LE\n");return LE;}
+">" {yylval=createLeaf("GT",yytext);printf("GT\n");return GT;}
+">=" {yylval=createLeaf("GE",yytext);printf("GE\n");return GE;}
+"!=" {yylval=createLeaf("NE",yytext);printf("NE\n");return NE;}
+"==" {yylval=createLeaf("EQ",yytext);printf("EQ\n");return EQ;}
+"+" {yylval=createLeaf("PLUS",yytext);printf("PLUS\n");return PLUS;}
+"-" {yylval=createLeaf("MINUS",yytext);printf("MINUS\n");return MINUS;}
+"*" {yylval=createLeaf("MUL",yytext);printf("MUL\n");return MUL;}
+"/" {yylval=createLeaf("DIV",yytext);printf("DIV\n");return DIV;}
+"&&" {yylval=createLeaf("AND",yytext);printf("AND\n");return AND;}
+"||" {yylval=createLeaf("OR",yytext);printf("OR\n");return OR;}
+"!" {yylval=createLeaf("NOT",yytext);printf("NOT\n");return NOT;}
+"(" {yylval=createLeaf("LP",yytext);printf("LP\n");return LP;}
+")" {yylval=createLeaf("RP",yytext);printf("RP\n");return RP;}
+"[" {yylval=createLeaf("LB",yytext);printf("LB\n");return LB;}
+"]" {yylval=createLeaf("RB",yytext);printf("RB\n");return RB;}
+"{" {yylval=createLeaf("LC",yytext);printf("LC\n");return LC;}
+"}" {yylval=createLeaf("RC",yytext);printf("RC\n");return RC;}
 
 %%
-int main(int argc, char **argv){
-    char *file_path;
-    if(argc < 2){
-        fprintf(stderr, "Usage: %s <file_path>\n", argv[0]);
-        return EXIT_FAIL;
-    } else if(argc == 2){
-        file_path = argv[1];
-        if(!(yyin = fopen(file_path, "r"))){
-            perror(argv[1]);
-            return EXIT_FAIL;
-        }
-        yylex();
-        return EXIT_OK;
-    } else{
-        fputs("Too many arguments! Expected: 2.\n", stderr);
-        return EXIT_FAIL;
-    }
-}

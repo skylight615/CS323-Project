@@ -1,24 +1,16 @@
-extern int yylineno;//行号
-extern char* yytext;//词
-void yyerror(char *s,...);//错误处理函数
-
 /*抽象语法树的结点*/
-struct parsetree
+struct Node
 {
-    int line; //行号
-    char* name;//语法单元的名字
-    struct parsetree *l;//左孩子
-    struct parsetree *r;//右孩子
-    union//共用体用来存放ID/CHAR/INTEGER/FLOAT结点的值
-    {
-	    char* str;
-	    int integer;
-	    float flt;
-    };
+    char* type;//token type
+    char* value;//token value
+    struct Node* clds[10];
+    int n_cld;
 };
 
+struct Node *createLeaf(char* type,char* value);
+
 /*构造抽象语法树,变长参数，name:语法单元名字；num:变长参数中语法结点个数*/
-struct parsetree *newast(char* name,int num,...);
+struct Node *createNode(char* type,int num, struct Node* list[]);
 
 /*遍历抽象语法树，level为树的层数*/
-void eval(struct parsetree*,int level);
+void dfs(struct Node* root,int level);

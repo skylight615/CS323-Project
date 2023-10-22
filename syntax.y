@@ -1,88 +1,126 @@
 %{
     #include "lex.yy.c"
-    #include "tree.h"
     void yyerror(const char*);
+    struct Node *cldArray[10];
     int yydebug = 1;
 %}
+
+%define api.value.type {struct Node *}
+
 /* terminal token */
 %token INT FLOAT CHAR TYPE STRUCT IF ELSE WHILE RETURN ID DOT SEMI COMMA
 %token ASSIGN LT LE GT GE NE EQ PLUS MINUS MUL DIV AND OR NOT LP RP LB RB
 %token LC RC
-/* non-terminal token */
-%token Program ExtDefList ExtDef Specifier ExtDecList VarDec FunDec CompSt
-%token StructSpecifier DefList VarList ParamDec StmtList Stmt Def DecList
-%token Dec Exp Args
+
+/* priority of operations */
+%right ASSIGN
+%left OR
+%left AND
+%left LT LE GT GE EQ NE
+%left PLUS MINUS
+%left MUL DIV
+%right NEG NOT
+%left LP RP LB RB DOT
+
 %%
 /* high-level definition */
-Program: ExtDefList
-ExtDefList: ExtDef ExtDefList
-    | $
-ExtDef: Specifier ExtDecList SEMI
-    | Specifier SEMI
-    | Specifier FunDec CompSt
-ExtDecList: VarDec
-    | VarDec COMMA ExtDecList
+Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); dfs($$,0);}
+    ;
+ExtDefList: %empty {$$ = createNode("Empty", 0, cldArray);}
+    | ExtDef ExtDefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDefList", 2, cldArray);}
+    ;
+ExtDef: Specifier ExtDecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("ExtDef", 3, cldArray);}
+    | Specifier SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);}
+    | Specifier FunDec CompSt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("ExtDef", 3, cldArray);}
+    ;
+ExtDecList: VarDec {cldArray[0] = $1; $$=createNode("ExtDecList", 1, cldArray);}
+    | VarDec COMMA ExtDecList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("ExtDecList", 3, cldArray);}
+    ;
 /* specifier */
-Specifier: TYPE
-    | StructSpecifier
-StructSpecifier: STRUCT ID LC DefList RC
-    | STRUCT ID
+Specifier: TYPE {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
+    | StructSpecifier {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
+    ;
+StructSpecifier: STRUCT ID LC DefList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("StructSpecifier", 5, cldArray);}
+    | STRUCT ID {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StructSpecifier", 2, cldArray);}
+    ;
 /* declarator */
-VarDec: ID
-    | VarDec LB INT RB
-FunDec: ID LP VarList RP
-    | ID LP RP
-VarList: ParamDec COMMA VarList
-    | ParamDec
-ParamDec: Specifier VarDec
+VarDec: ID {cldArray[0] = $1; $$=createNode("VarDec", 1, cldArray);}
+    | VarDec LB INT RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("VarDec", 4, cldArray);}
+    ;
+FunDec: ID LP VarList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);}
+    | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("FunDec", 3, cldArray);}
+    ;
+VarList: ParamDec COMMA VarList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("VarList", 3, cldArray);}
+    | ParamDec {cldArray[0] = $1; $$=createNode("VarList", 1, cldArray);}
+    ;
+ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);}
+    ;
 /* statement */
-CompSt: LC DefList StmtList RC
-StmtList: Stmt StmtList
-    | $
-Stmt: Exp SEMI
-    | CompSt
-    | RETURN Exp SEMI
-    | IF LP Exp RP Stmt
-    | IF LP Exp RP Stmt ELSE Stmt
-    | WHILE LP Exp RP Stmt
+CompSt: LC DefList StmtList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("CompSt", 4, cldArray);}
+    ;
+StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
+    | Stmt StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StmtList", 2, cldArray);}
+    ;
+Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cldArray);}
+    | CompSt {cldArray[0] = $1; $$=createNode("Stmt", 1, cldArray);}
+    | RETURN Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Stmt", 3, cldArray);}
+    | IF LP Exp RP Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);} 
+    | IF LP Exp RP Stmt ELSE Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; cldArray[5]=$6; cldArray[6]=$7;$$=createNode("Stmt", 7, cldArray);}
+    | WHILE LP Exp RP Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);}
+    ;
 /* local definition */
-DefList: Def DefList
-    | $
-Def: Specifier DecList SEMI
-DecList: Dec
-    | Dec COMMA DecList
-Dec: VarDec
-    | VarDec ASSIGN Exp
+DefList: %empty {$$ = createNode("Empty", 0, cldArray);}
+    | Def DefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("DefList", 2, cldArray);}
+    ;
+Def: Specifier DecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);}
+    ;
+DecList: Dec {cldArray[0] = $1; $$=createNode("DecList", 1, cldArray);}
+    | Dec COMMA DecList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("DecList", 3, cldArray);}
+    ;
+Dec: VarDec {cldArray[0] = $1; $$=createNode("Dec", 1, cldArray);}
+    | VarDec ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Dec", 3, cldArray);}
+    ;
 /* Expression */
-Exp: Exp ASSIGN Exp
-    | Exp AND Exp
-    | Exp OR Exp
-    | Exp LT Exp
-    | Exp LE Exp
-    | Exp GT Exp
-    | Exp GE Exp
-    | Exp NE Exp
-    | Exp EQ Exp
-    | Exp PLUS Exp
-    | Exp MINUS Exp
-    | Exp MUL Exp
-    | Exp DIV Exp
-    | LP Exp RP
-    | MINUS Exp
-    | NOT Exp
-    | ID LP Args RP
-    | ID LP RP
-    | Exp LB Exp RB
-    | Exp DOT ID
-    | ID
-    | INT
-    | FLOAT
-    | CHAR
-Args: Exp COMMA Args
-    | Exp
+Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp AND Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp OR Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp LT Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp LE Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp GT Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp GE Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp NE Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp EQ Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp PLUS Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp MINUS Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp MUL Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp DIV Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | LP Exp RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | MINUS Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);} %prec NEG
+    | NOT Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);}
+    | ID LP Args RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
+    | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | Exp LB Exp RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
+    | Exp DOT ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | ID {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
+    | INT {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
+    | FLOAT {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
+    | CHAR {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
+    ;
+Args: Exp COMMA Args {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Args", 3, cldArray);}
+    | Exp {cldArray[0] = $1; $$=createNode("Args", 1, cldArray);}
+    ;
 %%
 void yyerror(const char *s) {
-    fprintf(stderr, "%s\n", s);
+    extern int yylineno;	// defined and maintained in lex
+	extern char *yytext;	// defined and maintained in lex
+	int len=strlen(yytext);
+	int i;
+	char buf[512]={0};
+	for (i=0;i<len;++i)
+	{
+		sprintf(buf,"%s%d ",buf,yytext[i]);
+	}
+	fprintf(stderr, "ERROR: %s at symbol '%s' on line %d\n", s, buf, yylineno);
 }
 int main() {
     yyparse();

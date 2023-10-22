@@ -5,6 +5,7 @@ struct Node
     char* value;//token value
     struct Node* clds[10];
     int n_cld;
+    int line;
 };
 
 struct Node *createLeaf(char* type,char* value);

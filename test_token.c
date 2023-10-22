@@ -1,1 +1,12 @@
-int 3 03 26 17 0x10 0x000 0x5gg -225 -0x15544aab -0x1a1a a=b 1+0x1 'a' 2147 214748364444 -214748364444 '\x11'  '\x1'
+int test_1_r01(int a, int b)
+{
+    c = 'c';
+    if (a > b) 
+    {
+        return a;
+    } 
+    else 
+    {
+        return b;
+    }
+}

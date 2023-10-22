@@ -1,5 +1,4 @@
 %{
-    #define YYSTYPE struct Node *
     #include "syntax.tab.h"
     #include "tree.h"
     #include <string.h>
@@ -57,8 +56,8 @@ charhe \\x({digit}|[abcde]){2}
 
 -?{digit}({letter_}|{digit})* {printf("ERROR ID\n");return ID;}
 {letter_}({letter_}|{digit}){0,31} {yylval=createLeaf("ID",yytext);printf("ID %s\n",yytext);return ID;}
-[\t\r\n ]+ { /* does nothing when seeing white spaces except new line */}
-
+[\t\r ]+ { /* does nothing when seeing white spaces except new line */}
+[\n] {yylineno++;}
 
 "." {yylval=createLeaf("DOT",yytext);printf("DOT\n");return DOT;}
 ";" {yylval=createLeaf("SEMI",yytext);printf("SEMI\n");return SEMI;}

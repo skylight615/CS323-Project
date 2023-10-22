@@ -2,7 +2,7 @@ CC=gcc
 FLEX=flex
 BISON=bison
 parse:
-	$(BISON) -d syntax.y -v --debug
+	$(BISON) -d syntax.y
 	$(FLEX) lex.l
 	$(CC) syntax.tab.c tree.c -lfl -o parse.out
 clean:

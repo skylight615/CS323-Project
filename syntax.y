@@ -5,16 +5,12 @@
     int yydebug = 1;
 %}
 
+%define api.value.type {struct Node *}
+
 /* terminal token */
 %token INT FLOAT CHAR TYPE STRUCT IF ELSE WHILE RETURN ID DOT SEMI COMMA
 %token ASSIGN LT LE GT GE NE EQ PLUS MINUS MUL DIV AND OR NOT LP RP LB RB
 %token LC RC
-
-/* non-terminal token 
-%token Program ExtDefList ExtDef Specifier ExtDecList VarDec FunDec CompSt
-%token StructSpecifier DefList VarList ParamDec StmtList Stmt Def DecList
-%token Dec Exp Args
-*/
 
 /* priority of operations */
 %right ASSIGN
@@ -30,8 +26,8 @@
 /* high-level definition */
 Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); dfs($$,0);}
     ;
-ExtDefList: ExtDef ExtDefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDefList", 2, cldArray);}
-    | " "
+ExtDefList: %empty {$$ = createNode("Empty", 0, cldArray);}
+    | ExtDef ExtDefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDefList", 2, cldArray);}
     ;
 ExtDef: Specifier ExtDecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("ExtDef", 3, cldArray);}
     | Specifier SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);}
@@ -62,8 +58,8 @@ ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("P
 /* statement */
 CompSt: LC DefList StmtList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("CompSt", 4, cldArray);}
     ;
-StmtList: Stmt StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StmtList", 2, cldArray);}
-    | ""
+StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
+    | Stmt StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StmtList", 2, cldArray);}
     ;
 Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cldArray);}
     | CompSt {cldArray[0] = $1; $$=createNode("Stmt", 1, cldArray);}
@@ -73,8 +69,8 @@ Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cld
     | WHILE LP Exp RP Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);}
     ;
 /* local definition */
-DefList: Def DefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("DefList", 2, cldArray);}
-    | ""
+DefList: %empty {$$ = createNode("Empty", 0, cldArray);}
+    | Def DefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("DefList", 2, cldArray);}
     ;
 Def: Specifier DecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);}
     ;
@@ -115,7 +111,16 @@ Args: Exp COMMA Args {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=cre
     ;
 %%
 void yyerror(const char *s) {
-    fprintf(stderr, "%s\n", s);
+    extern int yylineno;	// defined and maintained in lex
+	extern char *yytext;	// defined and maintained in lex
+	int len=strlen(yytext);
+	int i;
+	char buf[512]={0};
+	for (i=0;i<len;++i)
+	{
+		sprintf(buf,"%s%d ",buf,yytext[i]);
+	}
+	fprintf(stderr, "ERROR: %s at symbol '%s' on line %d\n", s, buf, yylineno);
 }
 int main() {
     yyparse();

@@ -42,8 +42,8 @@ void dfs(struct Node* root,int level){
 	if(root !=NULL)
 	{
         if (strcmp(root->type,"Empty")!=0) {
-            for(i=0; i<4*level; i++)
-			    printf(" ");
+            for(i=0; i<level; i++)
+			    printf("  ");
             if(root->value==NULL)
                 printf("%s (%d)\n", root->type, root->line);
             else 

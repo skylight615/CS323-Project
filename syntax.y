@@ -22,6 +22,9 @@
 %right NEG NOT
 %left LP RP LB RB DOT
 
+%nonassoc LOWER_ELSE
+%nonassoc ELSE
+
 %%
 /* high-level definition */
 Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); dfs($$,0);}
@@ -64,7 +67,7 @@ StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
 Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cldArray);}
     | CompSt {cldArray[0] = $1; $$=createNode("Stmt", 1, cldArray);}
     | RETURN Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Stmt", 3, cldArray);}
-    | IF LP Exp RP Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);} 
+    | IF LP Exp RP Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);} %prec LOWER_ELSE
     | IF LP Exp RP Stmt ELSE Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; cldArray[5]=$6; cldArray[6]=$7;$$=createNode("Stmt", 7, cldArray);}
     | WHILE LP Exp RP Stmt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);}
     ;

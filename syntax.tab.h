@@ -82,7 +82,8 @@ extern int yydebug;
     RB = 288,
     LC = 289,
     RC = 290,
-    NEG = 291
+    NEG = 291,
+    LOWER_ELSE = 292
   };
 #endif
 

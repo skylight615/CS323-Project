@@ -3,6 +3,7 @@
     void yyerror(const char*);
     struct Node *cldArray[10];
     int yydebug = 1;
+    int isCorrect = 1;
 %}
 
 %define api.value.type {struct Node *}
@@ -27,7 +28,7 @@
 
 %%
 /* high-level definition */
-Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); dfs($$,0);}
+Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect){dfs($$,0);}}
     ;
 ExtDefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | ExtDef ExtDefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDefList", 2, cldArray);}
@@ -52,6 +53,7 @@ VarDec: ID {cldArray[0] = $1; $$=createNode("VarDec", 1, cldArray);}
     ;
 FunDec: ID LP VarList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);}
     | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("FunDec", 3, cldArray);}
+    | ID LP error {isCorrect=0;cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=createLeaf("RP",NULL);$$=createNode("FunDec", 3, cldArray);char* text = " MISSING )";printf("%d %s\n",$2->line,text);}
     ;
 VarList: ParamDec COMMA VarList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("VarList", 3, cldArray);}
     | ParamDec {cldArray[0] = $1; $$=createNode("VarList", 1, cldArray);}
@@ -101,8 +103,10 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
     | MINUS Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);} %prec NEG
     | NOT Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);}
     | ID LP Args RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
+    | ID LP Args error {isCorrect=0;cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=createLeaf("RP", NULL); $$=createNode("Exp", 4, cldArray);char* text = "MISSING )"; printf("%d %s\n",$3->line,text);}
     | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
     | Exp LB Exp RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
+    | Exp LB Exp error RB {yyerror("MISS ]\n");}
     | Exp DOT ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
     | ID {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
     | INT {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
@@ -113,18 +117,9 @@ Args: Exp COMMA Args {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=cre
     | Exp {cldArray[0] = $1; $$=createNode("Args", 1, cldArray);}
     ;
 %%
-void yyerror(const char *s) {
-    extern int yylineno;	// defined and maintained in lex
-	extern char *yytext;	// defined and maintained in lex
-	int len=strlen(yytext);
-	int i;
-	char buf[512]={0};
-	for (i=0;i<len;++i)
-	{
-		sprintf(buf,"%s%d ",buf,yytext[i]);
-	}
-	fprintf(stderr, "ERROR: %s at symbol '%s' on line %d\n", s, buf, yylineno);
-}
+void yyerror(const char *msg) {
+    printf("Error type B at Line ");
+} 
 int main() {
     yyparse();
 }

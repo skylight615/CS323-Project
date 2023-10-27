@@ -1,0 +1,41 @@
+struct my_struct
+{
+  int code;
+};
+int test(int a,int b)
+{
+    struct my_struct d;
+    int f=(2+3/(2-2))*2;
+    if(a>=b)
+    {
+        if(a>b)
+        {
+            a=1+1;
+            b=1+1;
+        }
+    }
+    else{
+        a=1;
+    }
+    if(a>=b)
+    {
+        if(a>1)
+        {
+            a=1;
+        }
+        else
+        {
+            a=2;
+        }
+    }
+    return a*b;
+}
+int test(int a,int B){
+    while(a<4){
+        while(b<3){
+            a=a+1;
+            b=b+1;
+        }
+        b=b+1;
+    }
+}

@@ -12,11 +12,12 @@ struct Node *createLeaf(char* type,char* value){
     node->type = (char*)malloc(sizeof(char)*strlen(type));
     strcpy(node->type, type);
     node->line = yylineno;
-    if (strcmp(type,"ID")==0 || strcmp(type,"FLOAT")==0 || strcmp(type,"INT")==0 || strcmp(type,"CHAR")==0){
+    if (strcmp(type,"ID")==0 || strcmp(type,"FLOAT")==0 || strcmp(type,"INT")==0 || 
+        strcmp(type,"CHAR")==0 || strcmp(type,"TYPE")==0 ||strcmp(type,"FILEIN")==0){
         node->value = (char*)malloc(sizeof(char)*strlen(value));
         strcpy(node->value, value);
-    } else {
-        node->value = NULL;
+    }else {
+        node->value = "SIG";
     }
     return node;
 }
@@ -46,8 +47,9 @@ void dfs(struct Node* root,int level){
 			    printf("  ");
             if(root->value==NULL)
                 printf("%s (%d)\n", root->type, root->line);
+            else if(strcmp(root->value,"SIG")==0) printf("%s\n", root->type);
             else 
-                printf("%s: %s (%d)\n", root->type, root->value, root->line);
+                printf("%s: %s\n", root->type, root->value);
             for (i=0; i<root->n_cld; i++) {  
                 dfs((root->clds)[i], level+1);
             }

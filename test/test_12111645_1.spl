@@ -1,0 +1,8 @@
+int test_1()
+{
+    int a=4294967299;
+    int b=012;
+    int d=0xaaaaaaaaaa;
+    char e='\x0';
+    
+}

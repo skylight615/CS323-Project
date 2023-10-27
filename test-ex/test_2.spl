@@ -1,0 +1,6 @@
+#include <stud.h>
+#include "sud.h"
+int test(int a){
+    int b=0;
+    
+}

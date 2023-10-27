@@ -1,0 +1,6 @@
+int test_2(){
+    int a=0X0;
+    int b=0x12ab;
+    int d=4294967295;
+
+}

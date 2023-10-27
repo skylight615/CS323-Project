@@ -9,7 +9,7 @@
 %define api.value.type {struct Node *}
 
 /* terminal token */
-%token INT FLOAT CHAR TYPE STRUCT IF ELSE WHILE RETURN ID DOT SEMI COMMA INCLUDE FILEIN
+%token INT FLOAT CHAR TYPE STRUCT IF ELSE WHILE RETURN ID DOT SEMI COMMA INCLUDE FILEIN DEFINEIN
 %token ASSIGN LT LE GT GE NE EQ PLUS MINUS MUL DIV AND OR NOT LP RP LB RB
 %token ERROR
 
@@ -26,6 +26,8 @@
 %nonassoc LOWER_ELSE
 %nonassoc ELSE
 
+%nonassoc REDUCE
+%nonassoc SHIFT
 %%
 /* high-level definition */
 Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0);}
@@ -38,7 +40,21 @@ Head: INCLUDE FILEIN {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Head", 
     | INCLUDE ERROR {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Head", 2, cldArray); isCorrect=0;}
     | INCLUDE error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Head", 2, cldArray);
         isCorrect=0;char* text = "Not a head file";printf("%d: %s\n",$2->line,text);}
-
+    | DEFINEIN ID INT {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    | DEFINEIN ID FLOAT {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    | DEFINEIN ID CHAR {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    | DEFINEIN ID ERROR {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray); isCorrect=0;}
+    | DEFINEIN error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Head", 2, cldArray);
+        isCorrect=0;char* text = "Not a head macro";printf("%d: %s\n",$1->line,text);}
+    | DEFINEIN TransPara Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    ;
+TransPara: ID LP IdList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;cldArray[3]=$4; $$=createNode("TransPara", 4, cldArray);}
+    | ID LP IdList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;cldArray[3]=$4; $$=createNode("TransPara", 4, cldArray);
+        isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
+    ;
+IdList: ID {cldArray[0] = $1; $$=createNode("IdList", 1, cldArray);}
+    | ID COMMA IdList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    ;
 ExtDefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | ExtDef ExtDefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDefList", 2, cldArray);}
     ;
@@ -57,7 +73,7 @@ Specifier: TYPE {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
     ;
 StructSpecifier: STRUCT ID LC DefList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("StructSpecifier", 5, cldArray);}
     | STRUCT ID LC DefList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("StructSpecifier", 5, cldArray);
-        isCorrect=0;char* text = "Missing closing brace '}'";printf("%d: %s\n",$2->line,text);}
+        isCorrect=0;char* text = "Missing closing brace '}'";printf("%d: %s\n",yylineno,text);}
     | STRUCT ID {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StructSpecifier", 2, cldArray);}
     ;
 /* declarator */
@@ -69,7 +85,7 @@ FunDec: ID LP VarList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cl
     | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("FunDec", 3, cldArray);}
     | ID LP error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=createLeaf("RP",NULL);$$=createNode("FunDec", 3, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
-    |ID LP VarList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);
+    | ID LP VarList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     ;
 VarList: ParamDec COMMA VarList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("VarList", 3, cldArray);}
@@ -78,10 +94,11 @@ VarList: ParamDec COMMA VarList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]
 ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);}
     ;
 /* statement */
-CompSt: LC DefList StmtList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("CompSt", 4, cldArray);}
-    | LC DefList StmtList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("CompSt", 4, cldArray);
-    isCorrect=0;if(strcmp($4->value,"int")==0 ||strcmp($4->value,"float")==0 ||strcmp($4->value,"char")==0){char* text = "Missing specifier";printf("%d: %s\n",$2->line,text);}
-    else{char* text = "Missing closing brace '}'";printf("%d: %s\n",$2->line,text);}}
+CompSt: LC BodyList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("CompSt", 3, cldArray);}
+    ;
+BodyList: DefList StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("BodyList", 2, cldArray);}
+    |   BodyList DefList StmtList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("BodyList", 3, cldArray);
+        isCorrect=0; printf("Error type B at Line %d: Missing specifier\n",$2->line);}
     ;
 StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | Stmt StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StmtList", 2, cldArray);}

@@ -1,2 +1,2 @@
-Error type A at line 3: unknown lexeme 'abc'
-Error type B at Line 4: Not a head macro
+Error type B at Line 3: Missing specifier
+Error type B at Line 5: Missing specifier

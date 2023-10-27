@@ -1,6 +1,7 @@
-#define PI 3.14
-#define Pa 1
-#define Pc 'abc'
-int test(int a){
-    int b=S(PI,Pa);
+int test(){
+    int a=0;
+    a=0;
+    int a=0;
+    a=0;
+    int a=0;
 }

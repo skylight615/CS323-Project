@@ -499,16 +499,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  19
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   354
+#define YYLAST   366
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  44
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  25
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  94
+#define YYNRULES  96
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  164
+#define YYNSTATES  165
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   298
@@ -561,16 +561,16 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    33,    33,    34,    36,    37,    39,    40,    41,    43,
-      44,    45,    46,    47,    49,    51,    52,    55,    56,    58,
-      59,    61,    62,    63,    64,    67,    68,    71,    72,    74,
-      75,    77,    80,    81,    82,    84,    85,    86,    88,    91,
-      92,    94,    97,    99,   100,   103,   104,   106,   107,   108,
-     109,   111,   112,   115,   116,   117,   120,   123,   124,   126,
-     127,   130,   131,   133,   134,   137,   138,   139,   140,   141,
-     142,   143,   144,   145,   146,   147,   148,   149,   150,   151,
-     152,   154,   155,   156,   157,   159,   160,   161,   162,   163,
-     164,   165,   166,   168,   169
+       0,    33,    33,    34,    37,    38,    40,    41,    42,    44,
+      45,    46,    47,    48,    50,    52,    54,    56,    60,    61,
+      62,    64,    65,    67,    68,    69,    70,    73,    74,    77,
+      78,    80,    81,    83,    86,    87,    88,    90,    91,    92,
+      94,    97,    98,   100,   103,   105,   106,   109,   110,   112,
+     113,   114,   115,   117,   118,   121,   122,   123,   126,   129,
+     130,   132,   133,   136,   137,   139,   140,   143,   144,   145,
+     146,   147,   148,   149,   150,   151,   152,   153,   154,   155,
+     156,   157,   158,   160,   161,   162,   163,   165,   166,   167,
+     168,   169,   170,   171,   172,   174,   175
 };
 #endif
 
@@ -605,7 +605,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-111)
+#define YYPACT_NINF (-114)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -619,23 +619,23 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     109,  -111,    -4,     4,     5,    75,    70,    -3,  -111,    70,
-       2,  -111,   -19,  -111,  -111,  -111,  -111,    28,   157,  -111,
-    -111,  -111,  -111,  -111,    33,  -111,  -111,    67,    84,    71,
-      70,  -111,  -111,  -111,    94,  -111,  -111,  -111,  -111,    76,
-     157,   157,   157,  -111,   280,     3,  -111,    22,   105,    70,
-    -111,    22,     0,    70,   103,    29,   219,    91,    91,    66,
-      99,   157,   157,   157,   157,   157,   157,   157,   157,   157,
-     157,   157,   157,   157,   157,   157,  -111,  -111,    22,    34,
-     121,  -111,  -111,   117,    20,   188,    43,    69,   139,  -111,
-    -111,  -111,    94,  -111,  -111,  -111,   242,    35,  -111,  -111,
-    -111,   280,    45,    45,    45,    45,    45,    45,    85,    85,
-      91,    91,   317,   299,   261,   280,   100,  -111,  -111,    70,
-    -111,  -111,   188,   123,   125,   157,  -111,  -111,   188,   120,
-     157,  -111,  -111,    22,  -111,   157,  -111,  -111,  -111,  -111,
-    -111,   157,   157,   151,  -111,  -111,  -111,   280,  -111,  -111,
-     182,   213,  -111,  -111,   188,   188,   188,   188,  -111,   150,
-    -111,  -111,   188,  -111
+       2,  -114,     0,    25,   105,    67,   103,    89,  -114,   103,
+       3,  -114,    37,  -114,  -114,  -114,  -114,    31,   152,  -114,
+    -114,  -114,  -114,  -114,    44,  -114,  -114,    83,    46,    72,
+     103,  -114,  -114,  -114,  -114,   100,  -114,  -114,  -114,  -114,
+      81,   152,   152,   152,  -114,   275,    26,  -114,    -6,   112,
+     103,  -114,    -6,     1,   103,   104,    36,   214,    66,    66,
+      65,   108,   152,   152,   152,   152,   152,   152,   152,   152,
+     152,   152,   152,   152,   152,   152,   152,  -114,  -114,    -6,
+      64,   106,  -114,  -114,    86,    23,   183,   -14,    68,   111,
+    -114,  -114,  -114,   100,  -114,  -114,  -114,   237,    70,  -114,
+    -114,  -114,   275,   317,   317,   317,   317,   317,   317,   329,
+     329,    66,    66,   312,   294,   256,   275,    88,  -114,  -114,
+     103,  -114,  -114,   183,    94,    97,   152,  -114,  -114,   183,
+     115,   152,  -114,  -114,    -6,  -114,   152,  -114,  -114,  -114,
+    -114,  -114,   152,   152,   146,  -114,  -114,  -114,   275,  -114,
+    -114,   177,   208,  -114,  -114,   183,   183,   183,   183,  -114,
+     122,  -114,  -114,   183,  -114
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -643,39 +643,39 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       4,    27,     0,     0,     0,     0,    19,     4,     2,    19,
-       0,    28,    31,     8,     6,     7,    13,     0,     0,     1,
-       3,     5,    20,    24,    32,    22,    34,     0,    25,     0,
-      57,     9,    10,    11,     0,    12,    89,    90,    91,    88,
-       0,     0,     0,    92,    14,     0,    21,     0,     0,    57,
-      23,     0,     0,    57,    17,     0,     0,    81,    82,     0,
+       4,    29,     0,     0,     0,     0,    21,     4,     2,    21,
+       0,    30,    33,     8,     6,     7,    14,     0,     0,     1,
+       3,     5,    22,    26,    34,    24,    36,     0,    27,     0,
+      59,     9,    10,    11,    12,    20,    13,    91,    92,    93,
+      90,     0,     0,     0,    94,    15,     0,    23,     0,     0,
+      59,    25,     0,     0,    59,    18,     0,     0,    83,    84,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    37,    36,     0,     0,
-      40,    32,    26,     0,    57,    45,    63,     0,    61,    30,
-      29,    58,     0,    16,    15,    85,    94,     0,    80,    79,
-      87,    65,    69,    70,    71,    72,    73,    74,    75,    76,
-      77,    78,    66,    67,     0,    68,    41,    38,    35,     0,
-      33,    42,    45,     0,     0,     0,    48,    43,    45,     0,
-       0,    60,    59,     0,    18,     0,    84,    83,    86,    39,
-      44,     0,     0,     0,    46,    56,    47,    64,    62,    93,
-       0,     0,    50,    49,     0,     0,     0,     0,    52,    51,
-      55,    54,     0,    53
+       0,     0,     0,     0,     0,     0,     0,    39,    38,     0,
+       0,    42,    34,    28,     0,    59,    47,    65,     0,    63,
+      32,    31,    60,    20,    17,    16,    87,    96,     0,    82,
+      81,    89,    67,    71,    72,    73,    74,    75,    76,    77,
+      78,    79,    80,    68,    69,     0,    70,    43,    40,    37,
+       0,    35,    44,    47,     0,     0,     0,    50,    45,    47,
+       0,     0,    62,    61,     0,    19,     0,    86,    85,    88,
+      41,    46,     0,     0,     0,    48,    58,    49,    66,    64,
+      95,     0,     0,    52,    51,     0,     0,     0,     0,    54,
+      53,    57,    56,     0,    55
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -111,  -111,   156,  -111,  -111,    74,    96,  -111,   138,    19,
-    -111,   -49,  -111,    48,  -111,   158,  -111,  -110,   -25,   -42,
-    -111,    64,  -111,   -18,    83
+    -114,  -114,   125,  -114,  -114,    55,     5,  -114,   101,    13,
+    -114,   -51,  -114,    33,  -114,   129,  -114,  -113,   -83,   -47,
+    -114,    17,  -114,   -18,    18
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_uint8 yydefgoto[] =
 {
-       0,     5,     6,     7,    18,    55,     8,     9,    27,    51,
-      11,    28,    29,    79,    80,   126,    84,   127,   128,    52,
-      53,    87,    88,   129,    97
+       0,     5,     6,     7,    18,    56,     8,     9,    27,    52,
+      11,    28,    29,    80,    81,   127,    85,   128,   129,    53,
+      54,    88,    89,   130,    98
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -683,82 +683,84 @@ static const yytype_uint8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      44,    89,    86,    23,    76,    13,    16,    85,    12,     1,
-       2,    91,   140,     3,    24,     4,    25,    17,   144,    10,
-      30,    14,    57,    58,    59,    10,     1,     2,    10,   116,
-      93,    31,    32,    33,    81,   117,   136,    77,    96,    26,
-      90,    15,   122,   101,   102,   103,   104,   105,   106,   107,
-     108,   109,   110,   111,   112,   113,   114,   115,    60,    26,
-     121,    34,   130,    94,    78,    35,    45,    98,   118,   137,
-     131,    68,    69,    70,    71,    19,     1,     2,    48,    60,
-      74,    46,    75,   132,    86,    61,    62,    63,    64,    65,
-      66,    67,    68,    69,    70,    71,    72,    73,    60,    47,
-      99,    74,    20,    75,    60,    22,    54,   143,    83,    56,
-      49,   100,   147,    70,    71,     1,     2,    96,    92,    48,
-      74,   145,    75,   150,   151,     3,    74,     4,    75,   158,
-     159,   160,   161,    60,   146,    48,   119,   163,    78,    61,
-      62,    63,    64,    65,    66,    67,    68,    69,    70,    71,
-      72,    73,   152,   120,   133,    74,   141,    75,   142,   162,
-      36,    37,    38,    21,    60,   153,   134,   139,     0,    39,
-      61,    62,    63,    64,    65,    66,    67,    68,    69,    70,
-      71,    72,    73,   154,    40,    82,    74,    50,    75,    41,
-      42,    36,    37,    38,    43,    60,   123,   148,   124,   125,
-      39,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,   156,    40,   155,    74,   149,    75,
-      41,    42,    36,    37,    38,    43,    60,    49,     0,     0,
-       0,    39,    61,    62,    63,    64,    65,    66,    67,    68,
-      69,    70,    71,    72,    73,     0,    40,   157,    74,     0,
-      75,    41,    42,    95,     0,    60,    43,   135,     0,     0,
-       0,    61,    62,    63,    64,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    60,     0,     0,    74,     0,    75,
-      61,    62,    63,    64,    65,    66,    67,    68,    69,    70,
-      71,    72,    73,    60,     0,     0,    74,   138,    75,    61,
-      62,    63,    64,    65,    66,    67,    68,    69,    70,    71,
-      72,    73,    60,     0,     0,    74,     0,    75,     0,    62,
-      63,    64,    65,    66,    67,    68,    69,    70,    71,    72,
-      60,     0,     0,     0,    74,     0,    75,    62,    63,    64,
-      65,    66,    67,    68,    69,    70,    71,     0,     0,     0,
-       0,     0,    74,     0,    75
+      45,    87,    90,    86,    23,   131,    82,    92,     1,     2,
+     141,    20,    12,    10,    22,    24,   145,    25,     3,    10,
+       4,    49,    10,    58,    59,    60,    13,    77,   117,     1,
+       2,    26,     1,     2,    31,    32,    33,    94,   123,    97,
+      26,    91,    14,    34,   102,   103,   104,   105,   106,   107,
+     108,   109,   110,   111,   112,   113,   114,   115,   116,    79,
+      78,    48,    15,   122,    35,   118,    99,    19,    36,   132,
+      95,   137,   159,   160,   161,   162,    30,    46,    61,    61,
+     164,    49,   133,    87,    62,    63,    64,    65,    66,    67,
+      68,    69,    70,    71,    72,    73,    74,    47,   119,   100,
+      75,    75,    76,    76,   138,     3,    16,     4,   144,     1,
+       2,    50,    55,   148,    57,    84,   146,    17,    97,    93,
+     101,   120,   121,    49,   151,   152,   134,   142,    61,   147,
+     143,   163,    21,    79,    62,    63,    64,    65,    66,    67,
+      68,    69,    70,    71,    72,    73,    74,   153,   135,    83,
+      75,   149,    76,   140,   150,    37,    38,    39,    51,    61,
+     154,     0,     0,     0,    40,    62,    63,    64,    65,    66,
+      67,    68,    69,    70,    71,    72,    73,    74,   155,    41,
+       0,    75,     0,    76,    42,    43,    37,    38,    39,    44,
+      61,   124,     0,   125,   126,    40,    62,    63,    64,    65,
+      66,    67,    68,    69,    70,    71,    72,    73,    74,   157,
+      41,   156,    75,     0,    76,    42,    43,    37,    38,    39,
+      44,    61,    50,     0,     0,     0,    40,    62,    63,    64,
+      65,    66,    67,    68,    69,    70,    71,    72,    73,    74,
+       0,    41,   158,    75,     0,    76,    42,    43,    96,     0,
+      61,    44,   136,     0,     0,     0,    62,    63,    64,    65,
+      66,    67,    68,    69,    70,    71,    72,    73,    74,    61,
+       0,     0,    75,     0,    76,    62,    63,    64,    65,    66,
+      67,    68,    69,    70,    71,    72,    73,    74,    61,     0,
+       0,    75,   139,    76,    62,    63,    64,    65,    66,    67,
+      68,    69,    70,    71,    72,    73,    74,    61,     0,     0,
+      75,     0,    76,     0,    63,    64,    65,    66,    67,    68,
+      69,    70,    71,    72,    73,    61,     0,     0,     0,    75,
+      61,    76,    63,    64,    65,    66,    67,    68,    69,    70,
+      71,    72,    61,    69,    70,    71,    72,    75,     0,    76,
+       0,     0,    75,     0,    76,     0,     0,    71,    72,     0,
+       0,     0,     0,     0,    75,     0,    76
 };
 
 static const yytype_int16 yycheck[] =
 {
-      18,     1,    51,     1,     1,     1,     1,    49,    12,     6,
-       7,    53,   122,    16,    12,    18,    14,    12,   128,     0,
-      39,    17,    40,    41,    42,     6,     6,     7,     9,    78,
-       1,     3,     4,     5,    12,     1,     1,    34,    56,    37,
-      40,    37,    84,    61,    62,    63,    64,    65,    66,    67,
-      68,    69,    70,    71,    72,    73,    74,    75,    13,    37,
-      40,    33,    19,    34,    45,    37,    33,     1,    34,    34,
-       1,    26,    27,    28,    29,     0,     6,     7,    35,    13,
-      35,    14,    37,    14,   133,    19,    20,    21,    22,    23,
-      24,    25,    26,    27,    28,    29,    30,    31,    13,    15,
-      34,    35,     6,    37,    13,     9,    12,   125,     3,    33,
-      39,    12,   130,    28,    29,     6,     7,   135,    15,    35,
-      35,     1,    37,   141,   142,    16,    35,    18,    37,   154,
-     155,   156,   157,    13,    14,    35,    15,   162,   119,    19,
-      20,    21,    22,    23,    24,    25,    26,    27,    28,    29,
-      30,    31,     1,    36,    15,    35,    33,    37,    33,     9,
-       3,     4,     5,     7,    13,    14,    92,   119,    -1,    12,
-      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
-      29,    30,    31,     1,    27,    47,    35,    29,    37,    32,
-      33,     3,     4,     5,    37,    13,     8,   133,    10,    11,
-      12,    19,    20,    21,    22,    23,    24,    25,    26,    27,
-      28,    29,    30,    31,     1,    27,    34,    35,   135,    37,
-      32,    33,     3,     4,     5,    37,    13,    39,    -1,    -1,
-      -1,    12,    19,    20,    21,    22,    23,    24,    25,    26,
-      27,    28,    29,    30,    31,    -1,    27,    34,    35,    -1,
-      37,    32,    33,    34,    -1,    13,    37,    15,    -1,    -1,
-      -1,    19,    20,    21,    22,    23,    24,    25,    26,    27,
-      28,    29,    30,    31,    13,    -1,    -1,    35,    -1,    37,
-      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
-      29,    30,    31,    13,    -1,    -1,    35,    36,    37,    19,
-      20,    21,    22,    23,    24,    25,    26,    27,    28,    29,
-      30,    31,    13,    -1,    -1,    35,    -1,    37,    -1,    20,
-      21,    22,    23,    24,    25,    26,    27,    28,    29,    30,
-      13,    -1,    -1,    -1,    35,    -1,    37,    20,    21,    22,
-      23,    24,    25,    26,    27,    28,    29,    -1,    -1,    -1,
-      -1,    -1,    35,    -1,    37
+      18,    52,     1,    50,     1,    19,    12,    54,     6,     7,
+     123,     6,    12,     0,     9,    12,   129,    14,    16,     6,
+      18,    35,     9,    41,    42,    43,     1,     1,    79,     6,
+       7,    37,     6,     7,     3,     4,     5,     1,    85,    57,
+      37,    40,    17,    12,    62,    63,    64,    65,    66,    67,
+      68,    69,    70,    71,    72,    73,    74,    75,    76,    46,
+      34,    15,    37,    40,    33,     1,     1,     0,    37,     1,
+      34,     1,   155,   156,   157,   158,    39,    33,    13,    13,
+     163,    35,    14,   134,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,    14,    34,    34,
+      35,    35,    37,    37,    34,    16,     1,    18,   126,     6,
+       7,    39,    12,   131,    33,     3,     1,    12,   136,    15,
+      12,    15,    36,    35,   142,   143,    15,    33,    13,    14,
+      33,     9,     7,   120,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,     1,    93,    48,
+      35,   134,    37,   120,   136,     3,     4,     5,    29,    13,
+      14,    -1,    -1,    -1,    12,    19,    20,    21,    22,    23,
+      24,    25,    26,    27,    28,    29,    30,    31,     1,    27,
+      -1,    35,    -1,    37,    32,    33,     3,     4,     5,    37,
+      13,     8,    -1,    10,    11,    12,    19,    20,    21,    22,
+      23,    24,    25,    26,    27,    28,    29,    30,    31,     1,
+      27,    34,    35,    -1,    37,    32,    33,     3,     4,     5,
+      37,    13,    39,    -1,    -1,    -1,    12,    19,    20,    21,
+      22,    23,    24,    25,    26,    27,    28,    29,    30,    31,
+      -1,    27,    34,    35,    -1,    37,    32,    33,    34,    -1,
+      13,    37,    15,    -1,    -1,    -1,    19,    20,    21,    22,
+      23,    24,    25,    26,    27,    28,    29,    30,    31,    13,
+      -1,    -1,    35,    -1,    37,    19,    20,    21,    22,    23,
+      24,    25,    26,    27,    28,    29,    30,    31,    13,    -1,
+      -1,    35,    36,    37,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,    13,    -1,    -1,
+      35,    -1,    37,    -1,    20,    21,    22,    23,    24,    25,
+      26,    27,    28,    29,    30,    13,    -1,    -1,    -1,    35,
+      13,    37,    20,    21,    22,    23,    24,    25,    26,    27,
+      28,    29,    13,    26,    27,    28,    29,    35,    -1,    37,
+      -1,    -1,    35,    -1,    37,    -1,    -1,    28,    29,    -1,
+      -1,    -1,    -1,    -1,    35,    -1,    37
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -768,50 +770,50 @@ static const yytype_int8 yystos[] =
        0,     6,     7,    16,    18,    45,    46,    47,    50,    51,
       53,    54,    12,     1,    17,    37,     1,    12,    48,     0,
       50,    46,    50,     1,    12,    14,    37,    52,    55,    56,
-      39,     3,     4,     5,    33,    37,     3,     4,     5,    12,
-      27,    32,    33,    37,    67,    33,    14,    15,    35,    39,
-      59,    53,    63,    64,    12,    49,    33,    67,    67,    67,
-      13,    19,    20,    21,    22,    23,    24,    25,    26,    27,
-      28,    29,    30,    31,    35,    37,     1,    34,    53,    57,
-      58,    12,    52,     3,    60,    63,    55,    65,    66,     1,
-      40,    63,    15,     1,    34,    34,    67,    68,     1,    34,
-      12,    67,    67,    67,    67,    67,    67,    67,    67,    67,
-      67,    67,    67,    67,    67,    67,    55,     1,    34,    15,
-      36,    40,    63,     8,    10,    11,    59,    61,    62,    67,
-      19,     1,    14,    15,    49,    15,     1,    34,    36,    57,
-      61,    33,    33,    67,    61,     1,    14,    67,    65,    68,
-      67,    67,     1,    14,     1,    34,     1,    34,    62,    62,
-      62,    62,     9,    62
+      39,     3,     4,     5,    12,    33,    37,     3,     4,     5,
+      12,    27,    32,    33,    37,    67,    33,    14,    15,    35,
+      39,    59,    53,    63,    64,    12,    49,    33,    67,    67,
+      67,    13,    19,    20,    21,    22,    23,    24,    25,    26,
+      27,    28,    29,    30,    31,    35,    37,     1,    34,    53,
+      57,    58,    12,    52,     3,    60,    63,    55,    65,    66,
+       1,    40,    63,    15,     1,    34,    34,    67,    68,     1,
+      34,    12,    67,    67,    67,    67,    67,    67,    67,    67,
+      67,    67,    67,    67,    67,    67,    67,    55,     1,    34,
+      15,    36,    40,    63,     8,    10,    11,    59,    61,    62,
+      67,    19,     1,    14,    15,    49,    15,     1,    34,    36,
+      57,    61,    33,    33,    67,    61,     1,    14,    67,    65,
+      68,    67,    67,     1,    14,     1,    34,     1,    34,    62,
+      62,    62,    62,     9,    62
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    44,    45,    45,    46,    46,    47,    47,    47,    47,
-      47,    47,    47,    47,    47,    48,    48,    49,    49,    50,
-      50,    51,    51,    51,    51,    52,    52,    53,    53,    54,
-      54,    54,    55,    55,    55,    56,    56,    56,    56,    57,
-      57,    58,    59,    60,    60,    61,    61,    62,    62,    62,
-      62,    62,    62,    62,    62,    62,    62,    63,    63,    64,
-      64,    65,    65,    66,    66,    67,    67,    67,    67,    67,
+      47,    47,    47,    47,    47,    47,    48,    48,    49,    49,
+      49,    50,    50,    51,    51,    51,    51,    52,    52,    53,
+      53,    54,    54,    54,    55,    55,    55,    56,    56,    56,
+      56,    57,    57,    58,    59,    60,    60,    61,    61,    62,
+      62,    62,    62,    62,    62,    62,    62,    62,    62,    63,
+      63,    64,    64,    65,    65,    66,    66,    67,    67,    67,
       67,    67,    67,    67,    67,    67,    67,    67,    67,    67,
       67,    67,    67,    67,    67,    67,    67,    67,    67,    67,
-      67,    67,    67,    68,    68
+      67,    67,    67,    67,    67,    68,    68
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     0,     2,     2,     2,     2,     3,
-       3,     3,     3,     2,     3,     4,     4,     1,     3,     0,
-       2,     3,     2,     3,     2,     1,     3,     1,     1,     5,
-       5,     2,     1,     4,     1,     4,     3,     3,     4,     3,
-       1,     2,     3,     2,     3,     0,     2,     2,     1,     3,
-       3,     5,     5,     7,     5,     5,     2,     0,     2,     3,
-       3,     1,     3,     1,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     2,     3,     4,     4,     1,     3,
+       0,     0,     2,     3,     2,     3,     2,     1,     3,     1,
+       1,     5,     5,     2,     1,     4,     1,     4,     3,     3,
+       4,     3,     1,     2,     3,     2,     3,     0,     2,     2,
+       1,     3,     3,     5,     5,     7,     5,     5,     2,     0,
+       2,     3,     3,     1,     3,     1,     3,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     2,     2,     4,     4,     3,     4,     3,     1,     1,
-       1,     1,     1,     3,     1
+       3,     3,     3,     2,     2,     4,     4,     3,     4,     3,
+       1,     1,     1,     1,     1,     3,     1
 };
 
 
@@ -1277,577 +1279,593 @@ yyreduce:
   case 2: /* Program: ExtDefList  */
 #line 33 "syntax.y"
                     {cldArray[0] = yyvsp[0]; yyval=createNode("Program", 1, cldArray); if(isCorrect==1)dfs(yyval,0);}
-#line 1281 "syntax.tab.c"
+#line 1283 "syntax.tab.c"
     break;
 
   case 3: /* Program: HeadList ExtDefList  */
 #line 34 "syntax.y"
-                          {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0];yyval=createNode("Program", 2, cldArray); if(isCorrect==1)dfs(yyval,0);}
-#line 1287 "syntax.tab.c"
+                          {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0];yyval=createNode("Program", 2, cldArray); 
+        if(isCorrect==1)dfs(yyval,0);}
+#line 1290 "syntax.tab.c"
     break;
 
   case 4: /* HeadList: %empty  */
-#line 36 "syntax.y"
+#line 37 "syntax.y"
                  {yyval = createNode("Empty", 0, cldArray);}
-#line 1293 "syntax.tab.c"
+#line 1296 "syntax.tab.c"
     break;
 
   case 5: /* HeadList: Head HeadList  */
-#line 37 "syntax.y"
+#line 38 "syntax.y"
                     {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("HeadList", 2, cldArray);}
-#line 1299 "syntax.tab.c"
+#line 1302 "syntax.tab.c"
     break;
 
   case 6: /* Head: INCLUDE FILEIN  */
-#line 39 "syntax.y"
+#line 40 "syntax.y"
                      {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Head", 2, cldArray);}
-#line 1305 "syntax.tab.c"
+#line 1308 "syntax.tab.c"
     break;
 
   case 7: /* Head: INCLUDE ERROR  */
-#line 40 "syntax.y"
+#line 41 "syntax.y"
                     {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Head", 2, cldArray); isCorrect=0;}
-#line 1311 "syntax.tab.c"
+#line 1314 "syntax.tab.c"
     break;
 
   case 8: /* Head: INCLUDE error  */
-#line 41 "syntax.y"
+#line 42 "syntax.y"
                     {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Head", 2, cldArray);
         isCorrect=0;char* text = "Not a head file";printf("%d: %s\n",yyvsp[0]->line,text);}
-#line 1318 "syntax.tab.c"
+#line 1321 "syntax.tab.c"
     break;
 
   case 9: /* Head: DEFINEIN ID INT  */
-#line 43 "syntax.y"
+#line 44 "syntax.y"
                       {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
-#line 1324 "syntax.tab.c"
+#line 1327 "syntax.tab.c"
     break;
 
   case 10: /* Head: DEFINEIN ID FLOAT  */
-#line 44 "syntax.y"
+#line 45 "syntax.y"
                         {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
-#line 1330 "syntax.tab.c"
+#line 1333 "syntax.tab.c"
     break;
 
   case 11: /* Head: DEFINEIN ID CHAR  */
-#line 45 "syntax.y"
-                       {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
-#line 1336 "syntax.tab.c"
-    break;
-
-  case 12: /* Head: DEFINEIN ID ERROR  */
 #line 46 "syntax.y"
-                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray); isCorrect=0;}
-#line 1342 "syntax.tab.c"
+                       {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
+#line 1339 "syntax.tab.c"
     break;
 
-  case 13: /* Head: DEFINEIN error  */
+  case 12: /* Head: DEFINEIN ID ID  */
 #line 47 "syntax.y"
+                     {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
+#line 1345 "syntax.tab.c"
+    break;
+
+  case 13: /* Head: DEFINEIN ID ERROR  */
+#line 48 "syntax.y"
+                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);
+         isCorrect=0;}
+#line 1352 "syntax.tab.c"
+    break;
+
+  case 14: /* Head: DEFINEIN error  */
+#line 50 "syntax.y"
                      {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Head", 2, cldArray);
         isCorrect=0;char* text = "Not a head macro";printf("%d: %s\n",yyvsp[-1]->line,text);}
-#line 1349 "syntax.tab.c"
+#line 1359 "syntax.tab.c"
     break;
 
-  case 14: /* Head: DEFINEIN TransPara Exp  */
-#line 49 "syntax.y"
-                             {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
-#line 1355 "syntax.tab.c"
-    break;
-
-  case 15: /* TransPara: ID LP IdList RP  */
-#line 51 "syntax.y"
-                           {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1];cldArray[3]=yyvsp[0]; yyval=createNode("TransPara", 4, cldArray);}
-#line 1361 "syntax.tab.c"
-    break;
-
-  case 16: /* TransPara: ID LP IdList error  */
+  case 15: /* Head: DEFINEIN TransPara Exp  */
 #line 52 "syntax.y"
-                         {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1];cldArray[3]=yyvsp[0]; yyval=createNode("TransPara", 4, cldArray);
-        isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-2]->line,text);}
-#line 1368 "syntax.tab.c"
+                             {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
+#line 1365 "syntax.tab.c"
     break;
 
-  case 17: /* IdList: ID  */
-#line 55 "syntax.y"
-           {cldArray[0] = yyvsp[0]; yyval=createNode("IdList", 1, cldArray);}
-#line 1374 "syntax.tab.c"
+  case 16: /* TransPara: ID LP IdList RP  */
+#line 54 "syntax.y"
+                           {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1];cldArray[3]=yyvsp[0];
+     yyval=createNode("TransPara", 4, cldArray);}
+#line 1372 "syntax.tab.c"
     break;
 
-  case 18: /* IdList: ID COMMA IdList  */
+  case 17: /* TransPara: ID LP IdList error  */
 #line 56 "syntax.y"
-                      {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
+                         {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1];cldArray[3]=yyvsp[0];
+         yyval=createNode("TransPara", 4, cldArray);
+        isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-2]->line,text);}
 #line 1380 "syntax.tab.c"
     break;
 
-  case 19: /* ExtDefList: %empty  */
-#line 58 "syntax.y"
-                   {yyval = createNode("Empty", 0, cldArray);}
+  case 18: /* IdList: ID  */
+#line 60 "syntax.y"
+           {cldArray[0] = yyvsp[0]; yyval=createNode("IdList", 1, cldArray);}
 #line 1386 "syntax.tab.c"
     break;
 
-  case 20: /* ExtDefList: ExtDef ExtDefList  */
-#line 59 "syntax.y"
-                        {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ExtDefList", 2, cldArray);}
+  case 19: /* IdList: ID COMMA IdList  */
+#line 61 "syntax.y"
+                      {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Head", 3, cldArray);}
 #line 1392 "syntax.tab.c"
     break;
 
-  case 21: /* ExtDef: Specifier ExtDecList SEMI  */
-#line 61 "syntax.y"
-                                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("ExtDef", 3, cldArray);}
+  case 20: /* IdList: %empty  */
+#line 62 "syntax.y"
+             {yyval = createNode("Empty", 0, cldArray);}
 #line 1398 "syntax.tab.c"
     break;
 
-  case 22: /* ExtDef: Specifier SEMI  */
-#line 62 "syntax.y"
-                     {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ExtDef", 2, cldArray);}
+  case 21: /* ExtDefList: %empty  */
+#line 64 "syntax.y"
+                   {yyval = createNode("Empty", 0, cldArray);}
 #line 1404 "syntax.tab.c"
     break;
 
-  case 23: /* ExtDef: Specifier FunDec CompSt  */
-#line 63 "syntax.y"
-                              {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("ExtDef", 3, cldArray);}
+  case 22: /* ExtDefList: ExtDef ExtDefList  */
+#line 65 "syntax.y"
+                        {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ExtDefList", 2, cldArray);}
 #line 1410 "syntax.tab.c"
     break;
 
-  case 24: /* ExtDef: Specifier error  */
-#line 64 "syntax.y"
+  case 23: /* ExtDef: Specifier ExtDecList SEMI  */
+#line 67 "syntax.y"
+                                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("ExtDef", 3, cldArray);}
+#line 1416 "syntax.tab.c"
+    break;
+
+  case 24: /* ExtDef: Specifier SEMI  */
+#line 68 "syntax.y"
+                     {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ExtDef", 2, cldArray);}
+#line 1422 "syntax.tab.c"
+    break;
+
+  case 25: /* ExtDef: Specifier FunDec CompSt  */
+#line 69 "syntax.y"
+                              {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("ExtDef", 3, cldArray);}
+#line 1428 "syntax.tab.c"
+    break;
+
+  case 26: /* ExtDef: Specifier error  */
+#line 70 "syntax.y"
                       {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ExtDef", 2, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",yyvsp[0]->line,text);}
-#line 1417 "syntax.tab.c"
-    break;
-
-  case 25: /* ExtDecList: VarDec  */
-#line 67 "syntax.y"
-                   {cldArray[0] = yyvsp[0]; yyval=createNode("ExtDecList", 1, cldArray);}
-#line 1423 "syntax.tab.c"
-    break;
-
-  case 26: /* ExtDecList: VarDec COMMA ExtDecList  */
-#line 68 "syntax.y"
-                              {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("ExtDecList", 3, cldArray);}
-#line 1429 "syntax.tab.c"
-    break;
-
-  case 27: /* Specifier: TYPE  */
-#line 71 "syntax.y"
-                {cldArray[0] = yyvsp[0]; yyval=createNode("Specifier", 1, cldArray);}
 #line 1435 "syntax.tab.c"
     break;
 
-  case 28: /* Specifier: StructSpecifier  */
-#line 72 "syntax.y"
-                      {cldArray[0] = yyvsp[0]; yyval=createNode("Specifier", 1, cldArray);}
+  case 27: /* ExtDecList: VarDec  */
+#line 73 "syntax.y"
+                   {cldArray[0] = yyvsp[0]; yyval=createNode("ExtDecList", 1, cldArray);}
 #line 1441 "syntax.tab.c"
     break;
 
-  case 29: /* StructSpecifier: STRUCT ID LC DefList RC  */
+  case 28: /* ExtDecList: VarDec COMMA ExtDecList  */
 #line 74 "syntax.y"
-                                         {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("StructSpecifier", 5, cldArray);}
+                              {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("ExtDecList", 3, cldArray);}
 #line 1447 "syntax.tab.c"
     break;
 
-  case 30: /* StructSpecifier: STRUCT ID LC DefList error  */
-#line 75 "syntax.y"
+  case 29: /* Specifier: TYPE  */
+#line 77 "syntax.y"
+                {cldArray[0] = yyvsp[0]; yyval=createNode("Specifier", 1, cldArray);}
+#line 1453 "syntax.tab.c"
+    break;
+
+  case 30: /* Specifier: StructSpecifier  */
+#line 78 "syntax.y"
+                      {cldArray[0] = yyvsp[0]; yyval=createNode("Specifier", 1, cldArray);}
+#line 1459 "syntax.tab.c"
+    break;
+
+  case 31: /* StructSpecifier: STRUCT ID LC DefList RC  */
+#line 80 "syntax.y"
+                                         {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("StructSpecifier", 5, cldArray);}
+#line 1465 "syntax.tab.c"
+    break;
+
+  case 32: /* StructSpecifier: STRUCT ID LC DefList error  */
+#line 81 "syntax.y"
                                  {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("StructSpecifier", 5, cldArray);
         isCorrect=0;char* text = "Missing closing brace '}'";printf("%d: %s\n",yylineno,text);}
-#line 1454 "syntax.tab.c"
-    break;
-
-  case 31: /* StructSpecifier: STRUCT ID  */
-#line 77 "syntax.y"
-                {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("StructSpecifier", 2, cldArray);}
-#line 1460 "syntax.tab.c"
-    break;
-
-  case 32: /* VarDec: ID  */
-#line 80 "syntax.y"
-           {cldArray[0] = yyvsp[0]; yyval=createNode("VarDec", 1, cldArray);}
-#line 1466 "syntax.tab.c"
-    break;
-
-  case 33: /* VarDec: VarDec LB INT RB  */
-#line 81 "syntax.y"
-                       {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("VarDec", 4, cldArray);}
 #line 1472 "syntax.tab.c"
     break;
 
-  case 34: /* VarDec: ERROR  */
-#line 82 "syntax.y"
-            {cldArray[0]=yyvsp[0]; yyval=createNode("Exp", 1, cldArray); isCorrect=0;}
+  case 33: /* StructSpecifier: STRUCT ID  */
+#line 83 "syntax.y"
+                {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("StructSpecifier", 2, cldArray);}
 #line 1478 "syntax.tab.c"
     break;
 
-  case 35: /* FunDec: ID LP VarList RP  */
-#line 84 "syntax.y"
-                         {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("FunDec", 4, cldArray);}
+  case 34: /* VarDec: ID  */
+#line 86 "syntax.y"
+           {cldArray[0] = yyvsp[0]; yyval=createNode("VarDec", 1, cldArray);}
 #line 1484 "syntax.tab.c"
     break;
 
-  case 36: /* FunDec: ID LP RP  */
-#line 85 "syntax.y"
-               {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("FunDec", 3, cldArray);}
+  case 35: /* VarDec: VarDec LB INT RB  */
+#line 87 "syntax.y"
+                       {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("VarDec", 4, cldArray);}
 #line 1490 "syntax.tab.c"
     break;
 
-  case 37: /* FunDec: ID LP error  */
-#line 86 "syntax.y"
+  case 36: /* VarDec: ERROR  */
+#line 88 "syntax.y"
+            {cldArray[0]=yyvsp[0]; yyval=createNode("Exp", 1, cldArray); isCorrect=0;}
+#line 1496 "syntax.tab.c"
+    break;
+
+  case 37: /* FunDec: ID LP VarList RP  */
+#line 90 "syntax.y"
+                         {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("FunDec", 4, cldArray);}
+#line 1502 "syntax.tab.c"
+    break;
+
+  case 38: /* FunDec: ID LP RP  */
+#line 91 "syntax.y"
+               {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("FunDec", 3, cldArray);}
+#line 1508 "syntax.tab.c"
+    break;
+
+  case 39: /* FunDec: ID LP error  */
+#line 92 "syntax.y"
                   {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=createLeaf("RP",NULL);yyval=createNode("FunDec", 3, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-1]->line,text);}
-#line 1497 "syntax.tab.c"
+#line 1515 "syntax.tab.c"
     break;
 
-  case 38: /* FunDec: ID LP VarList error  */
-#line 88 "syntax.y"
-                         {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("FunDec", 4, cldArray);
-        isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-2]->line,text);}
-#line 1504 "syntax.tab.c"
-    break;
-
-  case 39: /* VarList: ParamDec COMMA VarList  */
-#line 91 "syntax.y"
-                                {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("VarList", 3, cldArray);}
-#line 1510 "syntax.tab.c"
-    break;
-
-  case 40: /* VarList: ParamDec  */
-#line 92 "syntax.y"
-               {cldArray[0] = yyvsp[0]; yyval=createNode("VarList", 1, cldArray);}
-#line 1516 "syntax.tab.c"
-    break;
-
-  case 41: /* ParamDec: Specifier VarDec  */
+  case 40: /* FunDec: ID LP VarList error  */
 #line 94 "syntax.y"
-                           {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ParamDec", 2, cldArray);}
+                          {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("FunDec", 4, cldArray);
+        isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-2]->line,text);}
 #line 1522 "syntax.tab.c"
     break;
 
-  case 42: /* CompSt: LC BodyList RC  */
+  case 41: /* VarList: ParamDec COMMA VarList  */
 #line 97 "syntax.y"
-                       {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("CompSt", 3, cldArray);}
+                                {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("VarList", 3, cldArray);}
 #line 1528 "syntax.tab.c"
     break;
 
-  case 43: /* BodyList: DefList StmtList  */
-#line 99 "syntax.y"
-                           {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("BodyList", 2, cldArray);}
+  case 42: /* VarList: ParamDec  */
+#line 98 "syntax.y"
+               {cldArray[0] = yyvsp[0]; yyval=createNode("VarList", 1, cldArray);}
 #line 1534 "syntax.tab.c"
     break;
 
-  case 44: /* BodyList: BodyList DefList StmtList  */
+  case 43: /* ParamDec: Specifier VarDec  */
 #line 100 "syntax.y"
-                                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("BodyList", 3, cldArray);
-        isCorrect=0; printf("Error type B at Line %d: Missing specifier\n",yyvsp[-1]->line);}
-#line 1541 "syntax.tab.c"
+                           {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("ParamDec", 2, cldArray);}
+#line 1540 "syntax.tab.c"
     break;
 
-  case 45: /* StmtList: %empty  */
+  case 44: /* CompSt: LC BodyList RC  */
 #line 103 "syntax.y"
-                 {yyval = createNode("Empty", 0, cldArray);}
-#line 1547 "syntax.tab.c"
+                       {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("CompSt", 3, cldArray);}
+#line 1546 "syntax.tab.c"
     break;
 
-  case 46: /* StmtList: Stmt StmtList  */
-#line 104 "syntax.y"
-                    {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("StmtList", 2, cldArray);}
-#line 1553 "syntax.tab.c"
+  case 45: /* BodyList: DefList StmtList  */
+#line 105 "syntax.y"
+                           {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("BodyList", 2, cldArray);}
+#line 1552 "syntax.tab.c"
     break;
 
-  case 47: /* Stmt: Exp SEMI  */
+  case 46: /* BodyList: BodyList DefList StmtList  */
 #line 106 "syntax.y"
-               {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Stmt", 2, cldArray);}
+                                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("BodyList", 3, cldArray);
+        isCorrect=0; printf("Error type B at Line %d: Missing specifier\n",yyvsp[-1]->line-1);}
 #line 1559 "syntax.tab.c"
     break;
 
-  case 48: /* Stmt: CompSt  */
-#line 107 "syntax.y"
-             {cldArray[0] = yyvsp[0]; yyval=createNode("Stmt", 1, cldArray);}
+  case 47: /* StmtList: %empty  */
+#line 109 "syntax.y"
+                 {yyval = createNode("Empty", 0, cldArray);}
 #line 1565 "syntax.tab.c"
     break;
 
-  case 49: /* Stmt: RETURN Exp SEMI  */
-#line 108 "syntax.y"
-                      {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Stmt", 3, cldArray);}
+  case 48: /* StmtList: Stmt StmtList  */
+#line 110 "syntax.y"
+                    {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("StmtList", 2, cldArray);}
 #line 1571 "syntax.tab.c"
     break;
 
-  case 50: /* Stmt: RETURN Exp error  */
-#line 109 "syntax.y"
+  case 49: /* Stmt: Exp SEMI  */
+#line 112 "syntax.y"
+               {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Stmt", 2, cldArray);}
+#line 1577 "syntax.tab.c"
+    break;
+
+  case 50: /* Stmt: CompSt  */
+#line 113 "syntax.y"
+             {cldArray[0] = yyvsp[0]; yyval=createNode("Stmt", 1, cldArray);}
+#line 1583 "syntax.tab.c"
+    break;
+
+  case 51: /* Stmt: RETURN Exp SEMI  */
+#line 114 "syntax.y"
+                      {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Stmt", 3, cldArray);}
+#line 1589 "syntax.tab.c"
+    break;
+
+  case 52: /* Stmt: RETURN Exp error  */
+#line 115 "syntax.y"
                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Stmt", 3, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",yyvsp[-1]->line,text);}
-#line 1578 "syntax.tab.c"
+#line 1596 "syntax.tab.c"
     break;
 
-  case 51: /* Stmt: IF LP Exp RP Stmt  */
-#line 111 "syntax.y"
+  case 53: /* Stmt: IF LP Exp RP Stmt  */
+#line 117 "syntax.y"
                                         {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("Stmt", 5, cldArray);}
-#line 1584 "syntax.tab.c"
+#line 1602 "syntax.tab.c"
     break;
 
-  case 52: /* Stmt: IF LP Exp error Stmt  */
-#line 112 "syntax.y"
+  case 54: /* Stmt: IF LP Exp error Stmt  */
+#line 118 "syntax.y"
                                            {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("Stmt", 5, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-3]->line,text);}
-#line 1591 "syntax.tab.c"
+#line 1609 "syntax.tab.c"
     break;
 
-  case 53: /* Stmt: IF LP Exp RP Stmt ELSE Stmt  */
-#line 115 "syntax.y"
+  case 55: /* Stmt: IF LP Exp RP Stmt ELSE Stmt  */
+#line 121 "syntax.y"
                                   {cldArray[0] = yyvsp[-6]; cldArray[1] = yyvsp[-5]; cldArray[2]=yyvsp[-4]; cldArray[3]=yyvsp[-3]; cldArray[4]=yyvsp[-2]; cldArray[5]=yyvsp[-1]; cldArray[6]=yyvsp[0];yyval=createNode("Stmt", 7, cldArray);}
-#line 1597 "syntax.tab.c"
+#line 1615 "syntax.tab.c"
     break;
 
-  case 54: /* Stmt: WHILE LP Exp RP Stmt  */
-#line 116 "syntax.y"
+  case 56: /* Stmt: WHILE LP Exp RP Stmt  */
+#line 122 "syntax.y"
                            {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("Stmt", 5, cldArray);}
-#line 1603 "syntax.tab.c"
+#line 1621 "syntax.tab.c"
     break;
 
-  case 55: /* Stmt: WHILE LP Exp error Stmt  */
-#line 117 "syntax.y"
+  case 57: /* Stmt: WHILE LP Exp error Stmt  */
+#line 123 "syntax.y"
                               {cldArray[0] = yyvsp[-4]; cldArray[1] = yyvsp[-3]; cldArray[2]=yyvsp[-2]; cldArray[3]=yyvsp[-1]; cldArray[4]=yyvsp[0]; yyval=createNode("Stmt", 5, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-3]->line,text);}
-#line 1610 "syntax.tab.c"
-    break;
-
-  case 56: /* Stmt: Exp error  */
-#line 120 "syntax.y"
-                {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Stmt", 2, cldArray); isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",yyvsp[-1]->line,text);}
-#line 1616 "syntax.tab.c"
-    break;
-
-  case 57: /* DefList: %empty  */
-#line 123 "syntax.y"
-                {yyval = createNode("Empty", 0, cldArray);}
-#line 1622 "syntax.tab.c"
-    break;
-
-  case 58: /* DefList: Def DefList  */
-#line 124 "syntax.y"
-                  {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("DefList", 2, cldArray);}
 #line 1628 "syntax.tab.c"
     break;
 
-  case 59: /* Def: Specifier DecList SEMI  */
+  case 58: /* Stmt: Exp error  */
 #line 126 "syntax.y"
-                            {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Def", 3, cldArray);}
+                {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Stmt", 2, cldArray); isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",yyvsp[-1]->line,text);}
 #line 1634 "syntax.tab.c"
     break;
 
-  case 60: /* Def: Specifier DecList error  */
-#line 127 "syntax.y"
-                              {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Def", 3, cldArray);
-        isCorrect=0;char* text = "Missing semicolon ';'";printf("%d %s\n",yyvsp[-1]->line,text);}
-#line 1641 "syntax.tab.c"
+  case 59: /* DefList: %empty  */
+#line 129 "syntax.y"
+                {yyval = createNode("Empty", 0, cldArray);}
+#line 1640 "syntax.tab.c"
     break;
 
-  case 61: /* DecList: Dec  */
+  case 60: /* DefList: Def DefList  */
 #line 130 "syntax.y"
-             {cldArray[0] = yyvsp[0]; yyval=createNode("DecList", 1, cldArray);}
-#line 1647 "syntax.tab.c"
+                  {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("DefList", 2, cldArray);}
+#line 1646 "syntax.tab.c"
     break;
 
-  case 62: /* DecList: Dec COMMA DecList  */
-#line 131 "syntax.y"
-                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("DecList", 3, cldArray);}
-#line 1653 "syntax.tab.c"
+  case 61: /* Def: Specifier DecList SEMI  */
+#line 132 "syntax.y"
+                            {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Def", 3, cldArray);}
+#line 1652 "syntax.tab.c"
     break;
 
-  case 63: /* Dec: VarDec  */
+  case 62: /* Def: Specifier DecList error  */
 #line 133 "syntax.y"
-            {cldArray[0] = yyvsp[0]; yyval=createNode("Dec", 1, cldArray);}
+                              {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Def", 3, cldArray);
+        isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",yyvsp[-1]->line,text);}
 #line 1659 "syntax.tab.c"
     break;
 
-  case 64: /* Dec: VarDec ASSIGN Exp  */
-#line 134 "syntax.y"
-                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Dec", 3, cldArray);}
+  case 63: /* DecList: Dec  */
+#line 136 "syntax.y"
+             {cldArray[0] = yyvsp[0]; yyval=createNode("DecList", 1, cldArray);}
 #line 1665 "syntax.tab.c"
     break;
 
-  case 65: /* Exp: Exp ASSIGN Exp  */
+  case 64: /* DecList: Dec COMMA DecList  */
 #line 137 "syntax.y"
-                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("DecList", 3, cldArray);}
 #line 1671 "syntax.tab.c"
     break;
 
-  case 66: /* Exp: Exp AND Exp  */
-#line 138 "syntax.y"
-                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 65: /* Dec: VarDec  */
+#line 139 "syntax.y"
+            {cldArray[0] = yyvsp[0]; yyval=createNode("Dec", 1, cldArray);}
 #line 1677 "syntax.tab.c"
     break;
 
-  case 67: /* Exp: Exp OR Exp  */
-#line 139 "syntax.y"
-                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 66: /* Dec: VarDec ASSIGN Exp  */
+#line 140 "syntax.y"
+                        {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Dec", 3, cldArray);}
 #line 1683 "syntax.tab.c"
     break;
 
-  case 68: /* Exp: Exp ERROR Exp  */
-#line 140 "syntax.y"
-                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray); isCorrect=0;}
+  case 67: /* Exp: Exp ASSIGN Exp  */
+#line 143 "syntax.y"
+                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1689 "syntax.tab.c"
     break;
 
-  case 69: /* Exp: Exp LT Exp  */
-#line 141 "syntax.y"
-                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 68: /* Exp: Exp AND Exp  */
+#line 144 "syntax.y"
+                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1695 "syntax.tab.c"
     break;
 
-  case 70: /* Exp: Exp LE Exp  */
-#line 142 "syntax.y"
+  case 69: /* Exp: Exp OR Exp  */
+#line 145 "syntax.y"
                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1701 "syntax.tab.c"
     break;
 
-  case 71: /* Exp: Exp GT Exp  */
-#line 143 "syntax.y"
-                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 70: /* Exp: Exp ERROR Exp  */
+#line 146 "syntax.y"
+                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray); isCorrect=0;}
 #line 1707 "syntax.tab.c"
     break;
 
-  case 72: /* Exp: Exp GE Exp  */
-#line 144 "syntax.y"
+  case 71: /* Exp: Exp LT Exp  */
+#line 147 "syntax.y"
                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1713 "syntax.tab.c"
     break;
 
-  case 73: /* Exp: Exp NE Exp  */
-#line 145 "syntax.y"
+  case 72: /* Exp: Exp LE Exp  */
+#line 148 "syntax.y"
                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1719 "syntax.tab.c"
     break;
 
-  case 74: /* Exp: Exp EQ Exp  */
-#line 146 "syntax.y"
+  case 73: /* Exp: Exp GT Exp  */
+#line 149 "syntax.y"
                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1725 "syntax.tab.c"
     break;
 
-  case 75: /* Exp: Exp PLUS Exp  */
-#line 147 "syntax.y"
-                   {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 74: /* Exp: Exp GE Exp  */
+#line 150 "syntax.y"
+                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1731 "syntax.tab.c"
     break;
 
-  case 76: /* Exp: Exp MINUS Exp  */
-#line 148 "syntax.y"
-                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 75: /* Exp: Exp NE Exp  */
+#line 151 "syntax.y"
+                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1737 "syntax.tab.c"
     break;
 
-  case 77: /* Exp: Exp MUL Exp  */
-#line 149 "syntax.y"
-                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 76: /* Exp: Exp EQ Exp  */
+#line 152 "syntax.y"
+                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1743 "syntax.tab.c"
     break;
 
-  case 78: /* Exp: Exp DIV Exp  */
-#line 150 "syntax.y"
-                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 77: /* Exp: Exp PLUS Exp  */
+#line 153 "syntax.y"
+                   {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1749 "syntax.tab.c"
     break;
 
-  case 79: /* Exp: LP Exp RP  */
-#line 151 "syntax.y"
-                {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+  case 78: /* Exp: Exp MINUS Exp  */
+#line 154 "syntax.y"
+                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1755 "syntax.tab.c"
     break;
 
-  case 80: /* Exp: LP Exp error  */
-#line 152 "syntax.y"
+  case 79: /* Exp: Exp MUL Exp  */
+#line 155 "syntax.y"
+                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+#line 1761 "syntax.tab.c"
+    break;
+
+  case 80: /* Exp: Exp DIV Exp  */
+#line 156 "syntax.y"
+                  {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+#line 1767 "syntax.tab.c"
+    break;
+
+  case 81: /* Exp: LP Exp RP  */
+#line 157 "syntax.y"
+                {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
+#line 1773 "syntax.tab.c"
+    break;
+
+  case 82: /* Exp: LP Exp error  */
+#line 158 "syntax.y"
                    {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-1]->line,text);}
-#line 1762 "syntax.tab.c"
-    break;
-
-  case 81: /* Exp: MINUS Exp  */
-#line 154 "syntax.y"
-                {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Exp", 2, cldArray);}
-#line 1768 "syntax.tab.c"
-    break;
-
-  case 82: /* Exp: NOT Exp  */
-#line 155 "syntax.y"
-              {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Exp", 2, cldArray);}
-#line 1774 "syntax.tab.c"
-    break;
-
-  case 83: /* Exp: ID LP Args RP  */
-#line 156 "syntax.y"
-                    {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("Exp", 4, cldArray);}
 #line 1780 "syntax.tab.c"
     break;
 
-  case 84: /* Exp: ID LP Args error  */
-#line 157 "syntax.y"
+  case 83: /* Exp: MINUS Exp  */
+#line 160 "syntax.y"
+                {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Exp", 2, cldArray);}
+#line 1786 "syntax.tab.c"
+    break;
+
+  case 84: /* Exp: NOT Exp  */
+#line 161 "syntax.y"
+              {cldArray[0] = yyvsp[-1]; cldArray[1] = yyvsp[0]; yyval=createNode("Exp", 2, cldArray);}
+#line 1792 "syntax.tab.c"
+    break;
+
+  case 85: /* Exp: ID LP Args RP  */
+#line 162 "syntax.y"
+                    {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("Exp", 4, cldArray);}
+#line 1798 "syntax.tab.c"
+    break;
+
+  case 86: /* Exp: ID LP Args error  */
+#line 163 "syntax.y"
                        {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("Exp", 4, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",yyvsp[-2]->line,text);}
-#line 1787 "syntax.tab.c"
-    break;
-
-  case 85: /* Exp: ID LP RP  */
-#line 159 "syntax.y"
-               {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
-#line 1793 "syntax.tab.c"
-    break;
-
-  case 86: /* Exp: Exp LB Exp RB  */
-#line 160 "syntax.y"
-                    {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("Exp", 4, cldArray);}
-#line 1799 "syntax.tab.c"
-    break;
-
-  case 87: /* Exp: Exp DOT ID  */
-#line 161 "syntax.y"
-                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1805 "syntax.tab.c"
     break;
 
-  case 88: /* Exp: ID  */
-#line 162 "syntax.y"
-         {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
+  case 87: /* Exp: ID LP RP  */
+#line 165 "syntax.y"
+               {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1811 "syntax.tab.c"
     break;
 
-  case 89: /* Exp: INT  */
-#line 163 "syntax.y"
-          {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
+  case 88: /* Exp: Exp LB Exp RB  */
+#line 166 "syntax.y"
+                    {cldArray[0] = yyvsp[-3]; cldArray[1] = yyvsp[-2]; cldArray[2]=yyvsp[-1]; cldArray[3]=yyvsp[0]; yyval=createNode("Exp", 4, cldArray);}
 #line 1817 "syntax.tab.c"
     break;
 
-  case 90: /* Exp: FLOAT  */
-#line 164 "syntax.y"
-            {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
+  case 89: /* Exp: Exp DOT ID  */
+#line 167 "syntax.y"
+                 {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Exp", 3, cldArray);}
 #line 1823 "syntax.tab.c"
     break;
 
-  case 91: /* Exp: CHAR  */
-#line 165 "syntax.y"
-           {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
+  case 90: /* Exp: ID  */
+#line 168 "syntax.y"
+         {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
 #line 1829 "syntax.tab.c"
     break;
 
-  case 92: /* Exp: ERROR  */
-#line 166 "syntax.y"
-            {cldArray[0]=yyvsp[0]; yyval=createNode("Exp", 1, cldArray); isCorrect=0;}
+  case 91: /* Exp: INT  */
+#line 169 "syntax.y"
+          {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
 #line 1835 "syntax.tab.c"
     break;
 
-  case 93: /* Args: Exp COMMA Args  */
-#line 168 "syntax.y"
-                     {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Args", 3, cldArray);}
+  case 92: /* Exp: FLOAT  */
+#line 170 "syntax.y"
+            {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
 #line 1841 "syntax.tab.c"
     break;
 
-  case 94: /* Args: Exp  */
-#line 169 "syntax.y"
-          {cldArray[0] = yyvsp[0]; yyval=createNode("Args", 1, cldArray);}
+  case 93: /* Exp: CHAR  */
+#line 171 "syntax.y"
+           {cldArray[0] = yyvsp[0]; yyval=createNode("Exp", 1, cldArray);}
 #line 1847 "syntax.tab.c"
     break;
 
+  case 94: /* Exp: ERROR  */
+#line 172 "syntax.y"
+            {cldArray[0]=yyvsp[0]; yyval=createNode("Exp", 1, cldArray); isCorrect=0;}
+#line 1853 "syntax.tab.c"
+    break;
 
-#line 1851 "syntax.tab.c"
+  case 95: /* Args: Exp COMMA Args  */
+#line 174 "syntax.y"
+                     {cldArray[0] = yyvsp[-2]; cldArray[1] = yyvsp[-1]; cldArray[2]=yyvsp[0]; yyval=createNode("Args", 3, cldArray);}
+#line 1859 "syntax.tab.c"
+    break;
+
+  case 96: /* Args: Exp  */
+#line 175 "syntax.y"
+          {cldArray[0] = yyvsp[0]; yyval=createNode("Args", 1, cldArray);}
+#line 1865 "syntax.tab.c"
+    break;
+
+
+#line 1869 "syntax.tab.c"
 
       default: break;
     }
@@ -2040,7 +2058,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 171 "syntax.y"
+#line 177 "syntax.y"
 
 void yyerror(const char *s) {
     printf("Error type B at Line ");

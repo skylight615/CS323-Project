@@ -31,7 +31,8 @@
 %%
 /* high-level definition */
 Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0);}
-    | HeadList ExtDefList {cldArray[0] = $1; cldArray[1] = $2;$$=createNode("Program", 2, cldArray); if(isCorrect==1)dfs($$,0);}
+    | HeadList ExtDefList {cldArray[0] = $1; cldArray[1] = $2;$$=createNode("Program", 2, cldArray); 
+        if(isCorrect==1)dfs($$,0);}
     ;
 HeadList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | Head HeadList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("HeadList", 2, cldArray);}
@@ -43,17 +44,22 @@ Head: INCLUDE FILEIN {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Head", 
     | DEFINEIN ID INT {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
     | DEFINEIN ID FLOAT {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
     | DEFINEIN ID CHAR {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
-    | DEFINEIN ID ERROR {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray); isCorrect=0;}
+    | DEFINEIN ID ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    | DEFINEIN ID ERROR {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);
+         isCorrect=0;}
     | DEFINEIN error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Head", 2, cldArray);
         isCorrect=0;char* text = "Not a head macro";printf("%d: %s\n",$1->line,text);}
     | DEFINEIN TransPara Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
     ;
-TransPara: ID LP IdList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;cldArray[3]=$4; $$=createNode("TransPara", 4, cldArray);}
-    | ID LP IdList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;cldArray[3]=$4; $$=createNode("TransPara", 4, cldArray);
+TransPara: ID LP IdList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;cldArray[3]=$4;
+     $$=createNode("TransPara", 4, cldArray);}
+    | ID LP IdList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;cldArray[3]=$4;
+         $$=createNode("TransPara", 4, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     ;
 IdList: ID {cldArray[0] = $1; $$=createNode("IdList", 1, cldArray);}
     | ID COMMA IdList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Head", 3, cldArray);}
+    | %empty {$$ = createNode("Empty", 0, cldArray);}
     ;
 ExtDefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | ExtDef ExtDefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDefList", 2, cldArray);}
@@ -98,7 +104,7 @@ CompSt: LC BodyList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=c
     ;
 BodyList: DefList StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("BodyList", 2, cldArray);}
     |   BodyList DefList StmtList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("BodyList", 3, cldArray);
-        isCorrect=0; printf("Error type B at Line %d: Missing specifier\n",$2->line);}
+        isCorrect=0; printf("Error type B at Line %d: Missing specifier\n",$2->line-1);}
     ;
 StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | Stmt StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StmtList", 2, cldArray);}
@@ -125,7 +131,7 @@ DefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     ;
 Def: Specifier DecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);}
     | Specifier DecList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);
-        isCorrect=0;char* text = "Missing semicolon ';'";printf("%d %s\n",$2->line,text);}
+        isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
     ;
 DecList: Dec {cldArray[0] = $1; $$=createNode("DecList", 1, cldArray);}
     | Dec COMMA DecList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("DecList", 3, cldArray);}

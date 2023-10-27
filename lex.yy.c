@@ -945,226 +945,225 @@ YY_RULE_SETUP
 	char c;
 	while ((c = input()) != '\n'){}
 	unput(c);
-	
 }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 54 "lex.l"
+#line 53 "lex.l"
 {int i=0;while(yytext[i]!= '\0'){if(yytext[i]=='\n'){yylineno++;}i++;}}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 55 "lex.l"
+#line 54 "lex.l"
 {yylval=createLeaf("INCLUDE",yytext);return INCLUDE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 56 "lex.l"
+#line 55 "lex.l"
 {yylval=createLeaf("FILEIN",yytext);return FILEIN;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "lex.l"
+#line 56 "lex.l"
 {yylval=createLeaf("FILEIN",yytext);return FILEIN;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "lex.l"
+#line 57 "lex.l"
 {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
     yylval=createLeaf("ERROR",yytext);return ERROR;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 60 "lex.l"
+#line 59 "lex.l"
 {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
     yylval=createLeaf("ERROR",yytext);return ERROR;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 62 "lex.l"
+#line 61 "lex.l"
 {yylval=createLeaf("DEFINEIN",yytext);return DEFINEIN;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 63 "lex.l"
+#line 62 "lex.l"
 {yylval=createLeaf("TYPE",yytext);return TYPE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 64 "lex.l"
+#line 63 "lex.l"
 {yylval=createLeaf("STRUCT",yytext);return STRUCT;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 65 "lex.l"
+#line 64 "lex.l"
 {yylval=createLeaf("IF",yytext);return IF;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 66 "lex.l"
+#line 65 "lex.l"
 {yylval=createLeaf("ELSE",yytext);return ELSE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 67 "lex.l"
+#line 66 "lex.l"
 {yylval=createLeaf("WHILE",yytext);return WHILE;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 68 "lex.l"
+#line 67 "lex.l"
 {yylval=createLeaf("RETURN",yytext);return RETURN;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 70 "lex.l"
+#line 69 "lex.l"
 {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
     yylval=createLeaf("ERROR",yytext);return ERROR;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 72 "lex.l"
+#line 71 "lex.l"
 {yylval=createLeaf("ID",yytext);return ID;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 73 "lex.l"
+#line 72 "lex.l"
 { /* does nothing when seeing white spaces except new line */}
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 74 "lex.l"
+#line 73 "lex.l"
 {yylineno++;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 76 "lex.l"
+#line 75 "lex.l"
 {yylval=createLeaf("DOT",yytext);return DOT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 77 "lex.l"
+#line 76 "lex.l"
 {yylval=createLeaf("SEMI",yytext);return SEMI;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 78 "lex.l"
+#line 77 "lex.l"
 {yylval=createLeaf("COMMA",yytext);return COMMA;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 79 "lex.l"
+#line 78 "lex.l"
 {yylval=createLeaf("ASSIGN",yytext);return ASSIGN;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 80 "lex.l"
+#line 79 "lex.l"
 {yylval=createLeaf("LT",yytext);return LT;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 81 "lex.l"
+#line 80 "lex.l"
 {yylval=createLeaf("LE",yytext);return LE;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 82 "lex.l"
+#line 81 "lex.l"
 {yylval=createLeaf("GT",yytext);return GT;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 83 "lex.l"
+#line 82 "lex.l"
 {yylval=createLeaf("GE",yytext);return GE;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 84 "lex.l"
+#line 83 "lex.l"
 {yylval=createLeaf("NE",yytext);return NE;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 85 "lex.l"
+#line 84 "lex.l"
 {yylval=createLeaf("EQ",yytext);return EQ;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 86 "lex.l"
+#line 85 "lex.l"
 {yylval=createLeaf("PLUS",yytext);return PLUS;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 87 "lex.l"
+#line 86 "lex.l"
 {yylval=createLeaf("MINUS",yytext);return MINUS;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 88 "lex.l"
+#line 87 "lex.l"
 {yylval=createLeaf("MUL",yytext);return MUL;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 89 "lex.l"
+#line 88 "lex.l"
 {yylval=createLeaf("DIV",yytext);return DIV;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 90 "lex.l"
+#line 89 "lex.l"
 {yylval=createLeaf("AND",yytext);return AND;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 91 "lex.l"
+#line 90 "lex.l"
 {yylval=createLeaf("OR",yytext);return OR;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 92 "lex.l"
+#line 91 "lex.l"
 {yylval=createLeaf("NOT",yytext);return NOT;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 93 "lex.l"
+#line 92 "lex.l"
 {yylval=createLeaf("LP",yytext);return LP;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 94 "lex.l"
+#line 93 "lex.l"
 {yylval=createLeaf("RP",yytext);return RP;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 95 "lex.l"
+#line 94 "lex.l"
 {yylval=createLeaf("LB",yytext);return LB;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 96 "lex.l"
+#line 95 "lex.l"
 {yylval=createLeaf("RB",yytext);return RB;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 97 "lex.l"
+#line 96 "lex.l"
 {yylval=createLeaf("LC",yytext);return LC;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 98 "lex.l"
+#line 97 "lex.l"
 {yylval=createLeaf("RC",yytext);return RC;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 99 "lex.l"
+#line 98 "lex.l"
 {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
     yylval=createLeaf("ERROR",yytext);return ERROR;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 102 "lex.l"
+#line 101 "lex.l"
 ECHO;
 	YY_BREAK
-#line 1168 "lex.yy.c"
+#line 1167 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2169,6 +2168,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 102 "lex.l"
+#line 101 "lex.l"
 
 

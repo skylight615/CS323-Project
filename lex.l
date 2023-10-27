@@ -49,7 +49,6 @@ fileq \"{letter_}+(\."h")\"
 	char c;
 	while ((c = input()) != '\n'){}
 	unput(c);
-	
 }
 {MCB}(.|[\n])*{MCE} {int i=0;while(yytext[i]!= '\0'){if(yytext[i]=='\n'){yylineno++;}i++;}}
 "#include" {yylval=createLeaf("INCLUDE",yytext);return INCLUDE;}

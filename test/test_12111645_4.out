@@ -40,184 +40,191 @@ Program (1)
           RP
         CompSt (6)
           LC
-          DefList (7)
-            Def (7)
-              Specifier (7)
-                StructSpecifier (7)
-                  STRUCT
-                  ID: my_struct
-              DecList (7)
-                Dec (7)
-                  VarDec (7)
-                    ID: d
-              SEMI
-            DefList (8)
-              Def (8)
-                Specifier (8)
-                  TYPE: int
-                DecList (8)
-                  Dec (8)
-                    VarDec (8)
-                      ID: f
-                    ASSIGN
-                    Exp (8)
-                      Exp (8)
-                        LP
-                        Exp (8)
-                          Exp (8)
-                            INT: 2
-                          PLUS
-                          Exp (8)
-                            Exp (8)
-                              INT: 3
-                            DIV
-                            Exp (8)
-                              LP
-                              Exp (8)
-                                Exp (8)
-                                  INT: 2
-                                MINUS
-                                Exp (8)
-                                  INT: 2
-                              RP
-                        RP
-                      MUL
-                      Exp (8)
-                        INT: 2
+          BodyList (7)
+            DefList (7)
+              Def (7)
+                Specifier (7)
+                  StructSpecifier (7)
+                    STRUCT
+                    ID: my_struct
+                DecList (7)
+                  Dec (7)
+                    VarDec (7)
+                      ID: d
                 SEMI
-          StmtList (9)
-            Stmt (9)
-              IF
-              LP
-              Exp (9)
-                Exp (9)
-                  ID: a
-                GE
-                Exp (9)
-                  ID: b
-              RP
-              Stmt (10)
-                CompSt (10)
-                  LC
-                  StmtList (11)
-                    Stmt (11)
-                      IF
-                      LP
-                      Exp (11)
-                        Exp (11)
-                          ID: a
-                        GT
-                        Exp (11)
-                          ID: b
-                      RP
-                      Stmt (12)
-                        CompSt (12)
-                          LC
-                          StmtList (13)
-                            Stmt (13)
-                              Exp (13)
-                                Exp (13)
-                                  ID: a
-                                ASSIGN
-                                Exp (13)
-                                  Exp (13)
-                                    INT: 1
-                                  PLUS
-                                  Exp (13)
-                                    INT: 1
-                              SEMI
-                            StmtList (14)
-                              Stmt (14)
-                                Exp (14)
-                                  Exp (14)
-                                    ID: b
-                                  ASSIGN
-                                  Exp (14)
-                                    Exp (14)
-                                      INT: 1
-                                    PLUS
-                                    Exp (14)
-                                      INT: 1
-                                SEMI
-                          RC
-                  RC
-              ELSE
-              Stmt (17)
-                CompSt (17)
-                  LC
-                  StmtList (18)
-                    Stmt (18)
-                      Exp (18)
-                        Exp (18)
-                          ID: a
-                        ASSIGN
-                        Exp (18)
-                          INT: 1
-                      SEMI
-                  RC
-            StmtList (20)
-              Stmt (20)
+              DefList (8)
+                Def (8)
+                  Specifier (8)
+                    TYPE: int
+                  DecList (8)
+                    Dec (8)
+                      VarDec (8)
+                        ID: f
+                      ASSIGN
+                      Exp (8)
+                        Exp (8)
+                          LP
+                          Exp (8)
+                            Exp (8)
+                              INT: 2
+                            PLUS
+                            Exp (8)
+                              Exp (8)
+                                INT: 3
+                              DIV
+                              Exp (8)
+                                LP
+                                Exp (8)
+                                  Exp (8)
+                                    INT: 2
+                                  MINUS
+                                  Exp (8)
+                                    INT: 2
+                                RP
+                          RP
+                        MUL
+                        Exp (8)
+                          INT: 2
+                  SEMI
+            StmtList (9)
+              Stmt (9)
                 IF
                 LP
-                Exp (20)
-                  Exp (20)
+                Exp (9)
+                  Exp (9)
                     ID: a
                   GE
-                  Exp (20)
+                  Exp (9)
                     ID: b
                 RP
-                Stmt (21)
-                  CompSt (21)
+                Stmt (10)
+                  CompSt (10)
                     LC
-                    StmtList (22)
-                      Stmt (22)
-                        IF
-                        LP
-                        Exp (22)
-                          Exp (22)
-                            ID: a
-                          GT
-                          Exp (22)
-                            INT: 1
-                        RP
-                        Stmt (23)
-                          CompSt (23)
-                            LC
-                            StmtList (24)
-                              Stmt (24)
-                                Exp (24)
-                                  Exp (24)
-                                    ID: a
-                                  ASSIGN
-                                  Exp (24)
-                                    INT: 1
-                                SEMI
-                            RC
-                        ELSE
-                        Stmt (27)
-                          CompSt (27)
-                            LC
-                            StmtList (28)
-                              Stmt (28)
-                                Exp (28)
-                                  Exp (28)
-                                    ID: a
-                                  ASSIGN
-                                  Exp (28)
-                                    INT: 2
-                                SEMI
-                            RC
+                    BodyList (11)
+                      StmtList (11)
+                        Stmt (11)
+                          IF
+                          LP
+                          Exp (11)
+                            Exp (11)
+                              ID: a
+                            GT
+                            Exp (11)
+                              ID: b
+                          RP
+                          Stmt (12)
+                            CompSt (12)
+                              LC
+                              BodyList (13)
+                                StmtList (13)
+                                  Stmt (13)
+                                    Exp (13)
+                                      Exp (13)
+                                        ID: a
+                                      ASSIGN
+                                      Exp (13)
+                                        Exp (13)
+                                          INT: 1
+                                        PLUS
+                                        Exp (13)
+                                          INT: 1
+                                    SEMI
+                                  StmtList (14)
+                                    Stmt (14)
+                                      Exp (14)
+                                        Exp (14)
+                                          ID: b
+                                        ASSIGN
+                                        Exp (14)
+                                          Exp (14)
+                                            INT: 1
+                                          PLUS
+                                          Exp (14)
+                                            INT: 1
+                                      SEMI
+                              RC
                     RC
-              StmtList (31)
-                Stmt (31)
-                  RETURN
-                  Exp (31)
-                    Exp (31)
+                ELSE
+                Stmt (17)
+                  CompSt (17)
+                    LC
+                    BodyList (18)
+                      StmtList (18)
+                        Stmt (18)
+                          Exp (18)
+                            Exp (18)
+                              ID: a
+                            ASSIGN
+                            Exp (18)
+                              INT: 1
+                          SEMI
+                    RC
+              StmtList (20)
+                Stmt (20)
+                  IF
+                  LP
+                  Exp (20)
+                    Exp (20)
                       ID: a
-                    MUL
-                    Exp (31)
+                    GE
+                    Exp (20)
                       ID: b
-                  SEMI
+                  RP
+                  Stmt (21)
+                    CompSt (21)
+                      LC
+                      BodyList (22)
+                        StmtList (22)
+                          Stmt (22)
+                            IF
+                            LP
+                            Exp (22)
+                              Exp (22)
+                                ID: a
+                              GT
+                              Exp (22)
+                                INT: 1
+                            RP
+                            Stmt (23)
+                              CompSt (23)
+                                LC
+                                BodyList (24)
+                                  StmtList (24)
+                                    Stmt (24)
+                                      Exp (24)
+                                        Exp (24)
+                                          ID: a
+                                        ASSIGN
+                                        Exp (24)
+                                          INT: 1
+                                      SEMI
+                                RC
+                            ELSE
+                            Stmt (27)
+                              CompSt (27)
+                                LC
+                                BodyList (28)
+                                  StmtList (28)
+                                    Stmt (28)
+                                      Exp (28)
+                                        Exp (28)
+                                          ID: a
+                                        ASSIGN
+                                        Exp (28)
+                                          INT: 2
+                                      SEMI
+                                RC
+                      RC
+                StmtList (31)
+                  Stmt (31)
+                    RETURN
+                    Exp (31)
+                      Exp (31)
+                        ID: a
+                      MUL
+                      Exp (31)
+                        ID: b
+                    SEMI
           RC
       ExtDefList (33)
         ExtDef (33)
@@ -242,73 +249,76 @@ Program (1)
             RP
           CompSt (33)
             LC
-            StmtList (34)
-              Stmt (34)
-                WHILE
-                LP
-                Exp (34)
-                  Exp (34)
-                    ID: a
-                  LT
-                  Exp (34)
-                    INT: 4
-                RP
+            BodyList (34)
+              StmtList (34)
                 Stmt (34)
-                  CompSt (34)
-                    LC
-                    StmtList (35)
-                      Stmt (35)
-                        WHILE
-                        LP
-                        Exp (35)
-                          Exp (35)
-                            ID: b
-                          LT
-                          Exp (35)
-                            INT: 3
-                        RP
-                        Stmt (35)
-                          CompSt (35)
-                            LC
-                            StmtList (36)
-                              Stmt (36)
-                                Exp (36)
-                                  Exp (36)
-                                    ID: a
-                                  ASSIGN
-                                  Exp (36)
-                                    Exp (36)
-                                      ID: a
-                                    PLUS
-                                    Exp (36)
-                                      INT: 1
-                                SEMI
-                              StmtList (37)
-                                Stmt (37)
-                                  Exp (37)
-                                    Exp (37)
-                                      ID: b
-                                    ASSIGN
-                                    Exp (37)
-                                      Exp (37)
-                                        ID: b
-                                      PLUS
-                                      Exp (37)
-                                        INT: 1
-                                  SEMI
-                            RC
-                      StmtList (39)
-                        Stmt (39)
-                          Exp (39)
-                            Exp (39)
-                              ID: b
-                            ASSIGN
-                            Exp (39)
-                              Exp (39)
+                  WHILE
+                  LP
+                  Exp (34)
+                    Exp (34)
+                      ID: a
+                    LT
+                    Exp (34)
+                      INT: 4
+                  RP
+                  Stmt (34)
+                    CompSt (34)
+                      LC
+                      BodyList (35)
+                        StmtList (35)
+                          Stmt (35)
+                            WHILE
+                            LP
+                            Exp (35)
+                              Exp (35)
                                 ID: b
-                              PLUS
+                              LT
+                              Exp (35)
+                                INT: 3
+                            RP
+                            Stmt (35)
+                              CompSt (35)
+                                LC
+                                BodyList (36)
+                                  StmtList (36)
+                                    Stmt (36)
+                                      Exp (36)
+                                        Exp (36)
+                                          ID: a
+                                        ASSIGN
+                                        Exp (36)
+                                          Exp (36)
+                                            ID: a
+                                          PLUS
+                                          Exp (36)
+                                            INT: 1
+                                      SEMI
+                                    StmtList (37)
+                                      Stmt (37)
+                                        Exp (37)
+                                          Exp (37)
+                                            ID: b
+                                          ASSIGN
+                                          Exp (37)
+                                            Exp (37)
+                                              ID: b
+                                            PLUS
+                                            Exp (37)
+                                              INT: 1
+                                        SEMI
+                                RC
+                          StmtList (39)
+                            Stmt (39)
                               Exp (39)
-                                INT: 1
-                          SEMI
-                    RC
+                                Exp (39)
+                                  ID: b
+                                ASSIGN
+                                Exp (39)
+                                  Exp (39)
+                                    ID: b
+                                  PLUS
+                                  Exp (39)
+                                    INT: 1
+                              SEMI
+                      RC
             RC

@@ -12,8 +12,8 @@ MCE "*/"
 MCB "/*"
 
 integerde [1-9]{digit}{0,9}|0|[1-9]{digit}{0,9}
-integerhe 0(x|X)(0|(([1-9]|[abcdef])({digit}|[abcdef]){0,7}))
-charhe \\x({digit}|[abcde]){2}
+integerhe 0(x|X)(0|(([1-9]|[abcdefABCDEF])({digit}|[abcdefABCDEF]){0,7}))
+charhe \\x({digit}|[abcdefABCDEF]){2}
 filet \<{letter_}+(\."h")\>
 fileq \"{letter_}+(\."h")\"
 /*

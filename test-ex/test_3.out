@@ -1,2 +1,72 @@
-Error type B at Line 3: Missing specifier
-Error type B at Line 5: Missing specifier
+Program (1)
+  HeadList (1)
+    Head (1)
+      DEFINEIN
+      ID: PI
+      FLOAT: 3.14
+    HeadList (2)
+      Head (2)
+        DEFINEIN
+        ID: Pa
+        INT: 1
+      HeadList (3)
+        Head (3)
+          DEFINEIN
+          ID: Pc
+          CHAR: 'a'
+        HeadList (4)
+          Head (4)
+            DEFINEIN
+            TransPara (4)
+              ID: S
+              LP
+              Head (4)
+                ID: a
+                COMMA
+                IdList (4)
+                  ID: b
+              RP
+            Exp (4)
+              Exp (4)
+                ID: a
+              PLUS
+              Exp (4)
+                ID: b
+  ExtDefList (5)
+    ExtDef (5)
+      Specifier (5)
+        TYPE: int
+      FunDec (5)
+        ID: test
+        LP
+        VarList (5)
+          ParamDec (5)
+            Specifier (5)
+              TYPE: int
+            VarDec (5)
+              ID: a
+        RP
+      CompSt (5)
+        LC
+        DefList (6)
+          Def (6)
+            Specifier (6)
+              TYPE: int
+            DecList (6)
+              Dec (6)
+                VarDec (6)
+                  ID: b
+                ASSIGN
+                Exp (6)
+                  ID: S
+                  LP
+                  Args (6)
+                    Exp (6)
+                      ID: PI
+                    COMMA
+                    Args (6)
+                      Exp (6)
+                        ID: Pa
+                  RP
+            SEMI
+        RC

@@ -1,0 +1,6 @@
+Error type A at line 4: unknown lexeme '\xr0'
+Error type A at line 5: unknown lexeme 2_A
+Error type A at line 7: unknown lexeme 0x023456
+Error type A at line 9: unknown lexeme 0023
+Error type B at Line 12: Missing closing parenthesis ')'
+Error type B at Line 16: Missing closing parenthesis ')'

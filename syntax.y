@@ -100,11 +100,7 @@ VarList: ParamDec COMMA VarList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]
 ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);}
     ;
 /* statement */
-CompSt: LC BodyList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("CompSt", 3, cldArray);}
-    ;
-BodyList: DefList StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("BodyList", 2, cldArray);}
-    |   BodyList DefList StmtList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("BodyList", 3, cldArray);
-        isCorrect=0; printf("Error type B at Line %d: Missing specifier\n",$2->line-1);}
+CompSt: LC DefList StmtList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("CompSt", 4, cldArray);}
     ;
 StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | Stmt StmtList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StmtList", 2, cldArray);}

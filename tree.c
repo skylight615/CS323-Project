@@ -22,8 +22,29 @@ struct Node *createLeaf(char* type,char* value){
     return node;
 }
 
-/*构造抽象语法树,变长参数，name:语法单元名字；num:变长参数中语法结点个数*/
-struct Node *createNode(char* type,int num, struct Node* list[]){
+
+struct Node *createLeafWithContent(char* type,char* value,char* content){
+    extern int yylineno;
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->n_cld = 0;
+    node->content = content;
+    node->type = (char*)malloc(sizeof(char)*strlen(type));
+    strcpy(node->type, type);
+    node->line = yylineno;
+    if (strcmp(type,"ID")==0 || strcmp(type,"FLOAT")==0 || strcmp(type,"INT")==0 || 
+        strcmp(type,"CHAR")==0 || strcmp(type,"TYPE")==0 ||strcmp(type,"FILEIN")==0){
+        node->value = (char*)malloc(sizeof(char)*strlen(value));
+        strcpy(node->value, value);
+    }else {
+        node->value = "SIG";
+    }
+    return node;
+}
+
+/*构造抽象语法树,变长参数，name:语法单元名字；num:变长参数中语法结点个数
+* attr represents the type of value(int(1), float(2) or char(3))
+*/
+struct Node *createNode(char* type, int num, struct Node* list[]){
     struct Node* node = (struct Node*)malloc(sizeof(struct Node));
     node->n_cld = num;
     node->type = (char*)malloc(sizeof(char)*strlen(type));

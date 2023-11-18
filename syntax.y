@@ -9,6 +9,12 @@
     struct Node *cldArray[10];
     int yydebug = 1;
     int isCorrect = 1;
+    int paraCount = 0;
+    char* va_type[10];
+    int dec_type[10];// 1 is array, 0 is var 
+    int array_size[10];
+    int dec_num = 0;
+    char* dec_id[10];
     extern int LCnum;
 %}
 
@@ -36,7 +42,7 @@
 %nonassoc SHIFT
 %%
 /* high-level definition */
-Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0);}
+Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); /*if(isCorrect==1)dfs($$,0);*/ debug();}
     | HeadList ExtDefList {cldArray[0] = $1; cldArray[1] = $2;$$=createNode("Program", 2, cldArray); 
         if(isCorrect==1)dfs($$,0);}
     ;
@@ -72,7 +78,18 @@ ExtDefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     ;
 ExtDef: Specifier ExtDecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("ExtDef", 3, cldArray);}
     | Specifier SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);}
-    | Specifier FunDec CompSt {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("ExtDef", 3, cldArray);}
+    | Specifier FunDec CompSt {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3;
+        $$=createNode("ExtDef", 3, cldArray);
+        // add the function into funcTable
+        char* name = findToken($2, "ID");
+        char* rtype = findToken($1, "TYPE");
+        new_func(name, rtype, va_type, paraCount);
+        for (int i = 0; i < paraCount; i++){
+            free(va_type[i]);
+        }
+        paraCount = 0;
+    }
     | Specifier error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
     ;
@@ -83,7 +100,11 @@ ExtDecList: VarDec {cldArray[0] = $1; $$=createNode("ExtDecList", 1, cldArray);}
 Specifier: TYPE {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
     | StructSpecifier {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
     ;
-StructSpecifier: STRUCT ID LC DefList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("StructSpecifier", 5, cldArray);}
+StructSpecifier: STRUCT ID LC DefList RC {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; 
+        $$=createNode("StructSpecifier", 5, cldArray);
+        new_struct($2->value);
+    }
     | STRUCT ID LC DefList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("StructSpecifier", 5, cldArray);
         isCorrect=0;char* text = "Missing closing brace '}'";printf("%d: %s\n",yylineno,text);}
     | STRUCT ID {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StructSpecifier", 2, cldArray);}
@@ -100,8 +121,23 @@ FunDec: ID LP VarList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cl
     | ID LP VarList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     ;
-VarList: ParamDec COMMA VarList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("VarList", 3, cldArray);}
-    | ParamDec {cldArray[0] = $1; $$=createNode("VarList", 1, cldArray);}
+VarList: ParamDec COMMA VarList {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
+        $$=createNode("VarList", 3, cldArray);
+        char* type = findToken($1, "TYPE");
+        va_type[paraCount] = (char*)malloc(sizeof(char)*strlen(type));
+        strcpy(va_type[paraCount], type);
+        paraCount++;
+    }
+    | ParamDec {
+        cldArray[0] = $1; 
+        $$=createNode("VarList", 1, cldArray);
+        // record the func parameter
+        char* type = findToken($$, "TYPE");
+        va_type[paraCount] = (char*)malloc(sizeof(char)*strlen(type));
+        strcpy(va_type[paraCount], type);
+        paraCount++;
+    }
     ;
 ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);}
     ;
@@ -131,15 +167,65 @@ Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cld
 DefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | Def DefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("DefList", 2, cldArray);}
     ;
-Def: Specifier DecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);}
+Def: Specifier DecList SEMI {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
+        $$=createNode("Def", 3, cldArray);
+        // new a var or an array
+        char* type = findToken($1, "TYPE");
+        for (int i = 0; i < dec_num; i++){
+            if (dec_type[i]){
+                // array
+                new_array(type, dec_id[i], array_size[i]);
+            } else {
+                // var
+                new_var(type, dec_id[i]);
+            }
+            free(dec_id[i]);
+        }
+        dec_num = 0;
+    }
     | Specifier DecList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
     ;
 DecList: Dec {cldArray[0] = $1; $$=createNode("DecList", 1, cldArray);}
     | Dec COMMA DecList {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("DecList", 3, cldArray);}
     ;
-Dec: VarDec {cldArray[0] = $1; $$=createNode("Dec", 1, cldArray);}
-    | VarDec ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Dec", 3, cldArray);}
+Dec: VarDec {
+        cldArray[0] = $1; 
+        $$=createNode("Dec", 1, cldArray);
+        int type = isArray($1);
+        if (type == 0){
+            // var
+            dec_type[dec_num] = 0;
+        } else {
+            // array
+            dec_type[dec_num] = 1;
+            char* size = findToken($1, "INT");
+            array_size[dec_num] = atoi(size);
+        }
+        char* id = findToken($1, "ID");
+        dec_id[dec_num] = (char*)malloc(sizeof(char)*strlen(id));
+        strcpy(dec_id[dec_num], id);
+        dec_num++;
+    }
+    | VarDec ASSIGN Exp {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
+        $$=createNode("Dec", 3, cldArray);
+        int type = isArray($1);
+        if (type == 0){
+            // var
+            dec_type[dec_num] = 0;
+        } else {
+            // array
+            dec_type[dec_num] = 1;
+            char* size = findToken($1, "INT");
+            array_size[dec_num] = atoi(size);
+        }
+        char* id = findToken($1, "ID");
+        dec_id[dec_num] = (char*)malloc(sizeof(char)*strlen(id));
+        strcpy(dec_id[dec_num], id);
+        dec_num++;
+    }
     ;
 /* Expression */
 Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}

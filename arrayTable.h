@@ -9,6 +9,7 @@ typedef struct array_
     // 所属的结构体编号
     // int strucNum;
     int size;
+    int level;
     struct array_* next;
     struct array_* before;
 }array;

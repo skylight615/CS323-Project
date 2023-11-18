@@ -1,9 +1,15 @@
 %{
     #include "lex.yy.c"
+    #include "arrayTable.h"
+    #include "varTable.h"
+    #include "funcTable.h"
+    #include "structTable.h"
+    #include "stdlib.h"
     void yyerror(const char*);
     struct Node *cldArray[10];
     int yydebug = 1;
-    int isCorrect=1;
+    int isCorrect = 1;
+    extern int LCnum;
 %}
 
 %define api.value.type {struct Node *}
@@ -176,11 +182,30 @@ void yyerror(const char *s) {
 }
 int main(int argc, char *argv[]) {
     if(argc < 2) return 1;
+    // init tables
+    var_head = (var*)malloc(sizeof(var));
+    var_tail = (var*)malloc(sizeof(var));
+    var_head->next = var_tail;
+    var_tail->before = var_head;
+    struct_head = (Struct*)malloc(sizeof(Struct));
+    struct_tail = (Struct*)malloc(sizeof(Struct));
+    struct_head->next = struct_tail;
+    struct_tail->before = struct_head;
+    func_head = (func*)malloc(sizeof(func));
+    func_tail = (func*)malloc(sizeof(func));
+    func_head->next = func_tail;
+    func_tail->before = func_head;
+    array_head = (array*)malloc(sizeof(array));
+    array_tail = (array*)malloc(sizeof(array));
+    array_head->next = array_tail;
+    array_tail->before = array_head;
+
     FILE *f = fopen(argv[1], "r");
     if(!f) {
         perror(argv[1]);
         return 1;
     }
+
     yyrestart(f);
     yylineno = 1;
     yyparse();

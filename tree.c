@@ -51,6 +51,8 @@ struct Node *createNode(char* type, int num, struct Node* list[]){
     strcpy(node->type, type);
     node->line = RAND_MAX;
     node->value = NULL;
+    extern int LCnum;
+    printf("level: %d\n", LCnum);
     for (int i = 0; i < num; i++){
         node->clds[i] = list[i];
         node->line = (node->line > list[i]->line) ? list[i]->line : node->line;

@@ -2,6 +2,8 @@
     #include "syntax.tab.h"
     #include "tree.h"
     #include <string.h>
+    extern int LCnum;
+    int LCnum = 0;
 %}
 
 letter [a-zA-Z]
@@ -93,8 +95,8 @@ fileq \"{letter_}+(\."h")\"
 ")" {yylval=createLeaf("RP",yytext);return RP;}
 "[" {yylval=createLeaf("LB",yytext);return LB;}
 "]" {yylval=createLeaf("RB",yytext);return RB;}
-"{" {yylval=createLeaf("LC",yytext);return LC;}
-"}" {yylval=createLeaf("RC",yytext);return RC;}
+"{" {LCnum += 1;yylval=createLeaf("LC",yytext);return LC;}
+"}" {LCnum -= 1;yylval=createLeaf("RC",yytext);return RC;}
 . {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
     yylval=createLeaf("ERROR",yytext);return ERROR;}
 

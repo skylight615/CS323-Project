@@ -82,6 +82,23 @@ int isArray(struct Node* root){
     return res;
 }
 
+int findSize(struct Node* root, int count, int* size){
+    if(root == NULL){
+        return 0;
+    }
+    char* INT = "INT";
+    if (strcmp(root->type, INT)==0){
+        *(size+count+1) = atoi(root->value);
+        count++; 
+        return count;
+    } else {
+        for (int i = 0; i < root->n_cld; i++){
+            count = findSize(root->clds[i], count, size);
+        }
+    }
+    return count;
+}
+
 /*遍历抽象语法树，level为树的层数*/
 void dfs(struct Node* root,int level){
     int i;
@@ -127,7 +144,11 @@ void debug(){
     array* array_temp = array_head->next;
     while (array_temp != array_tail)
     {
-        printf("%s %s %d %d\n", array_temp->type, array_temp->name, array_temp->size, array_temp->level);
+        printf("%s %s %d ", array_temp->type, array_temp->name, array_temp->level);
+        for (int i = 0; i < array_temp->dm; i++){
+            printf("%d ", array_temp->size[i]);
+        }
+        printf("\n");
         array_temp = array_temp->next;
     }
     printf("\n\n");

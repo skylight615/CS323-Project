@@ -8,7 +8,8 @@ typedef struct array_
     // int inStruc;
     // 所属的结构体编号
     // int strucNum;
-    int size;
+    int size[10];
+    int dm;
     int level;
     struct array_* next;
     struct array_* before;
@@ -17,7 +18,7 @@ typedef struct array_
 array *array_head, *array_tail;
 
 // add a var into linkedlist
-void new_array(char *name, char *type, int size);
+void new_array(char *name, char *type, int* size);
 
 // find the variable if exist
 array* find_array(char *name);

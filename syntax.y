@@ -12,7 +12,7 @@
     int paraCount = 0;
     char* va_type[10];
     int dec_type[10];// 1 is array, 0 is var 
-    int array_size[10];
+    int *array_size[10];
     int dec_num = 0;
     char* dec_id[10];
     char* structTypes[10];
@@ -188,6 +188,7 @@ Def: Specifier DecList SEMI {
             if (dec_type[i]){
                 // array
                 (type == NULL) ? new_array(s, dec_id[i], array_size[i]) : new_array(type, dec_id[i], array_size[i]);
+                free(array_size[i]);
             } else {
                 // var or struct
                 (type == NULL) ? new_var(s, dec_id[i]) : new_var(type, dec_id[i]);
@@ -216,8 +217,9 @@ Dec: VarDec {
         } else {
             // array
             dec_type[dec_num] = 1;
-            char* size = findToken($1, "INT");
-            array_size[dec_num] = atoi(size);
+            array_size[dec_num] = (int*)malloc(sizeof(int)*10);
+            int c = findSize($1, 0, array_size[dec_num]);
+            array_size[dec_num][0] = c;
         }
         char* id = findToken($1, "ID");
         dec_id[dec_num] = (char*)malloc(sizeof(char)*strlen(id));
@@ -234,8 +236,9 @@ Dec: VarDec {
         } else {
             // array
             dec_type[dec_num] = 1;
-            char* size = findToken($1, "INT");
-            array_size[dec_num] = atoi(size);
+            array_size[dec_num] = (int*)malloc(sizeof(int)*10);
+            int c = findSize($1, 0, array_size[dec_num]);
+            array_size[dec_num][0] = c;
         }
         char* id = findToken($1, "ID");
         dec_id[dec_num] = (char*)malloc(sizeof(char)*strlen(id));

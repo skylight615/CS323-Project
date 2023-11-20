@@ -18,6 +18,8 @@ char* findToken(struct Node* root, char* type);
 
 int isArray(struct Node* root);
 
+int findSize(struct Node* root, int count, int* size);
+
 /*遍历抽象语法树，level为树的层数*/
 void dfs(struct Node* root,int level);
 

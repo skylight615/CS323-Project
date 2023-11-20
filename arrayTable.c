@@ -6,13 +6,16 @@
 extern int LCnum;
 
 // add a var into linkedlist
-void new_array(char *name, char *type, int size){
+void new_array(char *name, char *type, int* size){
     array *next = (array *)malloc(sizeof(array));
     next->name = (char*)malloc(sizeof(char)*strlen(name));
     next->type = (char*)malloc(sizeof(char)*strlen(type));
     strcpy(next->name, name);
     strcpy(next->type, type);
-    next->size = size;
+    next->dm = *size;
+    for (int i = 0; i < next->dm; i++){
+        next->size[i] = *(size+i+1);
+    }
     next->level = LCnum;
     array_tail->before->next = next;
     next->before = array_tail->before->next;

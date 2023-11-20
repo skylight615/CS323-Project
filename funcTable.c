@@ -22,11 +22,11 @@ void new_func(char *name, char *rtype, char *va_type[], int va_num){
 }
 
 // find the variable if exist
-func* find_func(char *name, char *rtype, char *va_type[], int va_num){
+func* find_func(char *name, char *va_type[], int va_num){
     func *temp = func_head->next;
     while (temp != func_tail)
     {
-        if (!strcmp(temp->name, name) && !strcmp(temp->rtype, rtype) && va_num == temp->va_num){
+        if (!strcmp(temp->name, name) && va_num == temp->va_num){
             int para = 1;
             for (int i = 0; i < va_num; i++){
                 para = strcmp(va_type[i], temp->va_type[i]) & para;

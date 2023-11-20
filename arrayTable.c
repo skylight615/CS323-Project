@@ -21,11 +21,11 @@ void new_array(char *name, char *type, int size){
 }
 
 // find the variable if exist
-array* find_array(char *name, char *type){
+array* find_array(char *name){
     array *temp = array_head->next;
     while (temp != array_tail)
     {
-        if (!strcmp(temp->name, name) && !strcmp(temp->type, type) && temp->level == LCnum){
+        if (!strcmp(temp->name, name) && temp->level == LCnum){
             return temp;
         }
         temp = temp->next;

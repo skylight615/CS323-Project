@@ -18,5 +18,5 @@ func *func_head, *func_tail;
 void new_func(char *name, char *rtype, char *va_type[], int va_num);
 
 // find the variable if exist
-func* find_func(char *name, char *rtype, char *va_type[], int va_num);
+func* find_func(char *name, char *va_type[], int va_num);
 

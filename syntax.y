@@ -45,7 +45,7 @@
 %nonassoc SHIFT
 %%
 /* high-level definition */
-Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); /*if(isCorrect==1)dfs($$,0);*/ debug();}
+Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0); debug();}
     | HeadList ExtDefList {cldArray[0] = $1; cldArray[1] = $2;$$=createNode("Program", 2, cldArray); 
         if(isCorrect==1)dfs($$,0);}
     ;
@@ -180,13 +180,17 @@ Def: Specifier DecList SEMI {
         $$=createNode("Def", 3, cldArray);
         // new a var or an array
         char* type = findToken($1, "TYPE");
+        char* s;
+        if (type == NULL){
+            s = findToken($1, "ID");
+        }
         for (int i = 0; i < dec_num; i++){
             if (dec_type[i]){
                 // array
-                new_array(type, dec_id[i], array_size[i]);
+                (type == NULL) ? new_array(s, dec_id[i], array_size[i]) : new_array(type, dec_id[i], array_size[i]);
             } else {
-                // var
-                new_var(type, dec_id[i]);
+                // var or struct
+                (type == NULL) ? new_var(s, dec_id[i]) : new_var(type, dec_id[i]);
             }
             free(dec_id[i]);
         }

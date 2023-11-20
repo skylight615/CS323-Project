@@ -22,12 +22,12 @@ void new_var(char* type, char* name){
 }
 
 // find the variable if exist
-var* find_var(char* type, char* name){
+var* find_var(char* name){
     var* temp = var_head->next;
     while (temp != var_tail)
     {
         // equal
-        if (!strcmp(temp->name, name) && !strcmp(temp->type, type) && temp->level <= LCnum){
+        if (!strcmp(temp->name, name) && temp->level <= LCnum){
             return temp;
         }
         temp = temp->next;

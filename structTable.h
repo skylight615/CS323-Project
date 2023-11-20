@@ -16,4 +16,4 @@ void new_struct(char *name, char *type[], int typeNum);
 // find the variable if exist
 Struct* find_struct(char *name);
 
-Struct* structual_equal(char *type[], int typeNum);
+Struct* structual_equal(char *name, char *type[], int typeNum);

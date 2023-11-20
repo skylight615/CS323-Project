@@ -31,11 +31,20 @@ Struct* find_struct(char *name){
     return NULL;
 }
 
-//this function works when the program is defining a new struct type, eg. struct book2{int a; float b;}. And it can judge whether there is a same structual type
-Struct* structual_equal(char *type[], int typeNum){
+/*this function works when the program is defining a new struct type, eg. struct book2{int a; float b;}. 
+ *And it can judge whether there is a same structual type.
+ *two situations mean the new type is conflict:
+ *1. the name has existed
+ *2. the struct types is same with another stuct; 
+ *If the return is not null, it means there is error;
+*/
+Struct* structual_equal(char *name, char *type[], int typeNum){
     Struct* temp = struct_head->next;
     while (temp != struct_tail)
     {
+        if (!strcmp(temp->name, name)){
+            return temp;
+        }
         if (temp->typeNum == typeNum){
             int equal = 1;
             for (int i = 0; i < typeNum; i++){

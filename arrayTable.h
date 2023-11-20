@@ -20,4 +20,4 @@ array *array_head, *array_tail;
 void new_array(char *name, char *type, int size);
 
 // find the variable if exist
-int find_array(char *name, char *type);
+array* find_array(char *name, char *type);

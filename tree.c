@@ -135,7 +135,11 @@ void debug(){
     Struct* s_temp = struct_head->next;
     while (s_temp != struct_tail)
     {
-        printf("%s\n", s_temp->name);
+        printf("%s ", s_temp->name);
+        for (int i = 0; i < s_temp->typeNum; i++){
+            printf("%s ", s_temp->type[i]);
+        }
+        printf("\n");
         s_temp = s_temp->next;
     }
 }

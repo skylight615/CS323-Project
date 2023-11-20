@@ -15,7 +15,10 @@
     int array_size[10];
     int dec_num = 0;
     char* dec_id[10];
+    char* structTypes[10];
+    int structTypeNum = 0;
     extern int LCnum;
+    extern int inStruct;
 %}
 
 %define api.value.type {struct Node *}
@@ -103,11 +106,16 @@ Specifier: TYPE {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
 StructSpecifier: STRUCT ID LC DefList RC {
         cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; 
         $$=createNode("StructSpecifier", 5, cldArray);
-        new_struct($2->value);
+        new_struct($2->value, structTypes, structTypeNum);
+        for (int i = 0; i < structTypeNum; i++){
+            free(structTypes[i]);
+        }
+        structTypeNum = 0;
+        inStruct = 0;
     }
     | STRUCT ID LC DefList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("StructSpecifier", 5, cldArray);
         isCorrect=0;char* text = "Missing closing brace '}'";printf("%d: %s\n",yylineno,text);}
-    | STRUCT ID {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StructSpecifier", 2, cldArray);}
+    | STRUCT ID {inStruct = 0; cldArray[0] = $1; cldArray[1] = $2; $$=createNode("StructSpecifier", 2, cldArray);}
     ;
 /* declarator */
 VarDec: ID {cldArray[0] = $1; $$=createNode("VarDec", 1, cldArray);}
@@ -183,6 +191,10 @@ Def: Specifier DecList SEMI {
             free(dec_id[i]);
         }
         dec_num = 0;
+        if (inStruct) {
+            structTypes[structTypeNum] = (char*)malloc(sizeof(char)*strlen(type));
+            strcpy(structTypes[structTypeNum++], type);
+        }
     }
     | Specifier DecList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}

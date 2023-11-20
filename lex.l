@@ -3,7 +3,9 @@
     #include "tree.h"
     #include <string.h>
     extern int LCnum;
+    extern int inStruct;
     int LCnum = 0;
+    int inStruct = 0;
 %}
 
 letter [a-zA-Z]
@@ -62,7 +64,7 @@ fileq \"{letter_}+(\."h")\"
     yylval=createLeaf("ERROR",yytext);return ERROR;}
 "#define" {yylval=createLeaf("DEFINEIN",yytext);return DEFINEIN;}
 "int"|"float"|"char" {yylval=createLeaf("TYPE",yytext);return TYPE;}
-"struct" {yylval=createLeaf("STRUCT",yytext);return STRUCT;}
+"struct" {inStruct = 1;yylval=createLeaf("STRUCT",yytext);return STRUCT;}
 "if" {yylval=createLeaf("IF",yytext);return IF;}
 "else" {yylval=createLeaf("ELSE",yytext);return ELSE;}
 "while" {yylval=createLeaf("WHILE",yytext);return WHILE;}

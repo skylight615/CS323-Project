@@ -16,4 +16,4 @@ var *var_head, *var_tail;
 void new_var(char* type, char* name);
 
 // find the variable if exist
-int find_var(char* type, char* name);
+var* find_var(char* type, char* name);

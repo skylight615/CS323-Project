@@ -22,7 +22,7 @@ void new_func(char *name, char *rtype, char *va_type[], int va_num){
 }
 
 // find the variable if exist
-int find_func(char *name, char *rtype, char *va_type[], int va_num){
+func* find_func(char *name, char *rtype, char *va_type[], int va_num){
     func *temp = func_head->next;
     while (temp != func_tail)
     {
@@ -35,10 +35,10 @@ int find_func(char *name, char *rtype, char *va_type[], int va_num){
                 }
             }
             if (para){
-                return 1;
+                return temp;
             }
         }
         temp = temp->next;
     }
-    return 0;
+    return NULL;
 }

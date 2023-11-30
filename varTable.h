@@ -10,7 +10,7 @@ typedef struct var_
     struct var_ *before;
 }var;
 
-var *var_head, *var_tail;
+extern var *var_head, *var_tail;
 
 // add a var into linkedlist
 void new_var(char* type, char* name);

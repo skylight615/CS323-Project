@@ -15,7 +15,7 @@ typedef struct array_
     struct array_* before;
 }array;
 
-array *array_head, *array_tail;
+extern array *array_head, *array_tail;
 
 // add a var into linkedlist
 void new_array(char *name, char *type, int* size);

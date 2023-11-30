@@ -12,7 +12,7 @@ typedef struct func_
     struct func_ *before;
 }func;
 
-func *func_head, *func_tail;
+extern func *func_head, *func_tail;
 
 // add a var into linkedlist
 void new_func(char *name, char *rtype, char *va_type[], int va_num);

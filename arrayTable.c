@@ -5,6 +5,8 @@
 
 extern int LCnum;
 
+array *array_head, *array_tail;
+
 // add a var into linkedlist
 void new_array(char *name, char *type, int* size){
     array *next = (array *)malloc(sizeof(array));

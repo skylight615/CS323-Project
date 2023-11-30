@@ -8,7 +8,7 @@ typedef struct struc_
     struct struc_ *before;
 }Struct;
 
-Struct *struct_head, *struct_tail;
+extern Struct *struct_head, *struct_tail;
 
 // add a struct into linkedlist
 void new_struct(char *name, char *type[], int typeNum);

@@ -2,6 +2,8 @@
 #include "stdlib.h"
 #include "string.h"
 
+func *func_head, *func_tail;
+
 // add a var into linkedlist
 void new_func(char *name, char *rtype, char *va_type[], int va_num){
     func *temp = (func*)malloc(sizeof(func));
@@ -16,7 +18,7 @@ void new_func(char *name, char *rtype, char *va_type[], int va_num){
         strcpy(temp->va_type[count++], va_type[i]);
     }
     func_tail->before->next = temp;
-    temp->before = func_tail->before->next;
+    temp->before = func_tail->before;
     temp->next = func_tail;
     func_tail->before = temp;
 }

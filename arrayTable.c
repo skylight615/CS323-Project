@@ -18,7 +18,7 @@ void new_array(char *name, char *type, int* size){
     }
     next->level = LCnum;
     array_tail->before->next = next;
-    next->before = array_tail->before->next;
+    next->before = array_tail->before;
     next->next = array_tail;
     array_tail->before = next;
 }

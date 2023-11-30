@@ -7,6 +7,8 @@
 
 extern int LCnum;
 
+var *var_head, *var_tail;
+
 // add a var into linkedlist
 void new_var(char* type, char* name){
     var *next = (var *)malloc(sizeof(var));
@@ -16,7 +18,7 @@ void new_var(char* type, char* name){
     strcpy(next->type, type);
     next->level = LCnum;
     var_tail->before->next = next;
-    next->before = var_tail->before->next;
+    next->before = var_tail->before;
     next->next = var_tail;
     var_tail->before = next;
 }

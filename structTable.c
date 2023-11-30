@@ -2,6 +2,8 @@
 #include "string.h"
 #include "stdlib.h"
 
+Struct *struct_head, *struct_tail;
+
 // add a struct into linkedlist
 void new_struct(char *name, char *type[], int typeNum){
     Struct* temp = (Struct*)malloc(sizeof(Struct));
@@ -13,7 +15,7 @@ void new_struct(char *name, char *type[], int typeNum){
         strcpy(temp->type[i], type[i]);
     }
     struct_tail->before->next = temp;
-    temp->before = struct_tail->before->next;
+    temp->before = struct_tail->before;
     temp->next = struct_tail;
     struct_tail->before = temp;
 }

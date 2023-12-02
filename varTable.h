@@ -4,6 +4,7 @@ typedef struct var_
     char *name;
     // int is the typr
     char *type;
+    char *func; 
     // combine instruc and strucNum to judge if two instruct vars that have the same name are different
     int level;
     struct var_ *next;
@@ -13,7 +14,7 @@ typedef struct var_
 extern var *var_head, *var_tail;
 
 // add a var into linkedlist
-void new_var(char* type, char* name);
+void new_var(char* type, char* name, char* func);
 
 // find the variable if exist
-var* find_var(char* name);
+var* find_var(char* name, char* current_func);

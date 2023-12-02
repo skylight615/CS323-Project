@@ -16,6 +16,7 @@
     int dec_num = 0;
     char* dec_id[10];
     char* structTypes[10];
+    char* current_func;
     int structTypeNum = 0;
     extern int LCnum;
     extern int inStruct;
@@ -92,6 +93,7 @@ ExtDef: Specifier ExtDecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[
             free(va_type[i]);
         }
         paraCount = 0;
+        free(current_func);
     }
     | Specifier error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
@@ -122,8 +124,18 @@ VarDec: ID {cldArray[0] = $1; $$=createNode("VarDec", 1, cldArray);}
     | VarDec LB INT RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("VarDec", 4, cldArray);}
     | ERROR {cldArray[0]=$1; $$=createNode("Exp", 1, cldArray); isCorrect=0;}
     ;
-FunDec: ID LP VarList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);}
-    | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("FunDec", 3, cldArray);}
+FunDec: ID LP VarList RP {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; 
+        $$=createNode("FunDec", 4, cldArray);
+        current_func = (char*)malloc(sizeof(char)*strlen($1->value));
+        current_func = $1->value;
+    }
+    | ID LP RP {
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
+        $$=createNode("FunDec", 3, cldArray);
+        current_func = (char*)malloc(sizeof(char)*strlen($1->value));
+        strcpy(current_func, $1->value);
+    }
     | ID LP error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=createLeaf("RP",NULL);$$=createNode("FunDec", 3, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     | ID LP VarList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);

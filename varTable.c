@@ -10,14 +10,12 @@ extern int func_num;
 var *var_head, *var_tail;
 
 // add a var into linkedlist
-void new_var(char* type, char* name, char* func){
+void new_var(char* type, char* name){
     var *next = (var *)malloc(sizeof(var));
     next->name = (char*)malloc(sizeof(char)*strlen(name));
     next->type = (char*)malloc(sizeof(char)*strlen(type));
-    next->func = (char*)malloc(sizeof(char)*strlen(func));
     strcpy(next->name, name);
     strcpy(next->type, type);
-    strcpy(next->func, func);
     next->level = LCnum;
     next->from_func=func_num;
     var_tail->before->next = next;
@@ -28,12 +26,12 @@ void new_var(char* type, char* name, char* func){
 }
 
 // find the variable if exist
-var* find_var(char* name, char* current_func){
+var* find_var(char* name){
     var* temp = var_head->next;
     while (temp != var_tail)
     {
         // equal
-        if (!strcmp(temp->name, name) && temp->level <= LCnum && !strcmp(temp->func, current_func)){
+        if (!strcmp(temp->name, name) && temp->level <= LCnum && temp->from_func==func_num){
             return temp;
         }
         temp = temp->next;

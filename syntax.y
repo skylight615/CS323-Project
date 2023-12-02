@@ -16,7 +16,6 @@
     int dec_num = 0;
     char* dec_id[10];
     char* structTypes[10];
-    char* current_func;
     int structTypeNum = 0;
     int varnum=0;
     char* var_name[10];
@@ -104,12 +103,12 @@ ExtDef: Specifier ExtDecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[
             free(va_type[i]);
         }
         paraCount = 0;
+
         char* typetemp=findToken($1,"TYPE");
         if(strcmp(typetemp,retype)!=0){
             isCorrect=0;
             printf("Error type 8 at Line %d: incompatiable return type\n",return_line);
         }
-        free(current_func);
     }
     | Specifier error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
@@ -140,18 +139,8 @@ VarDec: ID {cldArray[0] = $1; $$=createNode("VarDec", 1, cldArray);}
     | VarDec LB INT RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("VarDec", 4, cldArray);}
     | ERROR {cldArray[0]=$1; $$=createNode("Exp", 1, cldArray); isCorrect=0;}
     ;
-FunDec: ID LP VarList RP {
-        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; 
-        $$=createNode("FunDec", 4, cldArray);
-        current_func = (char*)malloc(sizeof(char)*strlen($1->value));
-        strcpy(current_func, $1->value);
-    }
-    | ID LP RP {
-        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
-        $$=createNode("FunDec", 3, cldArray);
-        current_func = (char*)malloc(sizeof(char)*strlen($1->value));
-        strcpy(current_func, $1->value);
-    }
+FunDec: ID LP VarList RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);}
+    | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("FunDec", 3, cldArray);}
     | ID LP error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=createLeaf("RP",NULL);$$=createNode("FunDec", 3, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     | ID LP VarList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("FunDec", 4, cldArray);
@@ -178,7 +167,7 @@ VarList: ParamDec COMMA VarList {
 ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);
             char* type = findToken($1, "TYPE");
             char* id =findToken($2,"ID");
-            new_var(type, id, current_func);
+            new_var(type, id);
             }
     ;
 /* statement */
@@ -250,7 +239,7 @@ Def: Specifier DecList SEMI {
                     isCorrect=0;
                     printf("Error type 3 at Line %d: variable %s is redefined in the same scope\n",$1->line,dec_id[i]);
                 }
-                else (type == NULL) ? new_array(dec_id[i],s , array_size[i], current_func) : new_array(dec_id[i], type, array_size[i], current_func);
+                else (type == NULL) ? new_array(dec_id[i],s , array_size[i]) : new_array(dec_id[i], type, array_size[i]);
                 free(array_size[i]);
             } else {
                 // var or struct
@@ -259,7 +248,7 @@ Def: Specifier DecList SEMI {
                     isCorrect=0;
                     printf("Error type 3 at Line %d: variable %s is redefined in the same scope\n",$1->line,dec_id[i]);
                 }
-                else{ (type == NULL) ? new_var(s, dec_id[i], current_func) : new_var(type, dec_id[i], current_func);}
+                else{ (type == NULL) ? new_var(s, dec_id[i]) : new_var(type, dec_id[i]);}
             }
             free(dec_id[i]);
         }

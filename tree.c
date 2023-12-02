@@ -49,7 +49,7 @@ char* findToken(struct Node* root, char* type){
 	if(root == NULL){
         return NULL;
     }
-    char *res;
+    char *res=NULL;
     if (strcmp(root->type,type)==0) {
         return root->value;
     } else {
@@ -73,10 +73,8 @@ int isArray(struct Node* root){
         return 1;
     } else {
         for (int i = 0; i < root->n_cld; i++){
-            res = isArray(root->clds[i]);
-            if (res){
-                break;
-            }
+            res += isArray(root->clds[i]);
+            
         }
     }
     return res;
@@ -99,6 +97,21 @@ int findSize(struct Node* root, int count, int* size){
     return count;
 }
 
+void findExp(struct Node* root,int b[]){
+    if (strcmp(root->type,"ID")==0) {
+        b[0]++;
+    }else if(strcmp(root->type,"INT")==0){
+        b[1]++;
+    }else if (strcmp(root->type,"FLOAT")==0){
+        b[2]++;
+    }else if(strcmp(root->type,"CHAR")==0){
+        b[3]++;
+    }
+    for(int i = 0; i < root->n_cld; i++){
+            findExp(root->clds[i], b);
+        }
+    
+}
 /*遍历抽象语法树，level为树的层数*/
 void dfs(struct Node* root,int level){
     int i;

@@ -20,6 +20,8 @@ int isArray(struct Node* root);
 
 int findSize(struct Node* root, int count, int* size);
 
+void findExp(struct Node* root,int b[]);
+
 /*遍历抽象语法树，level为树的层数*/
 void dfs(struct Node* root,int level);
 

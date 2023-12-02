@@ -2,7 +2,6 @@
 #include "syntax.tab.h"
 #include "string.h"
 #include "stdlib.h"
-
 extern int LCnum;
 
 array *array_head, *array_tail;
@@ -29,7 +28,7 @@ void new_array(char *name, char *type, int* size){
 array* find_array(char *name){
     array *temp = array_head->next;
     while (temp != array_tail)
-    {
+    {  
         if (!strcmp(temp->name, name) && temp->level == LCnum){
             return temp;
         }

@@ -4,7 +4,10 @@ typedef struct array_
     // int, float, char
     char *type;
     // combine instruc and strucNum to judge if two instruct arrays that have the same name are different
-    char *func;
+    // 是否为结构体域
+    // int inStruc;
+    // 所属的结构体编号
+    // int strucNum;
     int size[10];
     int dm;
     int level;
@@ -15,7 +18,7 @@ typedef struct array_
 extern array *array_head, *array_tail;
 
 // add a var into linkedlist
-void new_array(char *name, char *type, int* size, char* func);
+void new_array(char *name, char *type, int* size);
 
 // find the variable if exist
-array* find_array(char *name, char *current_func);
+array* find_array(char *name);

@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 extern int LCnum;
-
+extern int func_num;
 var *var_head, *var_tail;
 
 // add a var into linkedlist
@@ -17,10 +17,12 @@ void new_var(char* type, char* name){
     strcpy(next->name, name);
     strcpy(next->type, type);
     next->level = LCnum;
+    next->from_func=func_num;
     var_tail->before->next = next;
     next->before = var_tail->before;
     next->next = var_tail;
     var_tail->before = next;
+
 }
 
 // find the variable if exist
@@ -29,10 +31,11 @@ var* find_var(char* name){
     while (temp != var_tail)
     {
         // equal
-        if (!strcmp(temp->name, name) && temp->level <= LCnum){
+        if (!strcmp(temp->name, name) && temp->level <= LCnum && temp->from_func==func_num){
             return temp;
         }
         temp = temp->next;
     }
+    var* res=NULL;
     return NULL;
 }

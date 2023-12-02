@@ -3,7 +3,8 @@
 #include "string.h"
 
 func *func_head, *func_tail;
-
+int func_num=0;
+extern int func_num;
 // add a var into linkedlist
 void new_func(char *name, char *rtype, char *va_type[], int va_num){
     func *temp = (func*)malloc(sizeof(func));
@@ -21,6 +22,7 @@ void new_func(char *name, char *rtype, char *va_type[], int va_num){
     temp->before = func_tail->before;
     temp->next = func_tail;
     func_tail->before = temp;
+    func_num++;
 }
 
 // find the variable if exist
@@ -39,6 +41,29 @@ func* find_func(char *name, char *va_type[], int va_num){
             if (para){
                 return temp;
             }
+        }
+        temp = temp->next;
+    }
+    return NULL;
+}
+
+func* find_func_name(char *name, int va_num){
+    func *temp = func_head->next;
+    while (temp != func_tail)
+    {
+        if (!strcmp(temp->name, name) && va_num == temp->va_num){
+            return temp;
+        }
+        temp = temp->next;
+    }
+    return NULL;
+}
+func* find_func_name_only(char *name){
+    func *temp = func_head->next;
+    while (temp != func_tail)
+    {
+        if (!strcmp(temp->name, name) ){
+            return temp;
         }
         temp = temp->next;
     }

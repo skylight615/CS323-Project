@@ -18,8 +18,15 @@
     char* structTypes[10];
     char* current_func;
     int structTypeNum = 0;
+    int varnum=0;
+    char* var_name[10];
+    int usefunc=0;
+    char* retype;
+    int func_arg=0;
+    int return_line=0;
     extern int LCnum;
     extern int inStruct;
+    extern int func_num;
 %}
 
 %define api.value.type {struct Node *}
@@ -88,11 +95,20 @@ ExtDef: Specifier ExtDecList SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[
         // add the function into funcTable
         char* name = findToken($2, "ID");
         char* rtype = findToken($1, "TYPE");
-        new_func(name, rtype, va_type, paraCount);
+        func* find=find_func_name_only(name);
+        if(find!=NULL){
+            isCorrect=0;
+            printf("Error type 4 at Line %d: %s is redefined\n",$1->line,name);
+        }else{ new_func(name, rtype, va_type, paraCount);}
         for (int i = 0; i < paraCount; i++){
             free(va_type[i]);
         }
         paraCount = 0;
+        char* typetemp=findToken($1,"TYPE");
+        if(strcmp(typetemp,retype)!=0){
+            isCorrect=0;
+            printf("Error type 8 at Line %d: incompatiable return type\n",return_line);
+        }
         free(current_func);
     }
     | Specifier error {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ExtDef", 2, cldArray);
@@ -128,7 +144,7 @@ FunDec: ID LP VarList RP {
         cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; 
         $$=createNode("FunDec", 4, cldArray);
         current_func = (char*)malloc(sizeof(char)*strlen($1->value));
-        current_func = $1->value;
+        strcpy(current_func, $1->value);
     }
     | ID LP RP {
         cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
@@ -159,7 +175,11 @@ VarList: ParamDec COMMA VarList {
         paraCount++;
     }
     ;
-ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);}
+ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);
+            char* type = findToken($1, "TYPE");
+            char* id =findToken($2,"ID");
+            new_var(type, id, current_func);
+            }
     ;
 /* statement */
 CompSt: LC DefList StmtList RC {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("CompSt", 4, cldArray);}
@@ -169,7 +189,33 @@ StmtList: %empty {$$ = createNode("Empty", 0, cldArray);}
     ;
 Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cldArray);}
     | CompSt {cldArray[0] = $1; $$=createNode("Stmt", 1, cldArray);}
-    | RETURN Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Stmt", 3, cldArray);}
+    | RETURN Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Stmt", 3, cldArray);
+            char* id=findToken($2,"ID");
+            return_line=$1->line;
+            if(id==NULL){ // return is num
+                char* isint=findToken($2,"INT");
+                if(isint != NULL) retype="int";
+                else retype="float";
+            } else{   // return is an id or array or func
+                func* func= find_func_name_only(id); array* array= find_array(id); var* var= find_var(id);
+                if(func !=NULL){
+                    retype=func->rtype;
+                }else if(array !=NULL){
+                    retype=array->type;
+                    if(isArray($2)!=array->dm){
+                        isCorrect=0;
+                        printf("Error type 10 at line %d: indexing on non-array variable\n",$1->line);
+                    }
+                    
+                }else if(var!=NULL){
+                    retype=var->type;
+                }else{
+                    isCorrect=0;
+                    printf("Error type 1 at Line %d: %s is used without a definition",$1->line,id);
+                }
+            }
+            varnum=0;
+            }
     | RETURN Exp error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Stmt", 3, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
     | IF LP Exp RP Stmt %prec LOWER_ELSE{cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; $$=createNode("Stmt", 5, cldArray);}
@@ -188,8 +234,8 @@ DefList: %empty {$$ = createNode("Empty", 0, cldArray);}
     | Def DefList {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("DefList", 2, cldArray);}
     ;
 Def: Specifier DecList SEMI {
-        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; 
-        $$=createNode("Def", 3, cldArray);
+        cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);
+
         // new a var or an array
         char* type = findToken($1, "TYPE");
         char* s;
@@ -199,19 +245,61 @@ Def: Specifier DecList SEMI {
         for (int i = 0; i < dec_num; i++){
             if (dec_type[i]){
                 // array
-                (type == NULL) ? new_array(s, dec_id[i], array_size[i]) : new_array(type, dec_id[i], array_size[i]);
+                array* arr=find_array(dec_id[i]);
+                if(arr!=NULL){
+                    isCorrect=0;
+                    printf("Error type 3 at Line %d: variable %s is redefined in the same scope\n",$1->line,dec_id[i]);
+                }
+                else (type == NULL) ? new_array(dec_id[i],s , array_size[i], current_func) : new_array(dec_id[i], type, array_size[i], current_func);
                 free(array_size[i]);
             } else {
                 // var or struct
-                (type == NULL) ? new_var(s, dec_id[i]) : new_var(type, dec_id[i]);
+                var* var=find_var(dec_id[i]);
+                if(var!=NULL){
+                    isCorrect=0;
+                    printf("Error type 3 at Line %d: variable %s is redefined in the same scope\n",$1->line,dec_id[i]);
+                }
+                else{ (type == NULL) ? new_var(s, dec_id[i], current_func) : new_var(type, dec_id[i], current_func);}
             }
             free(dec_id[i]);
+        }
+        int b[4]={0};
+        findExp($2,b);
+        int cmp=-dec_num;
+        int minint=isArray($2);
+        for(int i=0;i<4;i++){
+            if(i==1) b[i]-=minint;
+            cmp+=b[i];
+        }
+        if(type!=NULL || cmp!=0){
+        int tot=0;
+        char* lefttype=type;
+        
+        for(int i=0;i<varnum;i++){
+            var* temp=find_var(var_name[i]);
+            if(strcmp(lefttype,temp->type)==0){ 
+               tot++;
+            }
+            free(var_name[i]);
+        }
+        if(strcmp(lefttype,"int")==0){
+            tot+=b[1];
+        }else if(strcmp(lefttype,"float")==0){
+            tot+=b[2];
+        }else{tot+=b[3];}
+        if(tot!=cmp){
+            isCorrect=0;
+            printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
+            if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
+        }
         }
         dec_num = 0;
         if (inStruct) {
             structTypes[structTypeNum] = (char*)malloc(sizeof(char)*strlen(type));
             strcpy(structTypes[structTypeNum++], type);
         }
+        varnum=0;
+        
     }
     | Specifier DecList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);
         isCorrect=0;char* text = "Missing semicolon ';'";printf("%d: %s\n",$2->line,text);}
@@ -256,10 +344,82 @@ Dec: VarDec {
         dec_id[dec_num] = (char*)malloc(sizeof(char)*strlen(id));
         strcpy(dec_id[dec_num], id);
         dec_num++;
+
+        for(int i=0;i<varnum;i++){
+            var* temp=find_var(var_name[i]);
+            if(temp== NULL){
+                isCorrect=0;
+                printf("Error type 1 at Lind %d: %s is used without a definition\n",$2->line,var_name[i]);
+            }
+            free(var_name[i]);
+        }
+        
     }
     ;
 /* Expression */
-Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);
+        int b1[4]={0};
+        findExp($1,b1);
+        if(b1[0]==0){
+            printf("Error type 6 at Line %d: rvalue appears on the left-side of assignment\n",$1->line);
+        }
+        else{
+            char* id=var_name[0];
+            var* v=find_var(id);
+            char* lefttype;
+            int num=1;          
+            if(v !=NULL){
+                lefttype=v->type;
+                Struct* s = find_struct(lefttype);
+                if(s!=NULL){ // aa.weight
+                    id=var_name[1];
+                    v=find_var(id);
+                    lefttype=v->type;
+                    num=2;
+                }
+            }
+            else{
+                array* arr=find_array(id);
+                lefttype=arr->type;
+                
+            }
+            int b[4]={0};
+            findExp($3,b);
+            int cmp=0;
+            for(int i=0;i<4;i++){
+                cmp+=b[i];
+            }
+            int tot=0;
+            for(int i=num;i<varnum;i++){
+                var* temp=find_var(var_name[i]);
+                if(temp!=NULL){
+                    if(strcmp(lefttype,temp->type)==0){ 
+                        tot++;
+                    }
+                }else{
+                    array* temp2=find_array(var_name[i]);
+                    if(strcmp(lefttype,temp2->type)==0){ 
+                        tot++;
+                    }
+                }
+            }
+            if(strcmp(lefttype,"int")==0){
+                tot+=b[1];
+            }else if(strcmp(lefttype,"float")==0){
+                tot+=b[2];
+            }else{tot+=b[3];}
+            printf("%d,%d\n",tot,cmp);
+            if(tot!=cmp){
+                isCorrect=0;
+                printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
+                if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
+            }
+        }
+        for(int i=0;i<varnum;i++){
+            free(var_name[i]);
+        }
+        varnum=0;
+        }
     | Exp AND Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
     | Exp OR Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
     | Exp ERROR Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray); isCorrect=0;}
@@ -278,20 +438,54 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     | MINUS Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);} %prec NEG
     | NOT Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);}
-    | ID LP Args RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
+    | ID LP Args RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);
+            usefunc=1;func* func=find_func_name_only($1->value);
+            if(func==NULL){
+                isCorrect=0;
+                printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);
+            }else{
+                int xingcan=func->va_num;isCorrect=0;
+                if(xingcan!=func_arg)printf("Error type 9 at Line %d: invalid argument number, except %d, got %d\n",$1->line,xingcan,func_arg);
+            }
+
+            func_arg=0;
+            }
     | ID LP Args error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
-    | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
+    | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);
+            usefunc=1;func* func=find_func_name_only($1->value);
+            if(func==NULL){
+                var* temp =find_var($1->value);isCorrect=0;
+                if(temp!=NULL){
+                    var_name[varnum] = (char*)malloc(sizeof(char)*strlen($1->value));
+                    strcpy(var_name[varnum], $1->value);
+                    varnum++;
+                    printf("Error type 11 at Line %d: invoking non-function variable\n",$1->line);
+                }
+                else printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);
+            }else{
+                int xingcan=func->va_num;isCorrect=0;
+                if(xingcan!=0)printf("Error type 9 at Line %d: invalid argument number, except %d, got 0\n",$1->line,xingcan);
+            }
+            }
     | Exp LB Exp RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
-    | Exp DOT ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);}
-    | ID {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
+    | Exp DOT ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);
+        char* id =$3->value;
+        var_name[varnum] = (char*)malloc(sizeof(char)*strlen(id));
+        strcpy(var_name[varnum], id);
+        varnum++;}
+    | ID {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);
+        char* id =$1->value;
+        var_name[varnum] = (char*)malloc(sizeof(char)*strlen(id));
+        strcpy(var_name[varnum], id);
+        varnum++;}
     | INT {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
     | FLOAT {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
     | CHAR {cldArray[0] = $1; $$=createNode("Exp", 1, cldArray);}
     | ERROR {cldArray[0]=$1; $$=createNode("Exp", 1, cldArray); isCorrect=0;}
     ;
-Args: Exp COMMA Args {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Args", 3, cldArray);}
-    | Exp {cldArray[0] = $1; $$=createNode("Args", 1, cldArray);}
+Args: Exp COMMA Args {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Args", 3, cldArray);func_arg++;}
+    | Exp {cldArray[0] = $1; $$=createNode("Args", 1, cldArray); func_arg++;}
     ;
 %%
 void yyerror(const char *s) {

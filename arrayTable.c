@@ -2,7 +2,6 @@
 #include "syntax.tab.h"
 #include "string.h"
 #include "stdlib.h"
-
 extern int LCnum;
 
 array *array_head, *array_tail;

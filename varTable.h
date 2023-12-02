@@ -7,6 +7,7 @@ typedef struct var_
     char *func; 
     // combine instruc and strucNum to judge if two instruct vars that have the same name are different
     int level;
+    int from_func;
     struct var_ *next;
     struct var_ *before;
 }var;

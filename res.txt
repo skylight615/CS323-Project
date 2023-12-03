@@ -1,17 +1,21 @@
-Error type 10 at line 12: indexing on non-array variable
+Error type 1 at Lind 3: z is used without a definition
+Error type 1 at Lind 9: a is used without a definition
+Error type 1 at Lind 10: a is used without a definition
+Error type 3 at Line 10: variable b is redefined in the same scope
 function table: 
-test_2_r10, int, 0
+sum, int, 2 int, int,
+test_2_r01, int, 0
 
 
 variable table: 
-int e 1
+int x 0
+int y 0
+int res 1
+int a1 1
+int b 1
 
 
 array table: 
-int a 1 2 4 6 8 
-int b 1 4 6 8 
-int c 1 6 8 
-int d 1 8 
 
 
 struct table: 

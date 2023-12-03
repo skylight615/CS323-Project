@@ -15,7 +15,7 @@ int test_2_r13()
   father.c.name = 1;
   father.c.age = 1;
   father.cc = 30;
-  mother.c.name = father.c.name;
+  mother.c.age =father.c.name;
   mother.cc.age = father.cc.age;
   mother.cc = father.cc;
   return 0;

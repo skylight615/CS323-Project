@@ -3,6 +3,7 @@ typedef struct struc_
     // the position of struc_
     char *name;
     int typeNum;
+    int structnum;
     char *type[10];
     struct struc_ *next;
     struct struc_ *before;

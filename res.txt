@@ -1,21 +1,2 @@
-Error type 1 at Lind 3: z is used without a definition
-Error type 1 at Lind 9: a is used without a definition
-Error type 1 at Lind 10: a is used without a definition
-Error type 3 at Line 10: variable b is redefined in the same scope
-function table: 
-sum, int, 2 int, int,
-test_2_r01, int, 0
-
-
-variable table: 
-int x 0
-int y 0
-int res 1
-int a1 1
-int b 1
-
-
-array table: 
-
-
-struct table: 
+Error type 15 at Line 7: redefine the same structure type
+Error type 5 at Line 16: unmatching type on both sides of assignment

@@ -18,3 +18,4 @@ void new_struct(char *name, char *type[], int typeNum);
 Struct* find_struct(char *name);
 
 Struct* structual_equal(char *name, char *type[], int typeNum);
+int structual_equal2(Struct *a, Struct *b);

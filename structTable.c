@@ -1,6 +1,7 @@
 #include "structTable.h"
 #include "string.h"
 #include "stdlib.h"
+#include <stdio.h>
 
 Struct *struct_head, *struct_tail;
 int struct_num=0;;
@@ -65,4 +66,32 @@ Struct* structual_equal(char *name, char *type[], int typeNum){
         temp = temp->next;
     }
     return NULL;
+}
+int structual_equal2(Struct *a, Struct *b){
+    if(a->typeNum==b->typeNum ){
+        int aint=0;int afloat=0;int achar=0;
+        for(int i=0;i<a->typeNum;i++){
+            if(!strcmp(a->type[i], "int")){
+                aint++;
+            }else if(!strcmp(a->type[i], "float")){
+                afloat++;
+            }else{
+                achar++;
+            }
+        }
+        int bint=0;int bfloat=0; int bchar=0;
+        for(int i=0;i<b->typeNum;i++){
+            if(!strcmp(b->type[i], "int")){
+                bint++;
+            }else if(!strcmp(b->type[i], "float")){
+                bfloat++;
+            }else{
+                bchar++;
+            }
+        }
+        if(aint==bint&& afloat==bfloat&& achar==bchar){
+            return 1;
+        }
+    }
+    return 0;
 }

@@ -1,7 +1,19 @@
-int test_1_o02()
+struct Apple
 {
-  int dec_int = 323;
-  int hex_int = 0xFFF;
-  char ch = '\xC0';
-  return hex_int - dec_int;
+  int weight;
+  float round;
+  float price;
+};
+struct B
+{
+  int r;
+  float w;
+  float p;
+};
+int test_2_r15()
+{
+  struct Apple aa;
+  struct B b;
+  aa=b;
+  return 0;
 }

@@ -1,7 +1,8 @@
-int test(){
-    int a=0;
-    a=0;
-    int a=0;
-    a=0;
-    int a=0;
+int main(){
+  int a=1;
+  int c=a();
+  float d=0;
+  int e[3];
+  int f[3];
+  e[s]=f[d]+1.1+f[g];
 }

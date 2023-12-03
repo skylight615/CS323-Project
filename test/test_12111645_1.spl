@@ -1,8 +1,22 @@
-int test_1()
+struct Child
 {
-    int a=4294967299;
-    int b=012;
-    int d=0xaaaaaaaaaa;
-    char e='\x0';
-    
+  float name;
+  int age;
+};
+struct Parent
+{
+  struct Child c;
+  int cc;
+};
+int test_2_r13()
+{
+  struct Parent father;
+  struct Parent mother;
+  father.c.name = 1;
+  father.c.age = 1;
+  father.cc = 30;
+  mother.c.age =father.c.name;
+  mother.cc.age = father;
+  mother.cc = father;
+  return 0;
 }

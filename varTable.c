@@ -47,7 +47,7 @@ var* find_var_struct(char* name,int struct_num){
     while (temp != var_tail)
     {
         // equal
-        if (!strcmp(temp->name, name) && temp->level <= LCnum && temp->from_struct==struct_num && temp->from_func==func_num){
+        if (!strcmp(temp->name, name) && temp->level <= LCnum && temp->from_struct==struct_num ){
             return temp;
         }
         temp = temp->next;

@@ -1,16 +1,29 @@
-int sum(int x, int y)
+struct St {
+    int sss; 
+    float ttt;
+};
+
+int add(int x, int y)
 {
-  int res = x + y;
-  return res;
+  return x + y;
 }
-float sum(int x, int y)
-{
-  int res = x + y;
-  return res;
-}
-int test_2_r04()
-{
-  int a1, a2;
-  int b = sum(a1, a2);
-  return 0;
+
+int test_2_s04() {
+    int a;
+    int b[5];
+    struct St st;
+
+    // Error Type 5 unmatching types appear at both sides of the assignment operator (=)
+    st.sss = 12.34;
+
+    // Error Type 9 a function’s arguments mismatch the declared parameters (either types or numbers, or both)
+    add(st.sss, st.ttt);
+
+    // Error Type 12 array indexing with a non-integer type expression
+    st.ttt = 23.45;
+    b[st.ttt];
+
+    // Error Type 14 accessing an undefined structure member
+    st.add;
+    return 0;
 }

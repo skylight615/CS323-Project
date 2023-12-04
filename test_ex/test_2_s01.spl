@@ -8,7 +8,7 @@ float aa()
     int a = 2;
     int f = 3;
     int h = 4;
-    if (a< f && h >f) return f;
+    if (a < f && h > f) return f;
     else if ( a == f || h > a) return 5.0;
     else return a;
 }

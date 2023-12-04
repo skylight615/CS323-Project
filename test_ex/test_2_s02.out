@@ -1,0 +1,3 @@
+Error type 1 at Lind 4: a is used without a definition
+Error type 2 at Line 5: func is invoked without a definition
+Error type 5 at Line 5: unmatching type on both sides of assignment

@@ -1,0 +1,5 @@
+Error type 5 at Line 17: unmatching type on both sides of assignment
+Error type 13 at Line 23: accessing with non-struct variable
+Error type 5 at Line 23: unmatching type on both sides of assignment
+Error type 7 at Line 23: unmatching operands
+Error type 12 at Line 24: indexing by non-integer

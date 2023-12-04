@@ -158,6 +158,7 @@ VarList: ParamDec COMMA VarList {
         va_type[paraCount] = (char*)malloc(sizeof(char)*strlen(type));
         strcpy(va_type[paraCount], type);
         paraCount++;
+        
     }
     | ParamDec {
         cldArray[0] = $1; 
@@ -172,7 +173,14 @@ VarList: ParamDec COMMA VarList {
 ParamDec: Specifier VarDec {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("ParamDec", 2, cldArray);
             char* type = findToken($1, "TYPE");
             char* id =findToken($2,"ID");
-            new_var(type, id);
+            var* a=find_var(id);
+            if(a!=NULL){
+                isCorrect=0;
+                printf("Error type 3 at line %d: variable %s is redefined in the same scope\n",$1->line,id);
+            }
+            else{
+                new_var(type, id);
+            }
             }
     ;
 /* statement */
@@ -290,7 +298,6 @@ Def: Specifier DecList SEMI {
                     tot+=b[2];
                 }else{tot+=b[3];}
                 if(tot!=cmp){
-                    printf("%d---%d\n",tot,cmp);
                     isCorrect=0;
                     printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
                     if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
@@ -433,8 +440,7 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
                             if(i!=varnum-1)cmp--;
                             else{
                                 if(s!=NULL && structual_equal2(s,s2)){
-                                    if(strcmp(lefttype,s2->name)==0){tot++;}
-                                    
+                                    if(strcmp(lefttype,s2->name)==0){tot++;}                                   
                                 }
                             }
                         }
@@ -539,7 +545,7 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
                     varnum++;
                     printf("Error type 11 at Line %d: invoking non-function variable\n",$1->line);
                 }
-                else {usefunc=1;printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);}
+                else {usefunc=2;printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);}
             }else{
                 int xingcan=func->va_num;usefunc=1;functype=func->rtype;
                 if(xingcan!=0){

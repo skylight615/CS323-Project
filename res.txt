@@ -1,4 +1,2 @@
-Error type 5 at Line 11: unmatching type on both sides of assignment
-Error type 7 at Line 11: unmatching operands
-Error type 5 at Line 12: unmatching type on both sides of assignment
-Error type 7 at Line 12: unmatching operands
+Error type 13 at Line 19: accessing with non-struct variable
+Error type 13 at Line 19: accessing with non-struct variable

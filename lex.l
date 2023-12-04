@@ -60,8 +60,6 @@ fileq \"{letter_}+(\."h")\"
 {fileq} {yylval=createLeaf("FILEIN",yytext);return FILEIN;}
 \".*\" {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
     yylval=createLeaf("ERROR",yytext);return ERROR;}
-\<.*\> {printf("Error type A at line %d: unknown lexeme %s\n",yylineno,yytext);
-    yylval=createLeaf("ERROR",yytext);return ERROR;}
 "#define" {yylval=createLeaf("DEFINEIN",yytext);return DEFINEIN;}
 "int"|"float"|"char" {yylval=createLeaf("TYPE",yytext);return TYPE;}
 "struct" {inStruct = 1;yylval=createLeaf("STRUCT",yytext);return STRUCT;}

@@ -404,7 +404,7 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
                             isCorrect=0;
                             printf("Error type 12 at Line %d: indexing by non-integer\n",$1->line);
                         }
-                        if(temparr==NULL &&tempvar== NULL){isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,var_name[num]);}
+                        if(temparr==NULL &&tempvar== NULL && usefunc!=1){isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,var_name[num]);}
                     }
                     
                 }else {isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,id); lefttype="int";}
@@ -432,8 +432,9 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
                             sn=s2->structnum;
                             if(i!=varnum-1)cmp--;
                             else{
-                                if(structual_equal2(s,s2)){
-                                    tot++;
+                                if(s!=NULL && structual_equal2(s,s2)){
+                                    if(strcmp(lefttype,s2->name)==0){tot++;}
+                                    
                                 }
                             }
                         }
@@ -549,7 +550,7 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
             }
     | Exp LB Exp RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);
             int a[4];findExp($3,a);if(a[2]!=0 ||a[3]!=0){
-                isCorrect=0;printf("Error type 12 at Line %d: indexing by non-integer",$1->line);
+                isCorrect=0;printf("Error type 12 at Line %d: indexing by non-integer\n",$1->line);
             }}
     | Exp DOT ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);
         char* id =$3->value;

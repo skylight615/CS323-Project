@@ -3,6 +3,7 @@ typedef struct struc_
     // the position of struc_
     char *name;
     int typeNum;
+    int structnum;
     char *type[10];
     struct struc_ *next;
     struct struc_ *before;
@@ -17,3 +18,4 @@ void new_struct(char *name, char *type[], int typeNum);
 Struct* find_struct(char *name);
 
 Struct* structual_equal(char *name, char *type[], int typeNum);
+int structual_equal2(Struct *a, Struct *b);

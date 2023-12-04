@@ -1,6 +1,21 @@
-int test_2(){
-    int a=0X0;
-    int b=0x12ab;
-    int d=4294967295;
+int test1()
+{
+  return 'c';
+}
 
+float test2()
+{
+  return 1.0;
+}
+
+int test_2_r08(int a, int b)
+{
+  if (a > b)
+  {
+    return test1(a);
+  }
+  else
+  {
+    return test2();
+  }
 }

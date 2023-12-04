@@ -1,4 +1,5 @@
-Error type A at line 3: unknown lexeme 4294967299
-ERROR type A at line 4: unknown lexeme 012
-ERROR type A at line 5: unknown lexeme 0xaaaaaaaaaa
-ERROR type A at line 6: unknown lexeme '\x0'
+Error type 5 at Line 15: unmatching type on both sides of assignment
+Error type 5 at Line 18: unmatching type on both sides of assignment
+Error type 13 at Line 19: accessing with non-struct variable
+Error type 5 at Line 19: unmatching type on both sides of assignment
+Error type 5 at Line 20: unmatching type on both sides of assignment

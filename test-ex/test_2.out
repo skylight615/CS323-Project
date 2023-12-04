@@ -7,7 +7,128 @@ Program (1)
       Head (2)
         INCLUDE
         FILEIN: "sud.h"
-  ExtDefList (3)
+  ExtDefList (3)Program (1)
+  ExtDefList (1)
+    ExtDef (1)
+      Specifier (1)
+        StructSpecifier (1)
+          STRUCT
+          ID: Apple
+          LC
+          DefList (3)
+            Def (3)
+              Specifier (3)
+                TYPE: int
+              DecList (3)
+                Dec (3)
+                  VarDec (3)
+                    ID: weight
+              SEMI
+            DefList (4)
+              Def (4)
+                Specifier (4)
+                  TYPE: float
+                DecList (4)
+                  Dec (4)
+                    VarDec (4)
+                      ID: round
+                SEMI
+              DefList (5)
+                Def (5)
+                  Specifier (5)
+                    TYPE: float
+                  DecList (5)
+                    Dec (5)
+                      VarDec (5)
+                        ID: price
+                  SEMI
+          RC
+      SEMI
+    ExtDefList (7)
+      ExtDef (7)
+        Specifier (7)
+          StructSpecifier (7)
+            STRUCT
+            ID: B
+            LC
+            DefList (9)
+              Def (9)
+                Specifier (9)
+                  TYPE: int
+                DecList (9)
+                  Dec (9)
+                    VarDec (9)
+                      ID: r
+                SEMI
+              DefList (10)
+                Def (10)
+                  Specifier (10)
+                    TYPE: float
+                  DecList (10)
+                    Dec (10)
+                      VarDec (10)
+                        ID: w
+                  SEMI
+                DefList (11)
+                  Def (11)
+                    Specifier (11)
+                      TYPE: float
+                    DecList (11)
+                      Dec (11)
+                        VarDec (11)
+                          ID: p
+                    SEMI
+            RC
+        SEMI
+      ExtDefList (13)
+        ExtDef (13)
+          Specifier (13)
+            TYPE: int
+          FunDec (13)
+            ID: test_2_r15
+            LP
+            RP
+          CompSt (14)
+            LC
+            DefList (15)
+              Def (15)
+                Specifier (15)
+                  StructSpecifier (15)
+                    STRUCT
+                    ID: Apple
+                DecList (15)
+                  Dec (15)
+                    VarDec (15)
+                      ID: aa
+                SEMI
+              DefList (16)
+                Def (16)
+                  Specifier (16)
+                    StructSpecifier (16)
+                      STRUCT
+                      ID: B
+                  DecList (16)
+                    Dec (16)
+                      VarDec (16)
+                        ID: b
+                  SEMI
+            StmtList (17)
+              Stmt (17)
+                Exp (17)
+                  Exp (17)
+                    ID: aa
+                  ASSIGN
+                  Exp (17)
+                    ID: b
+                SEMI
+              StmtList (18)
+                Stmt (18)
+                  RETURN
+                  Exp (18)
+                    INT: 0
+                  SEMI
+            RC
+
     ExtDef (3)
       Specifier (3)
         TYPE: int

@@ -7,6 +7,7 @@ typedef struct var_
     // combine instruc and strucNum to judge if two instruct vars that have the same name are different
     int level;
     int from_func;
+    int from_struct;
     struct var_ *next;
     struct var_ *before;
 }var;
@@ -18,3 +19,5 @@ void new_var(char* type, char* name);
 
 // find the variable if exist
 var* find_var(char* name);
+
+var* find_var_struct(char* name,int struct_num);

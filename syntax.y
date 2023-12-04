@@ -22,10 +22,12 @@
     int usefunc=0;
     char* retype;
     int func_arg=0;
+    char* functype;
     int return_line=0;
     extern int LCnum;
     extern int inStruct;
     extern int func_num;
+    extern int struct_num;
 %}
 
 %define api.value.type {struct Node *}
@@ -52,7 +54,7 @@
 %nonassoc SHIFT
 %%
 /* high-level definition */
-Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0); debug();}
+Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0); }
     | HeadList ExtDefList {cldArray[0] = $1; cldArray[1] = $2;$$=createNode("Program", 2, cldArray); 
         if(isCorrect==1)dfs($$,0);}
     ;
@@ -123,7 +125,10 @@ Specifier: TYPE {cldArray[0] = $1; $$=createNode("Specifier", 1, cldArray);}
 StructSpecifier: STRUCT ID LC DefList RC {
         cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; cldArray[4]=$5; 
         $$=createNode("StructSpecifier", 5, cldArray);
-        new_struct($2->value, structTypes, structTypeNum);
+        if(find_struct($2->value)!=NULL){
+            isCorrect=0;
+            printf("Error type 15 at Line %d: redefine the same structure type\n",$1->line);
+        }else new_struct($2->value, structTypes, structTypeNum);
         for (int i = 0; i < structTypeNum; i++){
             free(structTypes[i]);
         }
@@ -200,7 +205,7 @@ Stmt: Exp SEMI {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Stmt", 2, cld
                     retype=var->type;
                 }else{
                     isCorrect=0;
-                    printf("Error type 1 at Line %d: %s is used without a definition",$1->line,id);
+                    printf("Error type 1 at Line %d: %s is used without a definition\n",$1->line,id);
                 }
             }
             varnum=0;
@@ -243,12 +248,14 @@ Def: Specifier DecList SEMI {
                 free(array_size[i]);
             } else {
                 // var or struct
-                var* var=find_var(dec_id[i]);
-                if(var!=NULL){
+                var* v=find_var_struct(dec_id[i],struct_num);
+                
+                if(v!=NULL){
                     isCorrect=0;
                     printf("Error type 3 at Line %d: variable %s is redefined in the same scope\n",$1->line,dec_id[i]);
                 }
-                else{ (type == NULL) ? new_var(s, dec_id[i]) : new_var(type, dec_id[i]);}
+                else{
+                    (type == NULL) ? new_var(s, dec_id[i]) : new_var(type, dec_id[i]);}
             }
             free(dec_id[i]);
         }
@@ -260,34 +267,43 @@ Def: Specifier DecList SEMI {
             if(i==1) b[i]-=minint;
             cmp+=b[i];
         }
-        if(type!=NULL || cmp!=0){
-        int tot=0;
-        char* lefttype=type;
-        
-        for(int i=0;i<varnum;i++){
-            var* temp=find_var(var_name[i]);
-            if(strcmp(lefttype,temp->type)==0){ 
-               tot++;
-            }
-            free(var_name[i]);
+        if(type!=NULL && cmp!=0){
+            int tot=0;
+            char* lefttype=type;
+            if(usefunc>0){
+                if(usefunc==1 && strcmp(lefttype,functype)!=0){
+                    isCorrect=0;
+                    printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
+                }
+                usefunc=0;
+            }else{
+                for(int i=0;i<varnum;i++){
+                    var* temp=find_var(var_name[i]);
+                    if(temp==NULL || strcmp(lefttype,temp->type)==0){ 
+                    tot++;
+                    }
+                    free(var_name[i]);
+                }
+                if(strcmp(lefttype,"int")==0){
+                    tot+=b[1];
+                }else if(strcmp(lefttype,"float")==0){
+                    tot+=b[2];
+                }else{tot+=b[3];}
+                if(tot!=cmp){
+                    printf("%d---%d\n",tot,cmp);
+                    isCorrect=0;
+                    printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
+                    if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
+                }
+                }
+                
         }
-        if(strcmp(lefttype,"int")==0){
-            tot+=b[1];
-        }else if(strcmp(lefttype,"float")==0){
-            tot+=b[2];
-        }else{tot+=b[3];}
-        if(tot!=cmp){
-            isCorrect=0;
-            printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
-            if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
-        }
-        }
+        varnum=0;
         dec_num = 0;
         if (inStruct) {
             structTypes[structTypeNum] = (char*)malloc(sizeof(char)*strlen(type));
             strcpy(structTypes[structTypeNum++], type);
         }
-        varnum=0;
         
     }
     | Specifier DecList error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Def", 3, cldArray);
@@ -333,14 +349,12 @@ Dec: VarDec {
         dec_id[dec_num] = (char*)malloc(sizeof(char)*strlen(id));
         strcpy(dec_id[dec_num], id);
         dec_num++;
-
         for(int i=0;i<varnum;i++){
             var* temp=find_var(var_name[i]);
             if(temp== NULL){
                 isCorrect=0;
                 printf("Error type 1 at Lind %d: %s is used without a definition\n",$2->line,var_name[i]);
             }
-            free(var_name[i]);
         }
         
     }
@@ -354,54 +368,122 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
         }
         else{
             char* id=var_name[0];
-            var* v=find_var(id);
+            var* v=find_var_struct(id,struct_num);
             char* lefttype;
-            int num=1;          
-            if(v !=NULL){
+            int num=1;
+            Struct* s;
+            if(v !=NULL){ // left is var or struct
                 lefttype=v->type;
-                Struct* s = find_struct(lefttype);
-                if(s!=NULL){ // aa.weight
-                    id=var_name[1];
-                    v=find_var(id);
+                s = find_struct(lefttype);
+                int sn=0;
+                while(s!=NULL){ // aa.weight
+                    sn=s->structnum;
+                    if(num==b1[0])break;
+                    id=var_name[num];
+                    v=find_var_struct(id,sn);
+                    num++;
+                    if(v==NULL){
+                        printf("Error type 14 at Line %d: accessing an undefined structure member\n",$2->line);break;}
                     lefttype=v->type;
-                    num=2;
+                    s = find_struct(lefttype);
+                }if(num!=b1[0]){
+                    isCorrect=0;
+                    v=find_var(id);
+                    if(v==NULL)printf("Error type 14 at Line %d: accessing an undefined structure member\n",$2->line);
+                    else printf("Error type 13 at Line %d: accessing with non-struct variable\n",$2->line);
+                    num=b1[0];
                 }
             }
-            else{
+            else{ // left is array or not exists
                 array* arr=find_array(id);
-                lefttype=arr->type;
-                
+                if(arr!=NULL){
+                    lefttype=arr->type;
+                    for(;num<b1[0];num++){
+                        array* temparr=find_array(var_name[num]); var* tempvar=find_var(var_name[num]);
+                        if(temparr!=NULL && strcmp(temparr->type,"int")!=0 ||tempvar!= NULL && strcmp(tempvar->type,"int")!=0){
+                            isCorrect=0;
+                            printf("Error type 12 at Line %d: indexing by non-integer\n",$1->line);
+                        }
+                        if(temparr==NULL &&tempvar== NULL){isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,var_name[num]);}
+                    }
+                    
+                }else {isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,id); lefttype="int";}
+
             }
-            int b[4]={0};
-            findExp($3,b);
-            int cmp=0;
-            for(int i=0;i<4;i++){
-                cmp+=b[i];
-            }
-            int tot=0;
-            for(int i=num;i<varnum;i++){
-                var* temp=find_var(var_name[i]);
-                if(temp!=NULL){
-                    if(strcmp(lefttype,temp->type)==0){ 
-                        tot++;
+            if(isArray($3)==0){  //right has no array
+                int b[4]={0};
+                findExp($3,b);
+                int cmp=0;
+                for(int i=0;i<4;i++){
+                    cmp+=b[i];
+                }
+                int tot=0;
+                int sn=struct_num;
+                Struct* s2;
+                for(int i=num;i<varnum;i++){
+                    var* temp=find_var_struct(var_name[i],sn);
+                    if(temp !=NULL){ 
+                        s2 = find_struct(temp->type);
+                        if(s2 ==NULL){
+                            if(strcmp(lefttype,temp->type)==0){ 
+                                tot++;
+                            }
+                        }else{
+                            sn=s2->structnum;
+                            if(i!=varnum-1)cmp--;
+                            else{
+                                if(structual_equal2(s,s2)){
+                                    tot++;
+                                }
+                            }
+                        }
+                    }else{
+                        array* temp2=find_array(var_name[i]);
+                        if(temp2!=NULL && strcmp(lefttype,temp2->type)==0){ 
+                            tot++;
+                        }else{
+                            cmp--;isCorrect=0; var* t=find_var(var_name[i]);
+                            if(t==NULL)printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,var_name[i]);
+                            else printf("Error type 13 at Line %d: accessing with non-struct variable\n",$2->line);
+                        }
+                    } 
+
+                }
+                if(strcmp(lefttype,"int")==0){
+                    tot+=b[1];
+                }else if(strcmp(lefttype,"float")==0){
+                    tot+=b[2];
+                }else{tot+=b[3];}
+                if(tot!=cmp){
+                    isCorrect=0;
+                    printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
+                    if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
+                }
+            }else{ //right is array
+                array* temparr=find_array(var_name[num]);
+                num++;
+                if(temparr!=NULL){
+                    if(strcmp(temparr->type,lefttype)!=0){
+                        isCorrect=0;printf("Error type 5 at Line %d: unmatching types on both sides of assignment\n",$2->line);
+                        }
+                    for(;num<varnum;num++){
+                        array* temparr=find_array(var_name[num]); var* tempvar=find_var(var_name[num]);
+                        if(temparr!=NULL && strcmp(temparr->type,"int")!=0 ||tempvar!= NULL && strcmp(tempvar->type,"int")!=0){
+                        isCorrect=0;
+                        printf("Error type 12 at Line %d: indexing by non-integer\n",$1->line);
+                        }
+                        if(temparr==NULL &&tempvar== NULL){
+                            isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,var_name[num]);}
+                    }
+                    int c[4];
+                    findExp($3,c);
+                    if(strcmp(lefttype,"int")==0 && (c[2]!=0||c[3]!=0)){
+                        isCorrect=0;printf("Error type 5 at Line %d: unmatching types on both sides of assignment\n",$2->line);
                     }
                 }else{
-                    array* temp2=find_array(var_name[i]);
-                    if(strcmp(lefttype,temp2->type)==0){ 
-                        tot++;
-                    }
+                     isCorrect=0;printf("Error type 1 at Line %d: %s is used without a definition\n",$2->line,var_name[num--]);
                 }
-            }
-            if(strcmp(lefttype,"int")==0){
-                tot+=b[1];
-            }else if(strcmp(lefttype,"float")==0){
-                tot+=b[2];
-            }else{tot+=b[3];}
-            printf("%d,%d\n",tot,cmp);
-            if(tot!=cmp){
-                isCorrect=0;
-                printf("Error type 5 at Line %d: unmatching type on both sides of assignment\n",$1->line);
-                if(cmp!=1)  printf("Error type 7 at Line %d: unmatching operands\n",$1->line);
+                
             }
         }
         for(int i=0;i<varnum;i++){
@@ -428,13 +510,18 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
     | MINUS Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);} %prec NEG
     | NOT Exp {cldArray[0] = $1; cldArray[1] = $2; $$=createNode("Exp", 2, cldArray);}
     | ID LP Args RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);
-            usefunc=1;func* func=find_func_name_only($1->value);
+            func* func=find_func_name_only($1->value);
             if(func==NULL){
+                usefunc=2;
                 isCorrect=0;
                 printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);
             }else{
-                int xingcan=func->va_num;isCorrect=0;
-                if(xingcan!=func_arg)printf("Error type 9 at Line %d: invalid argument number, except %d, got %d\n",$1->line,xingcan,func_arg);
+                usefunc=1;
+                int xingcan=func->va_num;functype=func->rtype;
+                if(xingcan!=func_arg){
+                    printf("Error type 9 at Line %d: invalid argument number, except %d, got %d\n",$1->line,xingcan,func_arg);
+                    isCorrect=0;
+                }
             }
 
             func_arg=0;
@@ -442,7 +529,7 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
     | ID LP Args error {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);
         isCorrect=0;char* text = "Missing closing parenthesis ')'";printf("%d: %s\n",$2->line,text);}
     | ID LP RP {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);
-            usefunc=1;func* func=find_func_name_only($1->value);
+            func* func=find_func_name_only($1->value);
             if(func==NULL){
                 var* temp =find_var($1->value);isCorrect=0;
                 if(temp!=NULL){
@@ -451,13 +538,19 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
                     varnum++;
                     printf("Error type 11 at Line %d: invoking non-function variable\n",$1->line);
                 }
-                else printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);
+                else {usefunc=1;printf("Error type 2 at Line %d: %s is invoked without a definition\n",$1->line,$1->value);}
             }else{
-                int xingcan=func->va_num;isCorrect=0;
-                if(xingcan!=0)printf("Error type 9 at Line %d: invalid argument number, except %d, got 0\n",$1->line,xingcan);
+                int xingcan=func->va_num;usefunc=1;functype=func->rtype;
+                if(xingcan!=0){
+                    isCorrect=0;
+                    printf("Error type 9 at Line %d: invalid argument number, except %d, got 0\n",$1->line,xingcan);
+                }
             }
             }
-    | Exp LB Exp RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);}
+    | Exp LB Exp RB {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; cldArray[3]=$4; $$=createNode("Exp", 4, cldArray);
+            int a[4];findExp($3,a);if(a[2]!=0 ||a[3]!=0){
+                isCorrect=0;printf("Error type 12 at Line %d: indexing by non-integer",$1->line);
+            }}
     | Exp DOT ID {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=createNode("Exp", 3, cldArray);
         char* id =$3->value;
         var_name[varnum] = (char*)malloc(sizeof(char)*strlen(id));

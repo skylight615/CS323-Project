@@ -1,1 +1,6 @@
-Error type B at Line 3: Missing closing parenthesis ')'
+Error type 11 at Line 8: invoking non-function variable
+Error type 5 at Line 9: unmatching type on both sides of assignment
+Error type 1 at Line 12: s is used without a definition
+Error type 12 at Line 12: indexing by non-integer
+Error type 1 at Line 12: g is used without a definition
+Error type 5 at Line 12: unmatching types on both sides of assignment

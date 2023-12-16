@@ -204,8 +204,8 @@ void translate_Exp(struct Node* node, char* var){
         iCode* code = new_code(3);
         append(code, var);
         append(code, ":=");
-        if (!strcmp("INT", node->type)){
-            char* value = (char*)malloc(sizeof(char)*(strlen(node->value)+1));
+        if (!strcmp("INT", node->clds[0]->type)){
+            char* value = (char*)malloc(sizeof(char)*(strlen(node->clds[0]->value)+1));
             value[0] = '#';
             strcpy(value+1, node->clds[0]->value);
             append(code, value);

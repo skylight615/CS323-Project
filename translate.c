@@ -24,8 +24,8 @@ char* new_label(){
     char* num = (char*)malloc(sizeof(char) * 10);
     sprintf(num, "%d", lb_count++);
     char* label = (char*)malloc(sizeof(char) * (strlen(num) + 1));
-    label[0] = 't';
-    strcpy(label+1, num);
+    strcpy(label, "label");
+    strcpy(label+5, num);
     free(num);
     return label;
 }
@@ -258,11 +258,11 @@ void translate_Exp(struct Node* node, char* var){
             append(code1, ":=");
             append(code1, tp);
             link2list(tail, code1);
-            iCode* code2 = new_code(3);
-            append(code2, var);
-            append(code2, ":=");
-            append(code2, v);
-            link2list(tail, code2);
+            // iCode* code2 = new_code(3);
+            // append(code2, var);
+            // append(code2, ":=");
+            // append(code2, v);
+            // link2list(tail, code2);
         } else if (!strcmp("PLUS", node->clds[1]->type) || !strcmp("MINUS", node->clds[1]->type) || !strcmp("MUL", node->clds[1]->type) || !strcmp("DIV", node->clds[1]->type)){
             char* t1 = new_place();
             char* t2 = new_place();

@@ -5,6 +5,7 @@
     #include "funcTable.h"
     #include "structTable.h"
     #include "stdlib.h"
+    #include "translate.h"
     void yyerror(const char*);
     struct Node *cldArray[10];
     int yydebug = 1;
@@ -54,7 +55,7 @@
 %nonassoc SHIFT
 %%
 /* high-level definition */
-Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); if(isCorrect==1)dfs($$,0); }
+Program: ExtDefList {cldArray[0] = $1; $$=createNode("Program", 1, cldArray); dfs($$,0); translate_Program($$);}
     | HeadList ExtDefList {cldArray[0] = $1; cldArray[1] = $2;$$=createNode("Program", 2, cldArray); 
         if(isCorrect==1)dfs($$,0);}
     ;
@@ -448,7 +449,6 @@ Exp: Exp ASSIGN Exp {cldArray[0] = $1; cldArray[1] = $2; cldArray[2]=$3; $$=crea
                             else printf("Error type 13 at Line %d: accessing with non-struct variable\n",$2->line);
                         }
                     } 
-
                 }
                 if(strcmp(lefttype,"int")==0){
                     tot+=b[1];

@@ -1,0 +1,4 @@
+Error type 1 at Lind 3: z is used without a definition
+Error type 1 at Lind 9: a is used without a definition
+Error type 1 at Lind 10: a is used without a definition
+Error type 3 at Line 10: variable b is redefined in the same scope

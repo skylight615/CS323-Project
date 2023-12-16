@@ -1,3 +1,6 @@
+#ifndef TREE_H
+#define TREE_H
+
 /*抽象语法树的结点*/
 struct Node
 {
@@ -26,3 +29,5 @@ void findExp(struct Node* root,int b[]);
 void dfs(struct Node* root,int level);
 
 void debug();
+
+#endif

@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.c"
+#line 2 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -622,14 +622,14 @@ char *yytext;
     extern int inStruct;
     int LCnum = 0;
     int inStruct = 0;
-#line 626 "lex.yy.c"
+#line 625 "lex.yy.c"
 /*
  * Error type:
  * 1. undefined tokens, eg., '@', '#' as non-literal token
  * 2. illegal hex int, eg., 0x5gg
  * 3. illegal hex char, eg., '\x9', '\xt0'
 */
-#line 633 "lex.yy.c"
+#line 632 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -848,7 +848,7 @@ YY_DECL
 	{
 #line 30 "lex.l"
 
-#line 852 "lex.yy.c"
+#line 851 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1163,7 +1163,7 @@ YY_RULE_SETUP
 #line 103 "lex.l"
 ECHO;
 	YY_BREAK
-#line 1167 "lex.yy.c"
+#line 1166 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

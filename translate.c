@@ -37,7 +37,7 @@ void translate_Program(struct Node* node){
 }
 
 void translate_ExtDefList(struct Node* node){
-    printf("translate_ExtDefList\n");
+    // printf("translate_ExtDefList\n");
     translate_ExtDef(node->clds[0]);
     if (strcmp(node->clds[1]->type, "Empty")){
         translate_ExtDefList(node->clds[1]);
@@ -45,7 +45,7 @@ void translate_ExtDefList(struct Node* node){
 }
 
 void translate_ExtDef(struct Node* node){
-    printf("translate_ExtDef\n");
+    // printf("translate_ExtDef\n");
     if (!strcmp(node->clds[1]->type, "FunDec")){
         translate_FunDec(node->clds[1]);
         translate_CompSt(node->clds[2]);
@@ -65,7 +65,7 @@ void translate_VarDec(struct Node* node){
 }
 
 void translate_FunDec(struct Node* node){
-    printf("translate_FunDec\n");
+    // printf("translate_FunDec\n");
     // FunDec = ID LP RP
     iCode* code = new_code(3);
     append(code, "FUNCTION");
@@ -79,7 +79,7 @@ void translate_FunDec(struct Node* node){
 }
 
 void translate_VarList(struct Node* node){
-    printf("translate_VarList\n");
+    // printf("translate_VarList\n");
     translate_ParamDec(node->clds[0]);
     if (node->n_cld == 3){
         translate_VarList(node->clds[2]);
@@ -87,17 +87,17 @@ void translate_VarList(struct Node* node){
 }
 
 void translate_ParamDec(struct Node* node){
-    printf("translate_ParamDec\n");
+    // printf("translate_ParamDec\n");
     translate_VarDec(node->clds[1]);
 }
 
 void translate_CompSt(struct Node* node){
-    printf("translate_CompSt\n");
+    // printf("translate_CompSt\n");
     translate_StmtList(node->clds[2]);
 }
 
 void translate_StmtList(struct Node* node){
-    printf("translate_StmtList\n");
+    // printf("translate_StmtList\n");
     translate_Stmt(node->clds[0]);
     if (node->n_cld == 2 && strcmp(node->clds[1]->type, "Empty")){
         translate_StmtList(node->clds[1]);
@@ -105,7 +105,7 @@ void translate_StmtList(struct Node* node){
 }
 
 void translate_Stmt(struct Node* node){
-    printf("translate_Stmt\n");
+    // printf("translate_Stmt\n");
     if (node->n_cld == 1){
         //CompSt
         translate_CompSt(node->clds[0]);
@@ -198,7 +198,7 @@ void translate_Stmt(struct Node* node){
 // void translate_Dec(struct Node* node){}
 
 void translate_Exp(struct Node* node, char* var){
-    printf("translate_Exp\n");
+    // printf("translate_Exp\n");
     if (node->n_cld == 1){
         // INT or ID
         free(var);
@@ -346,7 +346,7 @@ void translate_Exp(struct Node* node, char* var){
 }
 
 void translate_cond_Exp(struct Node* node, char* lbt, char* lbf){
-    printf("translate_cond_Exp\n");
+    // printf("translate_cond_Exp\n");
     // Exp EQ\AND\OR\LT\LE\GE\GT\NE Exp or NOT Exp
     if (!strcmp(node->clds[1]->type, "AND") || !strcmp(node->clds[1]->type, "OR")){
         char* lb1 = new_label();
@@ -396,7 +396,7 @@ void translate_cond_Exp(struct Node* node, char* lbt, char* lbf){
 }
 
 void translate_Args(struct Node* node){
-    printf("translate_Args\n");
+    // printf("translate_Args\n");
     char* tp = new_place();
     translate_Exp(node->clds[0], tp);
     iCode* code = new_code(2);

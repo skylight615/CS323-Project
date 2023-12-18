@@ -201,16 +201,18 @@ void translate_Exp(struct Node* node, char* var){
     printf("translate_Exp\n");
     if (node->n_cld == 1){
         // INT or ID
+        free(var);
         if (!strcmp("INT", node->clds[0]->type)){
-            iCode* code = new_code(3);
-            append(code, var);
-            append(code, ":=");
-            char* value = (char*)malloc(sizeof(char)*(strlen(node->clds[0]->value)+1));
-            value[0] = '#';
-            strcpy(value+1, node->clds[0]->value);
-            append(code, value);
-            link2list(tail, code);
+            // iCode* code = new_code(3);
+            // append(code, var);
+            // append(code, ":=");
+            var = (char*)malloc(sizeof(char)*(strlen(node->clds[0]->value)+1));
+            var[0] = '#';
+            strcpy(var+1, node->clds[0]->value);
+            // append(code, value);
+            // link2list(tail, code);
         } else {
+            var = (char*)malloc(sizeof(char)*strlen(node->clds[0]->value));
             strcpy(var, node->clds[0]->value);
         }
     } else if (node->n_cld == 2){

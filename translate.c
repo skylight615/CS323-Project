@@ -55,14 +55,14 @@ void translate_ExtDef(struct Node* node){
 // void translate_ExtDecList(struct Node* node){}
 // void translate_Specifier(struct Node* node){}
 // void translate_StructSpecifier();
-void translate_VarDec(struct Node* node){
-    if (node->n_cld == 1){
-        iCode* code = new_code(2);
-        append(code, "PARAM");
-        append(code, node->clds[0]->value);
-        link2list(tail, code);
-    }
-}
+// void translate_VarDec(struct Node* node){
+//     if (node->n_cld == 1){
+//         iCode* code = new_code(2);
+//         append(code, "PARAM");
+//         append(code, node->clds[0]->value);
+//         link2list(tail, code);
+//     }
+// }
 
 void translate_FunDec(struct Node* node){
     // printf("translate_FunDec\n");
@@ -88,11 +88,17 @@ void translate_VarList(struct Node* node){
 
 void translate_ParamDec(struct Node* node){
     // printf("translate_ParamDec\n");
-    translate_VarDec(node->clds[1]);
+    iCode* code = new_code(2);
+    append(code, "PARAM");
+    append(code, node->clds[1]->clds[0]->value);
+    link2list(tail, code);
 }
 
 void translate_CompSt(struct Node* node){
-    // printf("translate_CompSt\n");
+    printf("translate_CompSt\n");
+    if (strcmp(node->clds[1]->type, "Empty")){
+        translate_DefList(node->clds[1]);
+    }
     translate_StmtList(node->clds[2]);
 }
 
@@ -102,6 +108,50 @@ void translate_StmtList(struct Node* node){
     if (node->n_cld == 2 && strcmp(node->clds[1]->type, "Empty")){
         translate_StmtList(node->clds[1]);
     }
+}
+
+void translate_DefList(struct Node* node){
+    // printf("translate_DefList\n");
+    // printf("%d\n", node->n_cld);
+    translate_Def(node->clds[0]);
+    if (node->n_cld == 2 && strcmp(node->clds[1]->type, "Empty")){
+        translate_DefList(node->clds[1]);
+    }
+}
+
+void translate_Def(struct Node* node){
+    // printf("%d\n", node->n_cld);
+    // printf("%d\n", node->clds[1]->n_cld);
+    // printf("translate_Def\n");
+    translate_DecList(node->clds[1]);
+}
+
+void translate_DecList(struct Node* node){
+    // printf("translate_DecList\n");
+    translate_Dec(node->clds[0]);
+    if (node->n_cld == 3)
+    {
+        translate_DecList(node->clds[2]);
+    }
+    
+}
+void translate_Dec(struct Node* node){
+    // printf("translate_Dec\n");
+    iCode* code = new_code(3);
+    if (node->n_cld == 1) {
+        printf("%s\n", node->clds[0]->clds[0]->value);
+        append(code, node->clds[0]->clds[0]->value);
+        append(code, ":=");
+        append(code, "#0");
+    } else {
+        append(code, node->clds[0]->clds[0]->value);
+        append(code, ":=");
+        char* right = new_place();
+        translate_Exp(node->clds[2], right);
+        printf("%s\n", right);
+        append(code, right);
+    }
+    link2list(tail, code);
 }
 
 void translate_Stmt(struct Node* node){

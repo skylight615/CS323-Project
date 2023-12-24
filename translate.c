@@ -449,11 +449,11 @@ void translate_Args(struct Node* node){
     // printf("translate_Args\n");
     char* tp = new_place();
     translate_Exp(node->clds[0], tp);
+    if (node->n_cld == 3){
+        translate_Args(node->clds[2]);
+    }
     iCode* code = new_code(2);
     append(code, "ARG");
     append(code, tp);
     link2list(tail, code);
-    if (node->n_cld == 3){
-        translate_Args(node->clds[2]);
-    }
 }
